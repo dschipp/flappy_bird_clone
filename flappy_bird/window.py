@@ -27,7 +27,8 @@ class app(pyglet.window.Window):
         self.blocks = list()
         self.create_blocks()
 
-        self.bird = bird(x= 50, y=Y_TILING/2 * self.y_scale, radius=BIRDSIZE, color=(50, 225, 30))
+        self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale,
+                         radius=BIRDSIZE, color=(50, 225, 30))
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
         pyglet.clock.schedule_interval(self.update_app, SPEED)
@@ -38,21 +39,24 @@ class app(pyglet.window.Window):
 
             for block_count in range(2):
                 block_pair = [
-                    shapes.Rectangle(x= (block_pair_count + BLOCK_DIST * block_pair_count + self.startpoint) * self.x_scale, y=0, width= self.x_scale * BLOCK_WIDTH, height= self.y_scale * height, color=(0, 153, 76)),
-                    shapes.Rectangle(x= (block_pair_count + BLOCK_DIST * block_pair_count + self.startpoint) * self.x_scale, y= self.y_scale * (height+HOLE) , width=self.x_scale * BLOCK_WIDTH, height=self.y_scale * (Y_TILING-height), color=(0, 153, 76))
-                    ]
+                    shapes.Rectangle(x=(block_pair_count + BLOCK_DIST * block_pair_count + self.startpoint) * self.x_scale,
+                                     y=0, width=self.x_scale * BLOCK_WIDTH, height=self.y_scale * height, color=(0, 153, 76)),
+                    shapes.Rectangle(x=(block_pair_count + BLOCK_DIST * block_pair_count + self.startpoint) * self.x_scale, y=self.y_scale * (
+                        height+HOLE), width=self.x_scale * BLOCK_WIDTH, height=self.y_scale * (Y_TILING-height), color=(0, 153, 76))
+                ]
 
             self.blocks.append(block_pair)
-    
+
     def update_app(self, timer):
         self.clear()
 
         for block_pair in self.blocks:
             for block in block_pair:
                 if block.x < - BLOCK_WIDTH * self.x_scale:
-                    block.x = (BLOCK_COUNT + BLOCK_DIST * BLOCK_COUNT) * self.x_scale
+                    block.x = (BLOCK_COUNT + BLOCK_DIST *
+                               BLOCK_COUNT) * self.x_scale
                 block.x -= BLOCK_SPEED * self.x_scale
-        
+
         self.bird.move()
 
     def on_draw(self):
