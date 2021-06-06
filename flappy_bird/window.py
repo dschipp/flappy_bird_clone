@@ -25,13 +25,13 @@ class app(pyglet.window.Window):
 
         self.startpoint = X_TILING / 2 + 3
 
-        self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH, Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+        self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
+                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
 
         self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale,
                          radius=BIRDSIZE, color=(50, 225, 30))
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
-        
 
     def update_app(self, timer):
         self.clear()

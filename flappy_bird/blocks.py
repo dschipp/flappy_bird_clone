@@ -2,9 +2,12 @@ import pyglet
 from pyglet import shapes
 import random
 
+
 class block(shapes.Rectangle):
-    def __init__(self, x, y, width, height, color = (0, 153, 76)):
-        super(block, self).__init__(x=x, y=y, width=width, height=height, color=color)
+    def __init__(self, x, y, width, height, color=(0, 153, 76)):
+        super(block, self).__init__(
+            x=x, y=y, width=width, height=height, color=color)
+
 
 class blocks():
     def __init__(self, count, BLOCK_DIST, BLOCK_WIDTH, Y_TILING, HOLE, y_scale, x_scale, startpoint):
@@ -23,15 +26,15 @@ class blocks():
             for block_count in range(2):
                 block_pair = [
                     block(x=(block_pair_count + BLOCK_DIST * block_pair_count + startpoint) * x_scale,
-                                     y=0, width= x_scale * BLOCK_WIDTH, height= y_scale * height),
-                    block(x=(block_pair_count + BLOCK_DIST * block_pair_count + startpoint) * x_scale, y= y_scale * (
-                        height+HOLE), width= x_scale * BLOCK_WIDTH, height= y_scale * (Y_TILING-height))
+                          y=0, width=x_scale * BLOCK_WIDTH, height=y_scale * height),
+                    block(x=(block_pair_count + BLOCK_DIST * block_pair_count + startpoint) * x_scale, y=y_scale * (
+                        height+HOLE), width=x_scale * BLOCK_WIDTH, height=y_scale * (Y_TILING-height))
                 ]
 
             self.blocks.append(block_pair)
 
     def update(self, BLOCK_SPEED):
-        
+
         for block_pair in self.blocks:
             for block in block_pair:
                 if block.x < - self.block_width * self.x_scale:
