@@ -16,6 +16,8 @@ BIRDSIZE = 20
 
 
 class app(pyglet.window.Window):
+# TODO: Colision detection
+# TODO: Top and bottom Barriers
 
     def __init__(self) -> None:
         super(app, self).__init__()
