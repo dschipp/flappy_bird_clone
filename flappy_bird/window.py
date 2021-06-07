@@ -3,6 +3,7 @@ import random
 from pyglet import shapes
 from bird import bird
 from blocks import blocks
+from button import button
 
 Y_TILING = 10
 X_TILING = 16
@@ -24,6 +25,11 @@ class app(pyglet.window.Window):
         self.y_scale = self.get_size()[0] / Y_TILING
         self.x_scale = self.get_size()[1] / X_TILING
 
+        self.set_variables()
+
+        pyglet.gl.glClearColor(255, 255, 255, 1.0)
+    
+    def set_variables(self):
         self.startpoint = X_TILING / 2 + 3
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
@@ -31,10 +37,10 @@ class app(pyglet.window.Window):
 
         self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
                          radius=BIRDSIZE)
-
+        
         self.started = False
 
-        pyglet.gl.glClearColor(255, 255, 255, 1.0)
+        self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
     def update_app(self, timer):
         self.clear()
@@ -44,13 +50,21 @@ class app(pyglet.window.Window):
         self.bird.update(self.get_size()[0])
 
         if self.blocks.check_collision(self.bird.x, self.bird.y, self.bird.radius * 0.8): # Multiply with a factor so it feels better
-            pyglet.clock.unschedule(self.update_app)
+            self.pause()
 
     def on_draw(self):
         self.clear()
 
         self.blocks.draw()
         self.bird.draw()
+    
+    def pause(self):
+        self.restart_button.draw()
+
+        pyglet.clock.unschedule(self.update_app)
+
+    def restart(self):
+        self.set_variables()
     
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
