@@ -37,20 +37,21 @@ class bird(shapes.Circle):
         """
         self.velocity += self.jump_height
 
-    def update(self, x, y):
+    def update(self, height : int):
         """
-        Description of move
+        Description of update
 
         Args:
             self (undefined):
+            height (int):
 
         """
-
+    
         self.velocity += self.gravity        
         self.y += self.velocity
 
-        if self.y >= y - self.radius * 7:
-            self.y = y - self.radius * 7
+        if self.y >= height - self.radius * 7:
+            self.y = height - self.radius * 7
             self.velocity = 0
 
         if self.y <= self.radius / 2:
