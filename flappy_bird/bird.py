@@ -3,7 +3,7 @@ from pyglet import shapes
 
 
 class bird(shapes.Circle):
-    def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (50, 225, 30)) -> None:
+    def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
         Description of __init__
 
