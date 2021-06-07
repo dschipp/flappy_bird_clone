@@ -41,7 +41,7 @@ class blocks():
             None
 
         """
-    
+
         self.blocks = list()
 
         self.x_scale = x_scale
@@ -56,9 +56,9 @@ class blocks():
             for block_count in range(2):
                 block_pair = [
                     block(x=(block_pair_count + block_dist * block_pair_count + startpoint) * x_scale,
-                          y=0, width=x_scale * block_width, height=y_scale * height),
+                          y=0, width=x_scale * block_width, height=y_scale * height),  # Bottom Block
                     block(x=(block_pair_count + block_dist * block_pair_count + startpoint) * x_scale, y=y_scale * (
-                        height+hole), width=x_scale * block_width, height=y_scale * (y_tiling-height))
+                        height+hole), width=x_scale * block_width, height=y_scale * (y_tiling-height))  # Top Block
                 ]
 
             self.blocks.append(block_pair)
@@ -72,13 +72,38 @@ class blocks():
             speed (undefined):
 
         """
-    
+
         for block_pair in self.blocks:
             for block in block_pair:
                 if block.x < - self.block_width * self.x_scale:
                     block.x = (self.count + self.block_dist *
                                self.count) * self.x_scale
                 block.x -= speed * self.x_scale
+
+    def check_collision(self, x: int, y: int, radius: int = 0) -> bool:
+        """
+        Description of check_collision. Check if the given Coordinates hit a Block.
+
+        Args:
+            self (undefined):
+            x (int): The x Coordinate of the object to check
+            y (int): The y Coordinate of the object to check
+            radius (int=0): The Radius of the object to check
+
+        Returns: If the object hits
+            bool
+
+        """
+
+        for block_pair in self.blocks:
+            for top, block in enumerate(block_pair):
+
+                top_bottom = 1  # Var to determine if the radius should be added or subtracted
+                if not top:
+                    top_bottom = -1
+
+                if x + radius > block.x and x + radius < block.x + block.width and y + top_bottom * radius > block.y and y + top_bottom * radius < block.y + block.height:
+                    return True
 
     def draw(self):
         """

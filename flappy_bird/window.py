@@ -7,12 +7,12 @@ from blocks import blocks
 Y_TILING = 10
 X_TILING = 16
 BLOCK_WIDTH = 1.3
-HOLE = 2
+HOLE = 1.5
 BLOCK_COUNT = 10
 BLOCK_DIST = 3.5
 SPEED = 1/200
 BLOCK_SPEED = 0.04
-BIRDSIZE = 20
+BIRDSIZE = 15
 JUMP_HIGHT = 10
 GRAVITY = 0.3
 
@@ -41,15 +41,17 @@ class app(pyglet.window.Window):
 
         self.blocks.update(BLOCK_SPEED)
 
-        self.bird.update(self.get_size()[1], self.get_size()[0])
+        self.bird.update(self.get_size()[0])
+
+        if self.blocks.check_collision(self.bird.x, self.bird.y, self.bird.radius):
+            pyglet.clock.unschedule(self.update_app)
 
     def on_draw(self):
         self.clear()
 
         self.blocks.draw()
-
         self.bird.draw()
-
+    
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.UP:
             if not self.started:
@@ -57,5 +59,4 @@ class app(pyglet.window.Window):
                 self.started = True
             self.bird.move_up(self.get_size()[0])
         if symbol == pyglet.window.key.ESCAPE:
-            pyglet.clock.unschedule(self.update_app)
             self.close()
