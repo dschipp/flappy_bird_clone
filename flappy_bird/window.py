@@ -13,11 +13,12 @@ BLOCK_DIST = 3.5
 SPEED = 1/200
 BLOCK_SPEED = 0.04
 BIRDSIZE = 20
-
+JUMP_HIGHT = 10
+GRAVITY = 0.3
 
 class app(pyglet.window.Window):
-# TODO: Colision detection
-# TODO: Top and bottom Barriers
+    # TODO: Colision detection
+    # TODO: Top and bottom Barriers
 
     def __init__(self) -> None:
         super(app, self).__init__()
@@ -30,9 +31,9 @@ class app(pyglet.window.Window):
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
                              Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
 
-        self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale,
-                         radius=BIRDSIZE, color=(50, 225, 30))
-        
+        self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
+                         radius=BIRDSIZE)
+
         self.started = False
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
@@ -59,4 +60,4 @@ class app(pyglet.window.Window):
             self.bird.move_up()
         if symbol == pyglet.window.key.ESCAPE:
             pyglet.clock.unschedule(self.update_app)
-            self.close()
+            self.close
