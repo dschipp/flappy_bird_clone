@@ -18,7 +18,6 @@ GRAVITY = 0.3
 
 class app(pyglet.window.Window):
     # TODO: Colision detection
-    # TODO: Top and bottom Barriers
 
     def __init__(self) -> None:
         super(app, self).__init__()
@@ -43,7 +42,7 @@ class app(pyglet.window.Window):
 
         self.blocks.update(BLOCK_SPEED)
 
-        self.bird.move()
+        self.bird.update(self.get_size()[1], self.get_size()[0])
 
     def on_draw(self):
         self.clear()
@@ -57,7 +56,7 @@ class app(pyglet.window.Window):
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
                 self.started = True
-            self.bird.move_up()
+            self.bird.move_up(self.get_size()[0])
         if symbol == pyglet.window.key.ESCAPE:
             pyglet.clock.unschedule(self.update_app)
-            self.close
+            self.close()

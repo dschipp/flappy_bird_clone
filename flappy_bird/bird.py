@@ -27,7 +27,7 @@ class bird(shapes.Circle):
         self.velocity = 0
         self.jump_height = jump_height
 
-    def move_up(self):
+    def move_up(self, y):
         """
         Description of move_up
 
@@ -37,7 +37,7 @@ class bird(shapes.Circle):
         """
         self.velocity += self.jump_height
 
-    def move(self):
+    def update(self, x, y):
         """
         Description of move
 
@@ -45,5 +45,6 @@ class bird(shapes.Circle):
             self (undefined):
 
         """
-        self.velocity += self.gravity
-        self.y += self.velocity
+        if self.y < y - self.radius * 2 and self.y > 0:
+            self.velocity += self.gravity
+            self.y += self.velocity
