@@ -10,25 +10,25 @@ class block(shapes.Rectangle):
 
 
 class blocks():
-    def __init__(self, count, BLOCK_DIST, BLOCK_WIDTH, Y_TILING, HOLE, y_scale, x_scale, startpoint):
+    def __init__(self, count, block_dist, block_width, y_tiling, hole, y_scale, x_scale, startpoint):
 
         self.blocks = list()
 
         self.x_scale = x_scale
         self.y_scale = y_scale
         self.count = count
-        self.block_width = BLOCK_WIDTH
-        self.block_dist = BLOCK_DIST
+        self.block_width = block_width
+        self.block_dist = block_dist
 
         for block_pair_count in range(count):
             height = random.randint(2, 5)
 
             for block_count in range(2):
                 block_pair = [
-                    block(x=(block_pair_count + BLOCK_DIST * block_pair_count + startpoint) * x_scale,
-                          y=0, width=x_scale * BLOCK_WIDTH, height=y_scale * height),
-                    block(x=(block_pair_count + BLOCK_DIST * block_pair_count + startpoint) * x_scale, y=y_scale * (
-                        height+HOLE), width=x_scale * BLOCK_WIDTH, height=y_scale * (Y_TILING-height))
+                    block(x=(block_pair_count + block_dist * block_pair_count + startpoint) * x_scale,
+                          y=0, width=x_scale * block_width, height=y_scale * height),
+                    block(x=(block_pair_count + block_dist * block_pair_count + startpoint) * x_scale, y=y_scale * (
+                        height+hole), width=x_scale * block_width, height=y_scale * (y_tiling-height))
                 ]
 
             self.blocks.append(block_pair)
