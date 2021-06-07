@@ -17,7 +17,6 @@ JUMP_HIGHT = 10
 GRAVITY = 0.3
 
 class app(pyglet.window.Window):
-    # TODO: Colision detection
 
     def __init__(self) -> None:
         super(app, self).__init__()
