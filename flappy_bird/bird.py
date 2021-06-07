@@ -45,6 +45,14 @@ class bird(shapes.Circle):
             self (undefined):
 
         """
-        if self.y < y - self.radius * 2 and self.y > 0:
-            self.velocity += self.gravity
-            self.y += self.velocity
+
+        self.velocity += self.gravity        
+        self.y += self.velocity
+
+        if self.y >= y - self.radius * 7:
+            self.y = y - self.radius * 7
+            self.velocity = 0
+
+        if self.y <= self.radius / 2:
+            self.y = self.radius / 2
+            self.velocity = 0
