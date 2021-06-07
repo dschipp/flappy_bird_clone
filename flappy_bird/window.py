@@ -32,6 +32,8 @@ class app(pyglet.window.Window):
 
         self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale,
                          radius=BIRDSIZE, color=(50, 225, 30))
+        
+        self.started = False
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
 
@@ -51,6 +53,10 @@ class app(pyglet.window.Window):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == pyglet.window.key.UP:
+            if not self.started:
+                pyglet.clock.schedule_interval(self.update_app, SPEED)
+                self.started = True
             self.bird.move_up()
-        elif symbol == pyglet.window.key.DOWN:
-            pyglet.clock.schedule_interval(self.update_app, SPEED)
+        if symbol == pyglet.window.key.ESCAPE:
+            pyglet.clock.unschedule(self.update_app)
+            self.close()
