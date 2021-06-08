@@ -19,7 +19,7 @@ class block(shapes.Rectangle):
         """
         super(block, self).__init__(
             x=x, y=y, width=width, height=height, color=color)
-        
+
         self.height = height
         self.width = width
 
@@ -107,28 +107,41 @@ class blocks():
 
                 if x + radius > block.x and x + radius < block.x + block.width and y + top_bottom * radius > block.y and y + top_bottom * radius < block.y + block.height:
                     return True
-    
-    def nearest_block_coordinates(self, x):
+
+    def nearest_block_coordinates(self, x, x_max=500):
 
         nearest_block = 0
-        x_before = self.blocks[0][0].x - x
+        x_before = x_max
 
         for block_count, block_pair in enumerate(self.blocks):
             for block in block_pair:
 
-                if block.x - x > 0 and block.x - x <= x_before:
+                if block.x - x + block.width > 0 and block.x - x + block.width <= x_before:
                     nearest_block = block_count
-                    block.color = (0,255,0)
-                
-                x_before = block.x - x
-
-        coordinate_array = []
+                    block.color = (200, 0, 0)
+                    x_before = block.x - x + block.width
+                else:
+                    block.color = (0, 153, 76)
 
         block_pair = self.blocks[nearest_block]
-        coordinate_array = [block_pair[0].x, block_pair[0].y + block_pair[0].height, block_pair[1].x, block_pair[1].y + block_pair[0].height]
 
-        print(coordinate_array)
-                    
+        shapes.Circle(x=block_pair[0].x, y=block_pair[0].y +
+                      block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
+        shapes.Circle(x=block_pair[0].x + block_pair[0].width, y=block_pair[0].y +
+                      block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
+
+        shapes.Circle(x=block_pair[1].x + block_pair[1].width,
+                      y=block_pair[1].y, radius=5, color=(100, 0, 0)).draw()
+        shapes.Circle(x=block_pair[1].x, y=block_pair[1].y,
+                      radius=5, color=(100, 0, 0)).draw()
+
+        corner_array = [block_pair[0].x, block_pair[0].y + block_pair[0].height,
+                        block_pair[0].x + block_pair[0].width, block_pair[0].y +
+                        block_pair[0].height,
+                        block_pair[1].x + block_pair[1].width, block_pair[1].y,
+                        block_pair[1].x, block_pair[1].y]
+        
+        return corner_array
 
     def draw(self):
         """
