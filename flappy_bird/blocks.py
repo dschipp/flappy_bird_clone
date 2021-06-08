@@ -19,6 +19,9 @@ class block(shapes.Rectangle):
         """
         super(block, self).__init__(
             x=x, y=y, width=width, height=height, color=color)
+        
+        self.height = height
+        self.width = width
 
 
 class blocks():
@@ -104,6 +107,28 @@ class blocks():
 
                 if x + radius > block.x and x + radius < block.x + block.width and y + top_bottom * radius > block.y and y + top_bottom * radius < block.y + block.height:
                     return True
+    
+    def nearest_block_coordinates(self, x):
+
+        nearest_block = 0
+        x_before = self.blocks[0][0].x - x
+
+        for block_count, block_pair in enumerate(self.blocks):
+            for block in block_pair:
+
+                if block.x - x > 0 and block.x - x <= x_before:
+                    nearest_block = block_count
+                    block.color = (0,255,0)
+                
+                x_before = block.x - x
+
+        coordinate_array = []
+
+        block_pair = self.blocks[nearest_block]
+        coordinate_array = [block_pair[0].x, block_pair[0].y + block_pair[0].height, block_pair[1].x, block_pair[1].y + block_pair[0].height]
+
+        print(coordinate_array)
+                    
 
     def draw(self):
         """
