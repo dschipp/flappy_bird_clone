@@ -1,1 +1,2 @@
 TODO: Restart Button
+FIXME: Laying on the ground no collision
