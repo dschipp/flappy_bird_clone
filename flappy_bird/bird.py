@@ -1,5 +1,6 @@
 import pyglet
 from pyglet import shapes
+from NN import Neural_Net
 
 
 class bird(shapes.Circle):
@@ -27,7 +28,9 @@ class bird(shapes.Circle):
         self.velocity = 0
         self.jump_height = jump_height
 
-    def move_up(self, y):
+        self.NN = Neural_Net(9, 1)
+
+    def move_up(self):
         """
         Description of move_up
 
@@ -57,3 +60,11 @@ class bird(shapes.Circle):
         if self.y <= self.radius / 2:
             self.y = self.radius / 2
             self.velocity = 0
+    
+    def decide_NN(self, corner_positions):
+        
+        corner_positions.append(self.x)
+
+        decision = self.NN.output(corner_positions)
+
+        print(decision)

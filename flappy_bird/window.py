@@ -4,7 +4,6 @@ from pyglet import shapes
 from bird import bird
 from blocks import blocks
 from button import button
-from NN import Neural_Net
 
 Y_TILING = 10
 X_TILING = 16
@@ -30,12 +29,6 @@ class app(pyglet.window.Window):
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
 
-        self.NN = Neural_Net(4, 1) # Init the Neural Net
-        #pyglet.clock.schedule_interval(self.NN_decides, 0.1)
-
-    def NN_decides(self):
-        pass
-    
     def set_variables(self):
         self.startpoint = X_TILING / 2 + 3
 
@@ -59,7 +52,7 @@ class app(pyglet.window.Window):
         if self.blocks.check_collision(self.bird.x, self.bird.y, self.bird.radius * 0.8): # Multiply with a factor so it feels better
             self.pause()
 
-        self.blocks.nearest_block_coordinates(self.bird.x)
+        self.bird.decide_NN(self.blocks.nearest_block_coordinates(self.bird.x))
 
     def on_draw(self):
         self.clear()
