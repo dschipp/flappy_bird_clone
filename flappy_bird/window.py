@@ -1,6 +1,4 @@
 import pyglet
-import random
-from pyglet import shapes
 from bird import bird
 from blocks import blocks
 from button import button
