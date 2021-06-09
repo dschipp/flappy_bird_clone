@@ -31,7 +31,7 @@ class bird(shapes.Circle):
         self.velocity = 0
         self.jump_height = jump_height
 
-        self.NN = Neural_Net(9, 1)  # Crate a Neural Network for this bird.
+        # self.NN = Neural_Net(9, 1)  # Crate a Neural Network for this bird.
 
     def move_up(self):
         """
