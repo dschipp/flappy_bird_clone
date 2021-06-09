@@ -6,15 +6,15 @@ import random
 class block(shapes.Rectangle):
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
         """
-        Description of __init__
+        Create a block / Rectangle.
 
         Args:
             self (undefined):
-            x (int):
-            y (int):
-            width (int):
-            height (int):
-            color=(0 (,153,76)):
+            x (int): The x Position of the Block / The x of the lower left corner of the block.
+            y (int): The y Position of the Block / The y of the lower left corner of the block.
+            width (int): The width of the block / So the x coordinate + the width => lower right corner.
+            height (int): The height of the block / So the y coordinate + the height => upper left corneer.
+            color=(0 (,153,76)): The color of the block. Standard some kind of green.
 
         """
         super(block, self).__init__(
@@ -27,21 +27,23 @@ class block(shapes.Rectangle):
 class blocks():
     def __init__(self, count: int, block_dist: int, block_width: int, y_tiling: int, hole: int, y_scale: int, x_scale: int, startpoint: int) -> None:
         """
-        Description of __init__
+        Create an list of block pairs one at the top and the other at the bottom with a distance between them.
 
         Args:
             self (undefined):
-            count (int):
-            block_dist (int):
-            block_width (int):
-            y_tiling (int):
-            hole (int):
-            y_scale (int):
-            x_scale (int):
-            startpoint (int):
+            count (int): The number of block pairs.
+            block_dist (int): The distance between the block pairs.
+            block_width (int): The width of the blocks.
+            y_tiling (int): In how many tiles the y is splittet up.
+            hole (int): The size of the hole between the blocks in the block pair. So between the upper and lower block.
+            y_scale (int): The y scale of the window, because of the tiling.
+            x_scale (int): The x scale of the window after the tiling
+            startpoint (int): The x start coordinate of the first block pair.
 
         Returns:
             None
+
+        TODO: Rewrite the tiling of the window, it is not really usefull.
 
         """
 
@@ -53,6 +55,8 @@ class blocks():
         self.block_width = block_width
         self.block_dist = block_dist
 
+        # Create a list of block pairs with random heights. The list contains of block pairs, where the firs block
+        # is the bottom block and the second one is the top block
         for block_pair_count in range(count):
             height = random.randint(2, 5)
 
@@ -68,11 +72,11 @@ class blocks():
 
     def update(self, speed):
         """
-        Description of update
+        Update the position of the block pairs.
 
         Args:
             self (undefined):
-            speed (undefined):
+            speed (undefined): The speed with which the block pairs are moving.
 
         """
 
@@ -108,7 +112,19 @@ class blocks():
                 if x + radius > block.x and x + radius < block.x + block.width and y + top_bottom * radius > block.y and y + top_bottom * radius < block.y + block.height:
                     return True
 
-    def nearest_block_coordinates(self, x, x_max=500):
+    def nearest_block_coordinates(self, x: int, x_max: int = 500) -> list:
+        """
+        Check from given x coordinate which block pair ist the nearest.
+
+        Args:
+            self (undefined):
+            x (int): The x coordinate to check.
+            x_max=500 (int): The maximum x value of the window. So basically the window x size.
+
+        Returns:
+            list. A List of the cornder coordinates from the hole between the block pairs.
+
+        """
 
         nearest_block = 0
         x_before = x_max
@@ -117,7 +133,8 @@ class blocks():
             for block in block_pair:
 
                 if block.x - x + block.width > 0 and block.x - x + block.width <= x_before:
-                    nearest_block = block_count
+                    nearest_block = block_count  # Notice the list position of the nearest block
+                    # Change the block color of the nearest block to check.
                     block.color = (200, 0, 0)
                     x_before = block.x - x + block.width
                 else:
@@ -125,27 +142,29 @@ class blocks():
 
         block_pair = self.blocks[nearest_block]
 
-        shapes.Circle(x=block_pair[0].x, y=block_pair[0].y +
-                      block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
-        shapes.Circle(x=block_pair[0].x + block_pair[0].width, y=block_pair[0].y +
-                      block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
+        # Draw the corners as little circles
 
-        shapes.Circle(x=block_pair[1].x + block_pair[1].width,
-                      y=block_pair[1].y, radius=5, color=(100, 0, 0)).draw()
-        shapes.Circle(x=block_pair[1].x, y=block_pair[1].y,
-                      radius=5, color=(100, 0, 0)).draw()
+        # shapes.Circle(x=block_pair[0].x, y=block_pair[0].y +
+        #               block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
+        # shapes.Circle(x=block_pair[0].x + block_pair[0].width, y=block_pair[0].y +
+        #               block_pair[0].height, radius=5, color=(100, 0, 0)).draw()
+
+        # shapes.Circle(x=block_pair[1].x + block_pair[1].width,
+        #               y=block_pair[1].y, radius=5, color=(100, 0, 0)).draw()
+        # shapes.Circle(x=block_pair[1].x, y=block_pair[1].y,
+        #               radius=5, color=(100, 0, 0)).draw()
 
         corner_array = [block_pair[0].x, block_pair[0].y + block_pair[0].height,
                         block_pair[0].x + block_pair[0].width, block_pair[0].y +
                         block_pair[0].height,
                         block_pair[1].x + block_pair[1].width, block_pair[1].y,
                         block_pair[1].x, block_pair[1].y]
-        
+
         return corner_array
 
     def draw(self):
         """
-        Description of draw
+        Draw all blocks pairs.
 
         Args:
             self (undefined):
