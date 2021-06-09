@@ -7,7 +7,6 @@ class bird(shapes.Circle):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
         Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
-        TODO: Use a picture of the bird not just a circle.
 
         Args:
             self (undefined):
@@ -20,6 +19,8 @@ class bird(shapes.Circle):
 
         Returns:
             None
+
+        TODO: Use a picture of the bird not just a circle.
 
         """
 
