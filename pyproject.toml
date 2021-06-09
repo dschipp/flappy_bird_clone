@@ -6,8 +6,8 @@ authors = ["David Schippers <david.schip@posteo.de>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+mushroom-rl = "^1.7.0"
 pyglet = "^1.5.17"
-numpy = "^1.20.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
