@@ -142,6 +142,6 @@ class app(pyglet.window.Window):
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
                 self.started = True
-            self.bird.move_up(self.get_size()[0])
+            self.bird.move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
