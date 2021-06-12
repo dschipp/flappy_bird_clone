@@ -6,16 +6,16 @@ from button import button
 Y_TILING = 10
 X_TILING = 16
 BLOCK_WIDTH = 1.5
-HOLE = 1.5
+HOLE = 1.7
 BLOCK_COUNT = 10
 BLOCK_DIST = 4
-SPEED = 1/250
-BLOCK_SPEED = 0.04
+SPEED = 1/200
+BLOCK_SPEED = 0.06
 BIRDSIZE = 15
-JUMP_HIGHT = 9
-GRAVITY = 0.25
+JUMP_HIGHT = 2
+GRAVITY = 0.23
 
-BIRD_COUNT = 70
+BIRD_COUNT = 40
 
 
 class app(pyglet.window.Window):
