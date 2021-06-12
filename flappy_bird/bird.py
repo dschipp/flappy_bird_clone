@@ -119,6 +119,10 @@ class flappy_bird(shapes.Circle):
             If the bird should jump or not as a boolean.
 
         """
+        
+        # Check if the bird is dead
+        if self.dead:
+            return
 
         decision = self.NN.calc_outputs(distances)
 
