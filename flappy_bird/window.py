@@ -93,40 +93,46 @@ class app(pyglet.window.Window):
             if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8):
                 bird.die()
 
-        # Calculate the nearest blocks and normalize them
+        # Get the max x and y values for normalisation
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
-        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
-
-        stop_game = True
+        stop_game = True  # Variable to check if the game should be stopped because all birds are dead
 
         for bird in self.birds:
-
+            
+            # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
             block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
 
-            if block_coordinates[2] - bird.x < 0:
+            if block_coordinates[2] - bird.x < 0: # Check if a bird passed a pipe
                 bird.add_score()
 
+            # Calculate the distances to the nearest pipe
             dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
             dist_bot_block = abs(bird.y - block_coordinates[1]) / y_max
             dist_block = abs(bird.x - block_coordinates[0]) / x_max
 
+            # Ask the bird what he wants to do
             bird.decide_NN([dist_top_block, dist_bot_block, dist_block])
 
+            # Check if all birds are dead. If one bird is alive the game is not stopped
             if not bird.dead:
                 stop_game = False
 
+        # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
         if stop_game:
-            self.restart()
-
+            # Check the score
             i = 0
             for bird in self.birds:
                 i += bird.score
 
+            # If the score is 0, create a new population
             if i == 0:
                 self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+            
+            # Restart the game
+            self.restart()
 
     def on_draw(self):
         """
@@ -161,14 +167,13 @@ class app(pyglet.window.Window):
 
     def restart(self):
         """
-        (WIP) Restart the whole game.
+        Restart the whole game.
 
         Args:
             self (undefined):
 
-        TODO: Implement a working function.
-
         """
+        # First pause the game. FIXME: If the game is already stopped, this could lead to errors in the future.
         self.pause()
 
         self.set_variables()
@@ -177,7 +182,8 @@ class app(pyglet.window.Window):
                              Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
 
         self.started = False
-
+        
+        # Revive all birds
         for bird in self.birds:
             bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
 
