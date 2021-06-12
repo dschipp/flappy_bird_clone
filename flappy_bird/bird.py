@@ -74,10 +74,10 @@ class flappy_bird(shapes.Circle):
             self.y = height - self.radius * 7
             self.velocity = 0
 
-        if self.y <= self.radius :
+        if self.y <= self.radius:
             self.y = self.radius
             self.velocity = 0
-    
+
     def die(self):
         """
         Let the bird die => He cant jump anymore.
@@ -93,11 +93,21 @@ class flappy_bird(shapes.Circle):
         pass
 
     def revive(self, jump_height: int, y_pos: int):
+        """
+        Let the bird revive.
+
+        Args:
+            self (undefined):
+            jump_height (int): The jump height of the bird.
+            y_pos (int): The starting x pos.
+
+        """
+
         self.jump_height = jump_height
         self.dead = False
         self.y = y_pos
 
-    def decide_NN(self, distances: list, max_x : int = 1) -> bool:
+    def decide_NN(self, distances: list, max_x: int = 1) -> bool:
         """
         A function to determine what the Neural Net of the bird should do. Jump of no Jump.
 
@@ -113,6 +123,6 @@ class flappy_bird(shapes.Circle):
         decision = self.NN.calc_outputs(distances)
 
         # print(decision)
-        
+
         if decision[0] > 0.5:
             self.move_up()
