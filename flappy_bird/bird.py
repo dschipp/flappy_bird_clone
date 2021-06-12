@@ -31,7 +31,9 @@ class bird(shapes.Circle):
         self.velocity = 0
         self.jump_height = jump_height
 
-        self.NN = Neural_Net(9, 1)  # Crate a Neural Network for this bird.
+        self.dead = False
+
+        self.NN = Neural_Net(3, 1)  # Crate a Neural Network for this bird.
 
     def move_up(self):
         """
@@ -61,25 +63,30 @@ class bird(shapes.Circle):
             self.y = height - self.radius * 7
             self.velocity = 0
 
-        if self.y <= self.radius / 2:
-            self.y = self.radius / 2
+        if self.y <= self.radius :
+            self.y = self.radius
             self.velocity = 0
+    
+    def die(self):
+        self.jump_height = 0
+        self.dead = True
 
-    def decide_NN(self, corner_positions: list, max_x : int = 1) -> bool:
+    def decide_NN(self, distances: list, max_x : int = 1) -> bool:
         """
         A function to determine what the Neural Net of the bird should do. Jump of no Jump.
 
         Args:
             self (undefined):
-            corner_positions (undefined): The corner positions of the next Block pair.
+            distances (undefined): Distances / inputs for the NN
 
         Returns:
             If the bird should jump or not as a boolean.
 
         """
 
-        corner_positions.append(self.x / max_x)
+        decision = self.NN.calc_outputs(distances)
 
-        decision = self.NN.calc_outputs(corner_positions)
-
-        print(decision)
+        # print(decision)
+        
+        if decision[0] > 0.5:
+            self.move_up()

@@ -115,6 +115,7 @@ class blocks():
     def nearest_block_coordinates(self, x: int, x_max: int = 500) -> list:
         """
         Check from given x coordinate which block pair ist the nearest.
+        [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
 
         Args:
             self (undefined):

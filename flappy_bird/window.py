@@ -15,6 +15,8 @@ BIRDSIZE = 15
 JUMP_HIGHT = 9
 GRAVITY = 0.25
 
+BIRD_COUNT = 50
+
 
 class app(pyglet.window.Window):
 
@@ -56,8 +58,10 @@ class app(pyglet.window.Window):
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
                              Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
 
-        self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
-                         radius=BIRDSIZE)
+        # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
+        #                  radius=BIRDSIZE)
+
+        self.birds = [bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
 
         self.started = False
 
@@ -73,33 +77,45 @@ class app(pyglet.window.Window):
             self (undefined):
             timer (undefined): The timer of the app.
 
-        TODO: Let the NN of the bird decide if it wants to jump or not.
-
         """
         self.clear()
 
         self.blocks.update(BLOCK_SPEED)
 
-        self.bird.update(self.get_size()[0])
+        # self.bird.update(self.get_size()[0])
+
+        for bird in self.birds:
+            bird.update(self.get_size()[0])
 
         # Multiply with a factor so it feels better
-        if self.blocks.check_collision(self.bird.x, self.bird.y, self.bird.radius * 0.8):
-            self.pause()
+        for bird in self.birds:
+            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8):
+                bird.die()
 
         # Calculate the nearest blocks and normalize them
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
-        block_coordinates_normalized = self.blocks.nearest_block_coordinates(self.bird.x)
-        block_coordinates_normalized[0] = block_coordinates_normalized[0] / x_max
-        block_coordinates_normalized[1] = block_coordinates_normalized[1] / y_max
-        block_coordinates_normalized[2] = block_coordinates_normalized[2] / x_max
-        block_coordinates_normalized[3] = block_coordinates_normalized[3] / y_max
-        block_coordinates_normalized[4] = block_coordinates_normalized[4] / x_max
-        block_coordinates_normalized[5] = block_coordinates_normalized[5] / y_max
-        block_coordinates_normalized[6] = block_coordinates_normalized[6] / x_max
-        block_coordinates_normalized[7] = block_coordinates_normalized[7] / y_max
 
-        self.bird.decide_NN(block_coordinates_normalized, x_max) # TODO: Use the distance and the to the bottom and upper hole and the distance to the pipe
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
+
+        stop_game = True
+
+        for bird in self.birds:
+
+            block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
+
+            dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
+            dist_bot_block = abs(bird.y - block_coordinates[1]) / y_max
+            dist_block = abs(bird.x - block_coordinates[0]) / x_max
+
+            bird.decide_NN([dist_top_block, dist_bot_block, dist_block])
+
+            if not bird.dead:
+                stop_game = False
+
+        if stop_game:
+            self.pause()
+
 
     def on_draw(self):
         """
@@ -114,7 +130,10 @@ class app(pyglet.window.Window):
         self.clear()
 
         self.blocks.draw()
-        self.bird.draw()
+        # self.bird.draw()
+
+        for bird in self.birds:
+            bird.draw()
 
     def pause(self):
         """
@@ -155,6 +174,6 @@ class app(pyglet.window.Window):
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
                 self.started = True
-            self.bird.move_up()
+            # self.bird.move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
