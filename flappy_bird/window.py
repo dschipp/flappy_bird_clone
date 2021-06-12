@@ -86,7 +86,20 @@ class app(pyglet.window.Window):
         if self.blocks.check_collision(self.bird.x, self.bird.y, self.bird.radius * 0.8):
             self.pause()
 
-        # self.bird.decide_NN(self.blocks.nearest_block_coordinates(self.bird.x)) # TODO: Use the distance and the to the bottom and upper hole and the distance to the pipe
+        # Calculate the nearest blocks and normalize them
+        x_max = self.get_size()[1]
+        y_max = self.get_size()[0]
+        block_coordinates_normalized = self.blocks.nearest_block_coordinates(self.bird.x)
+        block_coordinates_normalized[0] = block_coordinates_normalized[0] / x_max
+        block_coordinates_normalized[1] = block_coordinates_normalized[1] / y_max
+        block_coordinates_normalized[2] = block_coordinates_normalized[2] / x_max
+        block_coordinates_normalized[3] = block_coordinates_normalized[3] / y_max
+        block_coordinates_normalized[4] = block_coordinates_normalized[4] / x_max
+        block_coordinates_normalized[5] = block_coordinates_normalized[5] / y_max
+        block_coordinates_normalized[6] = block_coordinates_normalized[6] / x_max
+        block_coordinates_normalized[7] = block_coordinates_normalized[7] / y_max
+
+        self.bird.decide_NN(block_coordinates_normalized, x_max) # TODO: Use the distance and the to the bottom and upper hole and the distance to the pipe
 
     def on_draw(self):
         """
