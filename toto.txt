@@ -1,3 +1,1 @@
-TODO: Score system
-TODO: Evolution of the birds
-TODO: COmment more
+TODO: Evolution of the birds / Learning System
