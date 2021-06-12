@@ -1,3 +1,3 @@
-TODO: Restart Button / Function
 TODO: Score system
 TODO: Evolution of the birds
+TODO: COmment more

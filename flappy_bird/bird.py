@@ -3,7 +3,7 @@ from pyglet import shapes
 from NN import Neural_Net
 
 
-class bird(shapes.Circle):
+class flappy_bird(shapes.Circle):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
         Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
@@ -25,13 +25,14 @@ class bird(shapes.Circle):
         """
 
         # Initialise the upper function.
-        super(bird, self).__init__(x=x, y=y, radius=radius, color=color)
+        super(flappy_bird, self).__init__(x=x, y=y, radius=radius, color=color)
 
         self.gravity = -gravity
         self.velocity = 0
         self.jump_height = jump_height
 
         self.dead = False
+        self.score = 0
 
         self.NN = Neural_Net(3, 1)  # Crate a Neural Network for this bird.
 
@@ -44,6 +45,16 @@ class bird(shapes.Circle):
 
         """
         self.velocity += self.jump_height
+
+    def add_score(self):
+        """
+        Add one to the bird score
+
+        Args:
+            self (undefined):
+
+        """
+        self.score += 1
 
     def update(self, height: int):
         """
@@ -68,8 +79,23 @@ class bird(shapes.Circle):
             self.velocity = 0
     
     def die(self):
+        """
+        Let the bird die => He cant jump anymore.
+
+        Args:
+            self (undefined):
+
+        """
         self.jump_height = 0
         self.dead = True
+
+    def learn_from_other_bird(self):
+        pass
+
+    def revive(self, jump_height: int, y_pos: int):
+        self.jump_height = jump_height
+        self.dead = False
+        self.y = y_pos
 
     def decide_NN(self, distances: list, max_x : int = 1) -> bool:
         """

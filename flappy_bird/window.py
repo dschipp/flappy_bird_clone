@@ -1,5 +1,5 @@
 import pyglet
-from bird import bird
+from bird import flappy_bird
 from blocks import blocks
 from button import button
 
@@ -9,13 +9,13 @@ BLOCK_WIDTH = 1.5
 HOLE = 1.5
 BLOCK_COUNT = 10
 BLOCK_DIST = 4
-SPEED = 1/200
+SPEED = 1/250
 BLOCK_SPEED = 0.04
 BIRDSIZE = 15
 JUMP_HIGHT = 9
 GRAVITY = 0.25
 
-BIRD_COUNT = 50
+BIRD_COUNT = 70
 
 
 class app(pyglet.window.Window):
@@ -40,11 +40,13 @@ class app(pyglet.window.Window):
 
         pyglet.gl.glClearColor(255, 255, 255, 1.0)
 
+        self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+
     def set_variables(self):
         """
         Set all the variables:
         - Crate all blocks
-        - Create a / all birds
+        - (Currently not) Create a / all birds
         - Set the starting point of the blocks
         - (WIP) Create a restart buttom, if the game ends
         - A variable if the game has already started
@@ -60,8 +62,6 @@ class app(pyglet.window.Window):
 
         # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
         #                  radius=BIRDSIZE)
-
-        self.birds = [bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
 
         self.started = False
 
@@ -104,6 +104,9 @@ class app(pyglet.window.Window):
 
             block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
 
+            if block_coordinates[2] - bird.x < 0:
+                bird.add_score()
+
             dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
             dist_bot_block = abs(bird.y - block_coordinates[1]) / y_max
             dist_block = abs(bird.x - block_coordinates[0]) / x_max
@@ -114,7 +117,14 @@ class app(pyglet.window.Window):
                 stop_game = False
 
         if stop_game:
-            self.pause()
+            self.restart()
+
+            i = 0
+            for bird in self.birds:
+                i += bird.score
+
+            if i == 0:
+                self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
 
 
     def on_draw(self):
@@ -158,7 +168,19 @@ class app(pyglet.window.Window):
         TODO: Implement a working function.
 
         """
+        self.pause()
+
         self.set_variables()
+
+        self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
+                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+
+        self.started = False
+
+        for bird in self.birds:
+            bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
+
+        pyglet.clock.schedule_interval(self.update_app, SPEED)
 
     def on_key_press(self, symbol, modifiers):
         """
