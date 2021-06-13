@@ -25,13 +25,14 @@ matrices slidely to train.
 """
 
 import numpy as np
+import random
 
 HIDDEN_NEURON_COUNT_1 = 5
 HIDDEN_NEURON_COUNT_2 = 5
 
 
 class Neural_Net:
-    def __init__(self, input_count, output_count):
+    def __init__(self, input_count, output_count, learning_rate: int = 1):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -39,9 +40,11 @@ class Neural_Net:
             self (undefined):
             input_count (undefined): The number of inputs.
             output_count (undefined): The number of outputs.
+            learning_rate (int = 1): The learning rate of the NN, when adapting.
 
         """
-    
+
+        self.learning_rate = learning_rate
         self.output_count = output_count
 
         self.hidden_layer_1 = np.random.rand(
@@ -77,3 +80,22 @@ class Neural_Net:
         output = np.matmul(output, self.output_layer) / normalisation
 
         return output.tolist()[0]
+
+    def adapting(self, NN_to_adapt):
+        """
+        Adapt the hidden layers from another bird, but slightly different.
+
+        Args:
+            self (undefined):
+            NN_to_adapt (Neural_Net): The Neural Net to adapt to.
+
+        """
+
+        adapt_rate = random.randint(1, 100) / 100
+        self.hidden_layer_1 = NN_to_adapt.hidden_layer_1 * adapt_rate * self.learning_rate
+
+        adapt_rate = random.randint(1, 100) / 100
+        self.hidden_layer_2 = NN_to_adapt.hidden_layer_1 * adapt_rate * self.learning_rate
+
+        adapt_rate = random.randint(1, 100) / 100
+        self.output_layer = NN_to_adapt.output_layer * adapt_rate * self.learning_rate

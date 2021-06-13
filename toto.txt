@@ -1,1 +1,3 @@
 TODO: Evolution of the birds / Learning System
+TODO: Draw a bird
+TODO: Draw pipes

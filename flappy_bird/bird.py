@@ -89,9 +89,9 @@ class flappy_bird(shapes.Circle):
         self.jump_height = 0
         self.dead = True
 
-    def learn_from_other_bird(self):
+    def learn_from_other_bird(self, learn_bird):
         # TODO: Implement a learning function for the bird and the Neuronal Net
-        pass
+        self.NN.adapting(learn_bird.NN)
 
     def revive(self, jump_height: int, y_pos: int):
         """

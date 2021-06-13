@@ -104,8 +104,9 @@ class app(pyglet.window.Window):
             # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
             block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
 
-            if block_coordinates[2] - bird.x < 0: # Check if a bird passed a pipe
+            if block_coordinates[0] - bird.x < 0: # Check if a bird passed a pipe
                 bird.add_score()
+                print("Got through one!")
 
             # Calculate the distances to the nearest pipe
             dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
@@ -122,17 +123,48 @@ class app(pyglet.window.Window):
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
         if stop_game:
             # Check the score
-            i = 0
-            for bird in self.birds:
-                i += bird.score
+            best_bird = self.check_best_bird()
 
             # If the score is 0, create a new population
-            if i == 0:
+            if best_bird == -1:
                 self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+            else:
+                print("Birds are learning...")
+                for bird in self.birds:
+                    bird.learn_from_other_bird(self.birds[best_bird])
             
             # Restart the game
             self.restart()
+
+    def check_best_bird(self) -> int:
+        """
+        Check for the best bird.
+
+        Args:
+            self (undefined):
+
+        Returns:
+            int: The position of the best bird or -1 if all birds failed.
+
+        """
+        
+        max_score = 0
+        best_bird = 0
+
+        print("Starting to check for the best score.")
+
+        for num, bird in enumerate(self.birds):
+            if bird.score > max_score:
+                max_score = bird.score
+                best_bird = num
+                print(bird.score)
+
+        if max_score == 0:
+            return -1
+
+        print(best_bird)
+        return best_bird
 
     def on_draw(self):
         """
