@@ -34,6 +34,8 @@ class flappy_bird(shapes.Circle):
         self.dead = False
         self.score = 0
 
+        self.nearest_block = 0
+
         self.NN = Neural_Net(3, 1)  # Crate a Neural Network for this bird.
 
     def move_up(self):
@@ -88,6 +90,7 @@ class flappy_bird(shapes.Circle):
         """
         self.jump_height = 0
         self.dead = True
+        self.nearest_block = 0
 
     def learn_from_other_bird(self, learn_bird):
         # TODO: Implement a learning function for the bird and the Neuronal Net
@@ -107,6 +110,7 @@ class flappy_bird(shapes.Circle):
         self.jump_height = jump_height
         self.dead = False
         self.y = y_pos
+        self.score = 0
 
     def decide_NN(self, distances: list, max_x: int = 1) -> bool:
         """

@@ -12,8 +12,8 @@ BLOCK_DIST = 4
 SPEED = 1/200
 BLOCK_SPEED = 0.06
 BIRDSIZE = 15
-JUMP_HIGHT = 2
-GRAVITY = 0.23
+JUMP_HIGHT = 5
+GRAVITY = 0.2
 
 BIRD_COUNT = 40
 
@@ -87,10 +87,10 @@ class app(pyglet.window.Window):
 
         for bird in self.birds:
             bird.update(self.get_size()[0])
-
-        # Multiply with a factor so it feels better
+        
+        # Check for collision
         for bird in self.birds:
-            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8):
+            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
                 bird.die()
 
         # Get the max x and y values for normalisation
@@ -101,12 +101,13 @@ class app(pyglet.window.Window):
 
         for bird in self.birds:
             
-            # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left]
+            # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
             block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
 
-            if block_coordinates[0] - bird.x < 0: # Check if a bird passed a pipe
+            if bird.nearest_block != block_coordinates[8]: # Check if a bird passed a pipe
                 bird.add_score()
                 print("Got through one!")
+                bird.nearest_block = block_coordinates[8]
 
             # Calculate the distances to the nearest pipe
             dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
@@ -158,12 +159,12 @@ class app(pyglet.window.Window):
             if bird.score > max_score:
                 max_score = bird.score
                 best_bird = num
-                print(bird.score)
+                print("The score of the best bird was: " + str(bird.score))
 
         if max_score == 0:
             return -1
 
-        print(best_bird)
+        print("The best bird was number: " + str(best_bird))
         return best_bird
 
     def on_draw(self):
@@ -235,6 +236,6 @@ class app(pyglet.window.Window):
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
                 self.started = True
-            # self.bird.move_up()
+            # self.birds[0].move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()

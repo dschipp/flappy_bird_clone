@@ -159,7 +159,7 @@ class blocks():
                         block_pair[0].x + block_pair[0].width, block_pair[0].y +
                         block_pair[0].height,
                         block_pair[1].x + block_pair[1].width, block_pair[1].y,
-                        block_pair[1].x, block_pair[1].y]
+                        block_pair[1].x, block_pair[1].y, nearest_block]
 
         return corner_array
 
