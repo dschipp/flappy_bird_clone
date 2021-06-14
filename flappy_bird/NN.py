@@ -34,7 +34,7 @@ HIDDEN_NEURON_COUNT_2 = 5
 
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, learning_rate: int = 0.1):
+    def __init__(self, input_count, output_count, learning_rate: int = 0.01):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -48,6 +48,7 @@ class Neural_Net:
 
         self.learning_rate = learning_rate
         self.output_count = output_count
+        self.input_count = input_count
 
         self.hidden_layer_1 = np.random.rand(
             input_count, HIDDEN_NEURON_COUNT_1)
@@ -93,12 +94,11 @@ class Neural_Net:
 
         """
 
-        adapt_rate = random.randint(-100, 100) / 1000
-
+        adapt_rate = np.random.rand(self.input_count, HIDDEN_NEURON_COUNT_1) * random.randint(-1,1)
         self.hidden_layer_1 = NN_to_adapt.hidden_layer_1 + adapt_rate * self.learning_rate
 
-        adapt_rate = random.randint(-100, 100) / 1000
+        adapt_rate = np.random.rand(HIDDEN_NEURON_COUNT_2, HIDDEN_NEURON_COUNT_1) * random.randint(-1,1)
         self.hidden_layer_2 = NN_to_adapt.hidden_layer_2 + adapt_rate * self.learning_rate
 
-        adapt_rate = random.randint(-100, 100) / 1000
+        adapt_rate = np.random.rand(self.output_count, HIDDEN_NEURON_COUNT_2).reshape(HIDDEN_NEURON_COUNT_2, self.output_count) * random.randint(-1,1)
         self.output_layer = NN_to_adapt.output_layer + adapt_rate * self.learning_rate
