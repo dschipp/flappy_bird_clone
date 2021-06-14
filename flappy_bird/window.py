@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 200
+BIRD_COUNT = 1000
 
 
 class app(pyglet.window.Window):
@@ -110,12 +110,13 @@ class app(pyglet.window.Window):
                 bird.nearest_block = block_coordinates[8]
 
             # Calculate the distances to the nearest pipe
-            dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
-            dist_bot_block = abs(bird.y - block_coordinates[1]) / y_max
-            dist_block = abs(bird.x - block_coordinates[0]) / x_max
+            y_top = block_coordinates[7] / y_max
+            y_bot = block_coordinates[1] / y_max
+            dist_block = abs(bird.x - block_coordinates[2]) / x_max
+            y_bird = bird.y / y_max
 
             # Ask the bird what he wants to do
-            bird.decide_NN([dist_top_block, dist_bot_block, dist_block])
+            bird.decide_NN([y_top, y_bot, dist_block, y_bird])
 
             # Check if all birds are dead. If one bird is alive the game is not stopped
             if not bird.dead:
@@ -136,6 +137,9 @@ class app(pyglet.window.Window):
                 for num, bird in enumerate(self.birds):
                     if num != best_bird:
                         bird.learn_from_other_bird(self.birds[best_bird])
+                        bird.best_bird = False
+                    else:
+                        bird.best_bird = True
             
             # Restart the game
             self.restart()
@@ -183,7 +187,8 @@ class app(pyglet.window.Window):
         # self.bird.draw()
 
         for bird in self.birds:
-            bird.draw()
+            if bird.best_bird:
+                bird.draw()
 
     def pause(self):
         """
