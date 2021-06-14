@@ -34,7 +34,6 @@ class flappy_bird(shapes.Circle):
         self.dead = False
         self.score = 0
 
-        self.best_bird = False
         self.nearest_block = 0 # Safe the number of the nearest block to check the score
 
         self.NN = Neural_Net(4, 1)  # Crate a Neural Network for this bird.

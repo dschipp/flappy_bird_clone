@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 1000
+BIRD_COUNT = 100
 
 
 class app(pyglet.window.Window):
@@ -83,26 +83,22 @@ class app(pyglet.window.Window):
 
         self.blocks.update(BLOCK_SPEED)
 
-        # self.bird.update(self.get_size()[0])
-
-        for bird in self.birds:
-            bird.update(self.get_size()[0])
-        
-        # Check for collision
-        for bird in self.birds:
-            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
-                bird.die()
-
         # Get the max x and y values for normalisation
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
         stop_game = True  # Variable to check if the game should be stopped because all birds are dead
 
-         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
 
         for bird in self.birds:
+
+            bird.update(self.get_size()[0])
+            
+            # Check for collision
+            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
+                bird.die()
 
             if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
                 bird.add_score()
@@ -167,8 +163,8 @@ class app(pyglet.window.Window):
         if max_score == 0:
             return -1
 
-        print("The score of the best bird was: " + str(max_score))
-        print("The best bird was number: " + str(best_bird))
+        # print("The score of the best bird was: " + str(max_score))
+        # print("The best bird was number: " + str(best_bird))
         return best_bird
 
     def on_draw(self):
@@ -186,9 +182,7 @@ class app(pyglet.window.Window):
         self.blocks.draw()
         # self.bird.draw()
 
-        for bird in self.birds:
-            if bird.best_bird:
-                bird.draw()
+        self.birds[self.check_best_bird()].draw()
 
     def pause(self):
         """
