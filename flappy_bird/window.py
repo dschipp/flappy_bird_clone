@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 100
+BIRD_COUNT = 1000
 
 
 class app(pyglet.window.Window):
