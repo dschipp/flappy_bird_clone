@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 40
+BIRD_COUNT = 2
 
 
 class app(pyglet.window.Window):
@@ -99,12 +99,12 @@ class app(pyglet.window.Window):
 
         stop_game = True  # Variable to check if the game should be stopped because all birds are dead
 
-        for bird in self.birds:
-            
-            # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-            block_coordinates = self.blocks.nearest_block_coordinates(bird.x)
+         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
 
-            if bird.nearest_block != block_coordinates[8]: # Check if a bird passed a pipe
+        for bird in self.birds:
+
+            if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
                 bird.add_score()
                 print("Got through one!")
                 bird.nearest_block = block_coordinates[8]
@@ -236,6 +236,6 @@ class app(pyglet.window.Window):
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
                 self.started = True
-            # self.birds[0].move_up()
+            #self.birds[1].move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()

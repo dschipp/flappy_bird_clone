@@ -22,6 +22,8 @@ So we need 3 matrices that have the size of:
 These matrices are getting multiplied and in a separate function you can change the values of the hidden layer 
 matrices slidely to train.
 
+To learn the NN gets another NN as input and then adapts the hidden layers of that NN slightly different.
+
 """
 
 import numpy as np
