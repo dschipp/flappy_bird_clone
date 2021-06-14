@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 40
+BIRD_COUNT = 200
 
 
 class app(pyglet.window.Window):
@@ -128,12 +128,14 @@ class app(pyglet.window.Window):
 
             # If the score is 0, create a new population
             if best_bird == -1:
+                print("No one made it :(")
                 self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
             else:
                 print("Birds are learning...")
-                for bird in self.birds:
-                    bird.learn_from_other_bird(self.birds[best_bird])
+                for num, bird in enumerate(self.birds):
+                    if num != best_bird:
+                        bird.learn_from_other_bird(self.birds[best_bird])
             
             # Restart the game
             self.restart()
@@ -157,11 +159,11 @@ class app(pyglet.window.Window):
             if bird.score > max_score:
                 max_score = bird.score
                 best_bird = num
-                print("The score of the best bird was: " + str(bird.score))
 
         if max_score == 0:
             return -1
 
+        print("The score of the best bird was: " + str(max_score))
         print("The best bird was number: " + str(best_bird))
         return best_bird
 
@@ -218,7 +220,7 @@ class app(pyglet.window.Window):
         for bird in self.birds:
             bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
 
-        print("Restarting with a new generation.")
+        print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, SPEED)
 
     def on_key_press(self, symbol, modifiers):
