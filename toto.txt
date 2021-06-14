@@ -1,3 +1,4 @@
 TODO: Evolution of the birds / Learning System
 TODO: Draw a bird
 TODO: Draw pipes
+TODO: Change the height of pipes after they are out of the window
