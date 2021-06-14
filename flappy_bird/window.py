@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 2
+BIRD_COUNT = 40
 
 
 class app(pyglet.window.Window):
@@ -106,7 +106,7 @@ class app(pyglet.window.Window):
 
             if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
                 bird.add_score()
-                print("Got through one!")
+                # print("Got through one!")
                 bird.nearest_block = block_coordinates[8]
 
             # Calculate the distances to the nearest pipe
@@ -152,8 +152,6 @@ class app(pyglet.window.Window):
         
         max_score = 0
         best_bird = 0
-
-        print("Starting to check for the best score.")
 
         for num, bird in enumerate(self.birds):
             if bird.score > max_score:
@@ -220,6 +218,7 @@ class app(pyglet.window.Window):
         for bird in self.birds:
             bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
 
+        print("Restarting with a new generation.")
         pyglet.clock.schedule_interval(self.update_app, SPEED)
 
     def on_key_press(self, symbol, modifiers):
