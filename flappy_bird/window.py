@@ -7,7 +7,7 @@ Y_TILING = 10
 X_TILING = 16
 BLOCK_WIDTH = 1.5
 HOLE = 2
-BLOCK_COUNT = 10
+BLOCK_COUNT = 4
 BLOCK_DIST = 6
 SPEED = 1/200
 BLOCK_SPEED = 0.06
@@ -15,7 +15,7 @@ BIRDSIZE = 15
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 1000
+BIRD_COUNT = 100
 
 
 class app(pyglet.window.Window):
@@ -163,8 +163,8 @@ class app(pyglet.window.Window):
         if max_score == 0:
             return -1
 
-        # print("The score of the best bird was: " + str(max_score))
-        # print("The best bird was number: " + str(best_bird))
+        print("The score of the best bird was: " + str(max_score))
+        print("The best bird was number: " + str(best_bird))
         return best_bird
 
     def on_draw(self):
@@ -180,9 +180,11 @@ class app(pyglet.window.Window):
         self.clear()
 
         self.blocks.draw()
-        # self.bird.draw()
+        
+        for bird in self.birds:
+            bird.draw()
 
-        self.birds[self.check_best_bird()].draw()
+        # self.birds[self.check_best_bird()].draw()
 
     def pause(self):
         """
