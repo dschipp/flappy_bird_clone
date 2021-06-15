@@ -91,6 +91,7 @@ class app(pyglet.window.Window):
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+        self.blocks.change_color(block_coordinates[8])
 
         for bird in self.birds:
 
@@ -139,6 +140,9 @@ class app(pyglet.window.Window):
             
             # Restart the game
             self.restart()
+
+    def bird_decisions(self):
+        pass
 
     def check_best_bird(self) -> int:
         """
