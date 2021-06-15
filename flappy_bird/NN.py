@@ -34,7 +34,7 @@ HIDDEN_NEURON_COUNT_2 = 5
 
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, learning_rate: int = 0.01):
+    def __init__(self, input_count, output_count, learning_rate: int = 0.001):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -59,8 +59,11 @@ class Neural_Net:
             HIDDEN_NEURON_COUNT_2, output_count)
         """
 
-        self.output_layer = np.random.rand(output_count, input_count).reshape(
-            input_count, output_count)
+        self.hidden_layer_1 = np.random.rand(
+            input_count, HIDDEN_NEURON_COUNT_1)
+
+        self.output_layer = np.random.rand(output_count, HIDDEN_NEURON_COUNT_1).reshape(
+            HIDDEN_NEURON_COUNT_1, output_count)
 
     def calc_outputs(self, inputs: list) -> list:
         """
@@ -74,9 +77,6 @@ class Neural_Net:
             list
 
         """
-
-        normalisation = sum(inputs)
-        inputs = np.array(inputs).reshape(1, len(inputs))
     
         """ normalisation = sum(inputs)
 
@@ -88,7 +88,12 @@ class Neural_Net:
         normalisation = sum(output.reshape(HIDDEN_NEURON_COUNT_2, 1))
         output = np.matmul(output, self.output_layer) / normalisation """
 
-        output = np.matmul(inputs, self.output_layer) / normalisation
+        normalisation = sum(inputs)
+        inputs = np.array(inputs).reshape(1, len(inputs))
+
+        output = np.matmul(inputs, self.hidden_layer_1) / normalisation
+        normalisation = sum(output.reshape(HIDDEN_NEURON_COUNT_1, 1))
+        output = np.matmul(output, self.output_layer) / normalisation
 
         return output.tolist()[0]
 
@@ -111,5 +116,8 @@ class Neural_Net:
         adapt_rate = np.random.rand(self.output_count, HIDDEN_NEURON_COUNT_2).reshape(HIDDEN_NEURON_COUNT_2, self.output_count) * random.randint(-1,1)
         self.output_layer = NN_to_adapt.output_layer + adapt_rate * self.learning_rate """
 
-        adapt_rate = np.random.rand(self.output_count, self.input_count).reshape(self.input_count, self.output_count) * random.randint(-1,1)
+        adapt_rate = np.random.rand(self.input_count, HIDDEN_NEURON_COUNT_1) * random.randint(-1,1)
+        self.hidden_layer_1 = NN_to_adapt.hidden_layer_1 + adapt_rate * self.learning_rate
+
+        adapt_rate = np.random.rand(self.output_count, HIDDEN_NEURON_COUNT_1).reshape(HIDDEN_NEURON_COUNT_1, self.output_count) * random.randint(-1,1)
         self.output_layer = NN_to_adapt.output_layer + adapt_rate * self.learning_rate
