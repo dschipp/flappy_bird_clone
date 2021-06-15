@@ -1,4 +1,4 @@
 TODO: Evolution of the birds / Learning System
 TODO: Draw a bird
 TODO: Draw pipes
-TODO: Change the height of pipes after they are out of the window
+TODO: Maybe move the decision of the birds in a different function and scedule this task not as often as you update the whole window
