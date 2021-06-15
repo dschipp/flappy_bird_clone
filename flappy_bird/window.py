@@ -134,7 +134,15 @@ class app(pyglet.window.Window):
             self.restart()
 
     def bird_decisions(self, timer):
+        """
+        A explicit function to let the birds decide an and don't do that in every step of the update.
 
+        Args:
+            self (undefined):
+            timer (undefined):
+
+        """
+    
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
