@@ -75,6 +75,7 @@ class Neural_Net:
 
         """
 
+        normalisation = sum(inputs)
         inputs = np.array(inputs).reshape(1, len(inputs))
     
         """ normalisation = sum(inputs)
@@ -87,7 +88,6 @@ class Neural_Net:
         normalisation = sum(output.reshape(HIDDEN_NEURON_COUNT_2, 1))
         output = np.matmul(output, self.output_layer) / normalisation """
 
-        normalisation = sum(inputs.reshape(self.input_count, 1))
         output = np.matmul(inputs, self.output_layer) / normalisation
 
         return output.tolist()[0]
