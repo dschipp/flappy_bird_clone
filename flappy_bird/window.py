@@ -16,7 +16,7 @@ JUMP_HIGHT = 5
 GRAVITY = 0.2
 
 NN_DECISION_SPEED = 0.1
-BIRD_COUNT = 200
+BIRD_COUNT = 100
 
 
 class app(pyglet.window.Window):
@@ -151,6 +151,7 @@ class app(pyglet.window.Window):
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
         self.blocks.change_color(block_coordinates[8])
 
@@ -161,9 +162,10 @@ class app(pyglet.window.Window):
                 y_bot = block_coordinates[1] / y_max
                 dist_block = abs(bird.x - block_coordinates[2]) / x_max
                 y_bird = bird.y / y_max
+                velocity_bird = (bird.velocity / 10) + 1
 
                 # Ask the bird what he wants to do
-                bird.decide_NN([y_top, y_bot, dist_block, y_bird])
+                bird.decide_NN([y_top, y_bot, dist_block, y_bird, velocity_bird])
 
     def check_best_bird(self) -> int:
         """
@@ -213,7 +215,18 @@ class app(pyglet.window.Window):
             if not bird.dead:
                 bird.draw()
 
-        # self.birds[self.check_best_bird()].draw()
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+
+        pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
+                    radius=5, color=(100, 0, 0)).draw()
+        pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
+                    radius=5, color=(100, 0, 0)).draw()
+
+        pyglet.shapes.Circle(x=block_coordinates[4],
+                       y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
+        pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
+                      radius=5, color=(100, 0, 0)).draw()
 
     def pause(self):
         """
