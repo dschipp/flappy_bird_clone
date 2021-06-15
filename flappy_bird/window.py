@@ -102,7 +102,7 @@ class app(pyglet.window.Window):
             if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
                 bird.die()
 
-            if bird.nearest_block != block_coordinates[8] and not bird.dead and block_coordinates[8] != 0: # Check if a bird passed a pipe
+            if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
                 bird.add_score()
                 # print("Got through one!")
                 bird.nearest_block = block_coordinates[8]
@@ -158,14 +158,14 @@ class app(pyglet.window.Window):
         for bird in self.birds:
             if not bird.dead:
                 # Calculate the distances to the nearest pipe
-                y_top = block_coordinates[7] / y_max
-                y_bot = block_coordinates[1] / y_max
+                y_top = (bird.y - block_coordinates[7]) / 2 * y_max + 1
+                y_bot = (bird.y - block_coordinates[1]) / 2 * y_max + 1
                 dist_block = abs(bird.x - block_coordinates[2]) / x_max
-                y_bird = bird.y / y_max
-                velocity_bird = (bird.velocity / 10) + 1
+                # y_bird = bird.y / y_max
+                velocity_bird = (bird.velocity / 20) + 1
 
                 # Ask the bird what he wants to do
-                bird.decide_NN([y_top, y_bot, dist_block, y_bird, velocity_bird])
+                bird.decide_NN([y_top, y_bot, dist_block, velocity_bird])
 
     def check_best_bird(self) -> int:
         """
@@ -193,7 +193,7 @@ class app(pyglet.window.Window):
         if max_score == 0:
             return None
 
-        print("The score of the best bird was: " + str(max_score))
+        print("The score of the best bird was: " + str(self.birds[best_birds[0]].score))
         print("The best bird was number: " + str(best_birds))
         return best_birds
 

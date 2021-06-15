@@ -31,7 +31,7 @@ import random
 from NN_functions import sigmoid, random_negative_positive
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, hidden_layer_count = 5, learning_rate: int = 0.005):
+    def __init__(self, input_count, output_count, hidden_layer_count = 5, learning_rate: int = 0.001):
         """
         Create Neural Network width 2 Hidden layers.
 
