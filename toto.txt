@@ -2,4 +2,3 @@ TODO: Evolution of the birds / Learning System
 TODO: Draw a bird
 TODO: Draw pipes
 TODO: The Score System does not work anymore as good as intended
-TODO: Let if more than one bird makes it, the other bird also teach to the next generation

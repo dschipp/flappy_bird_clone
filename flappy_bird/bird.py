@@ -48,6 +48,9 @@ class flappy_bird(shapes.Circle):
         """
         self.velocity += self.jump_height
 
+    def change_color(self, color):
+        self.color = color
+
     def add_score(self):
         """
         Add one to the bird score
