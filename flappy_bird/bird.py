@@ -1,6 +1,7 @@
 import pyglet
 from pyglet import shapes
 from NN import Neural_Net
+from NN_functions import decision_function
 
 
 class flappy_bird(shapes.Circle):
@@ -36,7 +37,10 @@ class flappy_bird(shapes.Circle):
 
         self.nearest_block = 0 # Safe the number of the nearest block to check the score
 
-        self.NN = Neural_Net(4, 1)  # Crate a Neural Network for this bird.
+        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
+
+        self.died_with_outputs = [] # A list to save the outputs the NN gave when the bird died
+        self.died_with_inputs = [] # A list to save the inputs the NN gave when the bird died
 
     def move_up(self):
         """
@@ -134,14 +138,9 @@ class flappy_bird(shapes.Circle):
             If the bird should jump or not as a boolean.
 
         """
-        
-        # Check if the bird is dead
-        if self.dead:
-            return
 
         decision = self.NN.calc_outputs(distances)
+        self.died_with_outputs = decision
 
-        # print(decision)
-
-        if decision[0] > 0.5:
+        if decision_function(decision):
             self.move_up()
