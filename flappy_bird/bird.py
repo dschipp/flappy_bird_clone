@@ -1,10 +1,10 @@
 import pyglet
-from pyglet import shapes
+from pyglet import image
 from NN import Neural_Net
 from NN_functions import decision_function
 
 
-class flappy_bird(shapes.Circle):
+class flappy_bird(image):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
         Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
@@ -26,7 +26,9 @@ class flappy_bird(shapes.Circle):
         """
 
         # Initialise the upper function.
-        super(flappy_bird, self).__init__(x=x, y=y, radius=radius, color=color)
+        super(flappy_bird, self).__init__(anchor_x=x, anchor_y=y, width = radius)
+
+        load("./assets/flappy_bird.png")
 
         self.gravity = -gravity
         self.velocity = 0
