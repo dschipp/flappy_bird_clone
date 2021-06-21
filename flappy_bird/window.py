@@ -39,10 +39,11 @@ class app(pyglet.window.Window):
 
         self.set_variables()
 
-        # pyglet.gl.glClearColor(255, 255, 255, 1.0)
-        background_image = pyglet.image.load("./assets/background.png")
-        self.background = pyglet.sprite.Sprite(background_image, x = 0, y = 0)
+        # Draw the background
+        self.background_image = pyglet.image.load("./assets/background.png")
+        self.background = pyglet.sprite.Sprite(self.background_image, x = 0, y = -20)
 
+        # Create the birds
         self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
 
