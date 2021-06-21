@@ -45,9 +45,9 @@ class app(pyglet.window.Window):
         # Create the Scoretext / Scoreboard
         self.max_score = 0
         self.score_text = pyglet.text.Label('Score : 0',
-                          font_name='Times New Roman',
-                          font_size=25, color = (0,0,0, 255),
-                          x=self.x_max * 40/41, y=self.y_max* 2/3)
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41, y=self.y_max * 2/3)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
@@ -109,11 +109,11 @@ class app(pyglet.window.Window):
                 bird.update(self.get_size()[0])
 
             # Check for collision
-            # Multiply with a factor so it feels better
             if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height):
                 bird.die()
 
             # Check if a bird passed a pipe
+            # FIXME: Score system does not work properly, it counts again if a pipe is removed
             if bird.nearest_block != block_coordinates[8] and not bird.dead:
                 bird.add_score()
                 # print("Got through one!")
@@ -127,19 +127,18 @@ class app(pyglet.window.Window):
         if stop_game:
             # Check the score
             check = self.check_best_bird()
-            best_birds = check[1]
-            score = check[0]
-
-            print("The score of the best bird was: " +
-                 str(score))
-            print("The best bird was number: " + str(best_birds))
 
             # If the score is 0, create a new population
-            if best_birds is None:
+            if check is None:
                 print("No one made it :(")
                 self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
             else:
+                best_birds = check[1]
+                score = check[0]
+                print("The score of the best bird was: " +
+                      str(score))
+                print("The best bird was number: " + str(best_birds))
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
                 steps = len(best_birds)
@@ -217,7 +216,7 @@ class app(pyglet.window.Window):
 
         if max_score == 0:
             return None
-        
+
         return [max_score, best_birds]
 
     def on_draw(self):
