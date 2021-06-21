@@ -3,14 +3,12 @@ from bird import flappy_bird
 from blocks import blocks
 from button import button
 
-Y_TILING = 10
-X_TILING = 16
-BLOCK_WIDTH = 1.5
-HOLE = 2
+BLOCK_WIDTH = 40
+HOLE = 120
 BLOCK_COUNT = 4
-BLOCK_DIST = 6
+BLOCK_DIST = 150
 SPEED = 1/200
-BLOCK_SPEED = 0.04
+BLOCK_SPEED = 1
 BIRDSIZE = 30
 JUMP_HIGHT = 5
 GRAVITY = 0.2
@@ -34,8 +32,8 @@ class app(pyglet.window.Window):
         """
         super(app, self).__init__()
 
-        self.y_scale = self.get_size()[0] / Y_TILING
-        self.x_scale = self.get_size()[1] / X_TILING
+        self.y_max = self.get_size()[0]
+        self.x_max = self.get_size()[1]
 
         self.set_variables()
 
@@ -44,7 +42,7 @@ class app(pyglet.window.Window):
         self.background = pyglet.sprite.Sprite(self.background_image, x = 0, y = -20)
 
         # Create the birds
-        self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
+        self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
 
     def set_variables(self):
@@ -63,7 +61,7 @@ class app(pyglet.window.Window):
         self.startpoint = BLOCK_DIST #X_TILING / 2 + 3
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+                            HOLE, self.y_max, self.x_max, self.startpoint)
 
         # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
         #                  radius=BIRDSIZE)
@@ -122,7 +120,7 @@ class app(pyglet.window.Window):
             # If the score is 0, create a new population
             if best_birds is None:
                 print("No one made it :(")
-                self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
+                self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
             else:
                 print("Birds are learning...")
@@ -263,13 +261,13 @@ class app(pyglet.window.Window):
         self.set_variables()
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+                             HOLE, self.y_max, self.x_max, self.startpoint)
 
         self.started = False
         
         # Revive all birds
         for bird in self.birds:
-            bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
+            bird.revive(JUMP_HIGHT, self.y_max/2)
 
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, SPEED)
