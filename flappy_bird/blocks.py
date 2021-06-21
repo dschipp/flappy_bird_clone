@@ -1,9 +1,9 @@
 import pyglet
-from pyglet import shapes
+from pyglet import sprite
 import random
 
 
-class Pipe(shapes.Rectangle):
+class Pipe(sprite.Sprite):
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
         """
         Create a block / Rectangle.
@@ -17,12 +17,17 @@ class Pipe(shapes.Rectangle):
             color=(0 (,153,76)): The color of the block. Standard some kind of green.
 
         """
-        super(Pipe, self).__init__(
-            x=x, y=y, width=width, height=height, color=color)
 
-        self.height = height
-        self.width = width
+        # load the image
+        pipe_image = pyglet.image.load("./assets/pipe_downwards.png")
 
+        # If this is a bottom block
+        if y == 0:
+            pipe_image = pyglet.image.load("./assets/pipe_upwards.png")
+
+        super(Pipe, self).__init__(pipe_image, x=x, y=y)
+        self.scale_y = height / self.height
+        self.scale_x = width / self.width
 
 class blocks():
     def __init__(self, count: int, block_dist: int, block_width: int, y_tiling: int, hole: int, y_scale: int, x_scale: int, startpoint: int) -> None:

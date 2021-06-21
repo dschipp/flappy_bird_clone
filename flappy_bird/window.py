@@ -11,7 +11,7 @@ BLOCK_COUNT = 4
 BLOCK_DIST = 6
 SPEED = 1/200
 BLOCK_SPEED = 0.04
-BIRDSIZE = 15
+BIRDSIZE = 30
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
@@ -39,7 +39,9 @@ class app(pyglet.window.Window):
 
         self.set_variables()
 
-        pyglet.gl.glClearColor(255, 255, 255, 1.0)
+        # pyglet.gl.glClearColor(255, 255, 255, 1.0)
+        background_image = pyglet.image.load("./assets/background.png")
+        self.background = pyglet.sprite.Sprite(background_image, x = 0, y = 0)
 
         self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
@@ -131,9 +133,10 @@ class app(pyglet.window.Window):
                     for num, bird in enumerate(self.birds[lower_boundaries:upper_boundaries]):
                         if num not in best_birds:
                             bird.learn_from_other_bird(self.birds[best_bird])
-                            bird.change_color((0, 255 * upper_boundaries, 255 * upper_boundaries))
+                            # bird.change_color((0, 255 * upper_boundaries, 255 * upper_boundaries))
                         else:
-                            bird.change_color((0, 0,255 * upper_boundaries))
+                            pass
+                            # bird.change_color((0, 0,255 * upper_boundaries))
                 
             # Restart the game
             self.restart()
@@ -209,6 +212,8 @@ class app(pyglet.window.Window):
         """
         self.clear()
 
+        self.background.draw()
+
         self.blocks.draw()
         
         for bird in self.birds:
@@ -218,6 +223,7 @@ class app(pyglet.window.Window):
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
 
+        # Draw the edges of the nearest Block
         pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
                     radius=5, color=(100, 0, 0)).draw()
         pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
