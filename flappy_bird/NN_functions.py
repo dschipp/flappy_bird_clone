@@ -7,7 +7,7 @@ def decision_function(input):
     return False
 
 def sigmoid(x):
-    x = 1 / (1 + exp(-x))
+    # x = 1 / (1 + exp(-x))
     return x
 
 def random_negative_positive(x):
