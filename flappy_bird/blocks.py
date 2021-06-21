@@ -3,7 +3,7 @@ from pyglet import sprite
 import random
 
 
-class Pipe(sprite.Sprite):
+class Pipe():
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
         """
         Create a block / Rectangle.
@@ -17,17 +17,38 @@ class Pipe(sprite.Sprite):
             color=(0 (,153,76)): The color of the block. Standard some kind of green.
 
         """
+        # super(Pipe, self).__init__(pipe_image, x=x, y=y)
+
+        self.x = x
+        self.y = y
+        self.height = height
+        self.width = width
 
         # load the image
-        pipe_image = pyglet.image.load("./assets/pipe_downwards.png")
+        pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
+        pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
 
-        # If this is a bottom block
+        self.pipe_head = sprite.Sprite(pipe_head_image, x = x, y = y)
+        self.pipe_body = sprite.Sprite(pipe_body_image, x = x, y = y)
+
+        self.pipe_head.scale_y = 0.2
+        self.pipe_head.scale_x = width / (self.pipe_head.width - 20)
+
+        self.pipe_body.scale_y = height / self.pipe_body.height
+        self.pipe_body.scale_x = width / self.pipe_body.width
+
+        # Draw different if it is a bottom block
+        self.pipe_head.y = self.y
         if y == 0:
-            pipe_image = pyglet.image.load("./assets/pipe_upwards.png")
+            self.pipe_head.y = self.height - self.pipe_head.height
 
-        super(Pipe, self).__init__(pipe_image, x=x, y=y)
-        self.scale_y = height / self.height
-        self.scale_x = width / self.width
+    def draw(self):
+
+        self.pipe_body.x = self.x
+        self.pipe_head.x = self.x - (self.pipe_head.width - self.pipe_body.width) /2
+
+        self.pipe_body.draw()
+        self.pipe_head.draw()
 
 class blocks():
     def __init__(self, count: int, block_dist: int, block_width: int, y_tiling: int, hole: int, y_scale: int, x_scale: int, startpoint: int) -> None:
