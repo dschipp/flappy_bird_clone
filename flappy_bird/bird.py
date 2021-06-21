@@ -3,8 +3,6 @@ from pyglet import sprite
 from NN import Neural_Net
 from NN_functions import decision_function
 
-# FIXME: The hitbox is weird with the new images
-
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
@@ -85,12 +83,12 @@ class flappy_bird(sprite.Sprite):
         # self.rotation =  90 * abs(self.velocity) / 15 - 45
 
         # Check if the bird hits the boundaries of the window / playing field.
-        if self.y >= height - self.radius * 7:
-            self.y = height - self.radius * 7
+        if self.y >= height - self.height * 8:
+            self.y = height - self.height * 8
             self.velocity = 0
 
-        if self.y <= self.radius:
-            self.y = self.radius
+        if self.y <= self.height * 2:
+            self.y = self.height * 2
             self.velocity = 0
 
     def die(self):

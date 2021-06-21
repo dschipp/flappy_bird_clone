@@ -102,7 +102,7 @@ class app(pyglet.window.Window):
                 bird.update(self.get_size()[0])
             
             # Check for collision
-            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
+            if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height): # Multiply with a factor so it feels better
                 bird.die()
 
             if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe

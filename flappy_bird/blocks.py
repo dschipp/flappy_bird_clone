@@ -130,7 +130,7 @@ class blocks():
 
             self.blocks.append(block_pair)
 
-    def check_collision(self, x: int, y: int, radius: int = 0) -> bool:
+    def check_collision(self, x: int, y: int, width:int = 0, height:int = 0) -> bool:
         """
         Description of check_collision. Check if the given Coordinates hit a Block.
 
@@ -138,7 +138,8 @@ class blocks():
             self (undefined):
             x (int): The x Coordinate of the object to check
             y (int): The y Coordinate of the object to check
-            radius (int=0): The Radius of the object to check
+            width (int=0): The width of the object to check
+            height (int=0): The height of the object to check
 
         Returns: If the object hits
             bool
@@ -151,8 +152,8 @@ class blocks():
                 top_bottom = 1  # Var to determine if the radius should be added or subtracted
                 if not top:
                     top_bottom = -1
-
-                if x + radius > block.x and x + radius < block.x + block.width and y + top_bottom * radius > block.y and y + top_bottom * radius < block.y + block.height:
+                
+                if x > block.x and x < block.x + block.width and y > block.y and y < block.y + block.height or x + width > block.x and x + width < block.x + block.width and y + height > block.y and y + height < block.y + block.height :
                     return True
 
     def nearest_block_coordinates(self, x: int, x_max: int = 500) -> list:
