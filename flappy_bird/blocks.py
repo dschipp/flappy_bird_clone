@@ -5,6 +5,7 @@ import random
 MAX_HEIGHT = 300
 MIN_HEIGHT = 150
 
+
 class Pipe():
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
         """
@@ -30,8 +31,8 @@ class Pipe():
         pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
         pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
 
-        self.pipe_head = sprite.Sprite(pipe_head_image, x = x, y = y)
-        self.pipe_body = sprite.Sprite(pipe_body_image, x = x, y = y)
+        self.pipe_head = sprite.Sprite(pipe_head_image, x=x, y=y)
+        self.pipe_body = sprite.Sprite(pipe_body_image, x=x, y=y)
 
         self.pipe_head.scale_y = 0.2
         self.pipe_head.scale_x = width / (self.pipe_head.width - 20)
@@ -47,10 +48,12 @@ class Pipe():
     def draw(self):
 
         self.pipe_body.x = self.x
-        self.pipe_head.x = self.x - (self.pipe_head.width - self.pipe_body.width) /2
+        self.pipe_head.x = self.x - \
+            (self.pipe_head.width - self.pipe_body.width) / 2
 
         self.pipe_body.draw()
         self.pipe_head.draw()
+
 
 class blocks():
     def __init__(self, count: int, block_dist: int, block_width: int, hole: int, y_max: int, x_max: int, startpoint: int) -> None:
@@ -90,9 +93,9 @@ class blocks():
 
             block_pair = [
                 Pipe(x=(block_pair_count + block_dist * block_pair_count + startpoint),
-                      y=0, width= block_width, height= height),  # Bottom Pipe
+                     y=0, width=block_width, height=height),  # Bottom Pipe
                 Pipe(x=(block_pair_count + block_dist * block_pair_count + startpoint), y=(
-                    height+hole), width= block_width, height= self.y_max)  # Top Pipe
+                    height+hole), width=block_width, height=self.y_max)  # Top Pipe
             ]
 
             self.blocks.append(block_pair)
@@ -122,14 +125,14 @@ class blocks():
 
             block_pair = [
                 Pipe(x=(self.count + self.block_dist * self.count),
-                      y=0, width= self.block_width, height= height),  # Bottom Block
-                Pipe(x= self.count + self.block_dist * self.count , y=height+self.hole, 
-                        width= self.block_width, height = height)  # Top Block
+                     y=0, width=self.block_width, height=height),  # Bottom Block
+                Pipe(x=self.count + self.block_dist * self.count, y=height+self.hole,
+                     width=self.block_width, height=height)  # Top Block
             ]
 
             self.blocks.append(block_pair)
 
-    def check_collision(self, x: int, y: int, width:int = 0, height:int = 0) -> bool:
+    def check_collision(self, x: int, y: int, width: int = 0, height: int = 0) -> bool:
         """
         Description of check_collision. Check if the given Coordinates hit a Block.
 
@@ -151,8 +154,8 @@ class blocks():
                 top_bottom = 1  # Var to determine if the radius should be added or subtracted
                 if not top:
                     top_bottom = -1
-                
-                if x > block.x and x < block.x + block.width and y > block.y and y < block.y + block.height or x + width > block.x and x + width < block.x + block.width and y + height > block.y and y + height < block.y + block.height :
+
+                if x > block.x and x < block.x + block.width and y > block.y and y < block.y + block.height or x + width > block.x and x + width < block.x + block.width and y + height > block.y and y + height < block.y + block.height:
                     return True
 
     def nearest_block_coordinates(self, x: int, x_max: int = 500) -> list:
@@ -181,7 +184,7 @@ class blocks():
                     # Change the block color of the nearest block to check.
                     # block.color = (200, 0, 0)
                     x_before = block.x - x + block.width
-                #else:
+                # else:
                 #    block.color = (0, 153, 76)
 
         block_pair = self.blocks[nearest_block]
@@ -206,7 +209,7 @@ class blocks():
 
         return corner_array
 
-    def change_color(self, block_pair_place, color = (200, 0, 0)):
+    def change_color(self, block_pair_place, color=(200, 0, 0)):
         self.blocks[block_pair_place][0].color = color
         self.blocks[block_pair_place][1].color = color
 

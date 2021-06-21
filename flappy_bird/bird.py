@@ -3,6 +3,7 @@ from pyglet import sprite
 from NN import Neural_Net
 from NN_functions import decision_function
 
+
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
@@ -32,16 +33,17 @@ class flappy_bird(sprite.Sprite):
         self.gravity = -gravity
         self.velocity = 0
         self.jump_height = jump_height
-        	
+
         self.dead = False
         self.score = 0
 
-        self.nearest_block = 0 # Safe the number of the nearest block to check the score
+        self.nearest_block = 0  # Safe the number of the nearest block to check the score
 
         self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
 
-        self.died_with_outputs = [] # A list to save the outputs the NN gave when the bird died
-        self.died_with_inputs = [] # A list to save the inputs the NN gave when the bird died
+        # A list to save the outputs the NN gave when the bird died
+        self.died_with_outputs = []
+        self.died_with_inputs = []  # A list to save the inputs the NN gave when the bird died
 
     def move_up(self):
         """

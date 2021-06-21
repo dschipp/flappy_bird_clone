@@ -39,7 +39,8 @@ class app(pyglet.window.Window):
 
         # Draw the background
         self.background_image = pyglet.image.load("./assets/background.png")
-        self.background = pyglet.sprite.Sprite(self.background_image, x = 0, y = -20)
+        self.background = pyglet.sprite.Sprite(
+            self.background_image, x=0, y=-20)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
@@ -58,10 +59,10 @@ class app(pyglet.window.Window):
             self (undefined):
 
         """
-        self.startpoint = BLOCK_DIST #X_TILING / 2 + 3
+        self.startpoint = BLOCK_DIST  # X_TILING / 2 + 3
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                            HOLE, self.y_max, self.x_max, self.startpoint)
+                             HOLE, self.y_max, self.x_max, self.startpoint)
 
         # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
         #                  radius=BIRDSIZE)
@@ -92,18 +93,21 @@ class app(pyglet.window.Window):
         stop_game = True  # Variable to check if the game should be stopped because all birds are dead
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
 
         for bird in self.birds:
-            
+
             if not bird.dead:
                 bird.update(self.get_size()[0])
-            
+
             # Check for collision
-            if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height): # Multiply with a factor so it feels better
+            # Multiply with a factor so it feels better
+            if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height):
                 bird.die()
 
-            if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
+            # Check if a bird passed a pipe
+            if bird.nearest_block != block_coordinates[8] and not bird.dead:
                 bird.add_score()
                 # print("Got through one!")
                 bird.nearest_block = block_coordinates[8]
@@ -136,7 +140,7 @@ class app(pyglet.window.Window):
                         else:
                             pass
                             # bird.change_color((0, 0,255 * upper_boundaries))
-                
+
             # Restart the game
             self.restart()
 
@@ -149,12 +153,13 @@ class app(pyglet.window.Window):
             timer (undefined):
 
         """
-    
+
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
         self.blocks.change_color(block_coordinates[8])
 
         for bird in self.birds:
@@ -180,7 +185,7 @@ class app(pyglet.window.Window):
             list: The position of the best birds or None if all birds failed.
 
         """
-        
+
         max_score = 0
         best_birds = []
 
@@ -195,7 +200,8 @@ class app(pyglet.window.Window):
         if max_score == 0:
             return None
 
-        print("The score of the best bird was: " + str(self.birds[best_birds[0]].score))
+        print("The score of the best bird was: " +
+              str(self.birds[best_birds[0]].score))
         print("The best bird was number: " + str(best_birds))
         return best_birds
 
@@ -214,24 +220,25 @@ class app(pyglet.window.Window):
         self.background.draw()
 
         self.blocks.draw()
-        
+
         for bird in self.birds:
             if not bird.dead:
                 bird.draw()
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
 
         # Draw the edges of the nearest Block
         pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
-                    radius=5, color=(100, 0, 0)).draw()
+                             radius=5, color=(100, 0, 0)).draw()
         pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
-                    radius=5, color=(100, 0, 0)).draw()
+                             radius=5, color=(100, 0, 0)).draw()
 
         pyglet.shapes.Circle(x=block_coordinates[4],
-                       y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
+                             y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
         pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
-                      radius=5, color=(100, 0, 0)).draw()
+                             radius=5, color=(100, 0, 0)).draw()
 
     def pause(self):
         """
@@ -264,7 +271,7 @@ class app(pyglet.window.Window):
                              HOLE, self.y_max, self.x_max, self.startpoint)
 
         self.started = False
-        
+
         # Revive all birds
         for bird in self.birds:
             bird.revive(JUMP_HIGHT, self.y_max/2)
@@ -286,8 +293,9 @@ class app(pyglet.window.Window):
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
-                pyglet.clock.schedule_interval(self.bird_decisions, NN_DECISION_SPEED)
+                pyglet.clock.schedule_interval(
+                    self.bird_decisions, NN_DECISION_SPEED)
                 self.started = True
-            #self.birds[1].move_up()
+            # self.birds[1].move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
