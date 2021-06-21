@@ -30,8 +30,9 @@ import numpy as np
 import random
 from NN_functions import sigmoid, random_negative_positive
 
+
 class Neural_Net:
-    def __init__(self, input_count, output_count, hidden_layer_count = 5, learning_rate: int = 0.001):
+    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.001):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -48,9 +49,11 @@ class Neural_Net:
         self.input_count = input_count
         self.hidden_layer_count = hidden_layer_count
 
-        self.weights_input_hidden = np.random.rand(input_count, self.hidden_layer_count)
+        self.weights_input_hidden = np.random.rand(
+            input_count, self.hidden_layer_count)
 
-        self.weights_hidden_output = np.random.rand(self.hidden_layer_count, output_count)
+        self.weights_hidden_output = np.random.rand(
+            self.hidden_layer_count, output_count)
 
         self.bias_hidden = np.random.rand(1, self.hidden_layer_count)
         self.bias_output = np.random.rand(1, self.output_count)
@@ -80,8 +83,6 @@ class Neural_Net:
 
         return output.tolist()[0]
 
-
-
     def adapting(self, NN_to_adapt):
         """
         Adapt the hidden layers from another bird, but slightly different.
@@ -94,14 +95,22 @@ class Neural_Net:
 
         """
 
-        adapt_rate_weights_input_hidden = random_negative_positive(np.random.rand(self.input_count, self.hidden_layer_count))
-        self.weights_input_hidden = NN_to_adapt.weights_input_hidden + adapt_rate_weights_input_hidden * self.learning_rate
+        adapt_rate_weights_input_hidden = random_negative_positive(
+            np.random.rand(self.input_count, self.hidden_layer_count))
+        self.weights_input_hidden = NN_to_adapt.weights_input_hidden + \
+            adapt_rate_weights_input_hidden * self.learning_rate
 
-        adapt_rate_weights_hidden_output = random_negative_positive(np.random.rand(self.hidden_layer_count, self.output_count))
-        self.weights_hidden_output = NN_to_adapt.weights_hidden_output + adapt_rate_weights_hidden_output * self.learning_rate
+        adapt_rate_weights_hidden_output = random_negative_positive(
+            np.random.rand(self.hidden_layer_count, self.output_count))
+        self.weights_hidden_output = NN_to_adapt.weights_hidden_output + \
+            adapt_rate_weights_hidden_output * self.learning_rate
 
-        adapt_rate_bias_hidden = random_negative_positive(np.random.rand(1, self.hidden_layer_count))
-        self.bias_hidden = NN_to_adapt.bias_hidden + adapt_rate_bias_hidden * self.learning_rate
+        adapt_rate_bias_hidden = random_negative_positive(
+            np.random.rand(1, self.hidden_layer_count))
+        self.bias_hidden = NN_to_adapt.bias_hidden + \
+            adapt_rate_bias_hidden * self.learning_rate
 
-        adapt_rate_bias_output = random_negative_positive(np.random.rand(1, self.output_count))
-        self.bias_output = NN_to_adapt.bias_output + adapt_rate_bias_output * self.learning_rate
+        adapt_rate_bias_output = random_negative_positive(
+            np.random.rand(1, self.output_count))
+        self.bias_output = NN_to_adapt.bias_output + \
+            adapt_rate_bias_output * self.learning_rate

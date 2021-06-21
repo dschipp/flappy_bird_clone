@@ -42,6 +42,13 @@ class app(pyglet.window.Window):
         self.background = pyglet.sprite.Sprite(
             self.background_image, x=0, y=-20)
 
+        # Create the Scoretext / Scoreboard
+        self.max_score = 0
+        self.score_text = pyglet.text.Label('Score : 0',
+                          font_name='Times New Roman',
+                          font_size=25, color = (0,0,0, 255),
+                          x=self.x_max * 40/41, y=self.y_max* 2/3)
+
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
@@ -119,7 +126,13 @@ class app(pyglet.window.Window):
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
         if stop_game:
             # Check the score
-            best_birds = self.check_best_bird()
+            check = self.check_best_bird()
+            best_birds = check[1]
+            score = check[0]
+
+            print("The score of the best bird was: " +
+                 str(score))
+            print("The best bird was number: " + str(best_birds))
 
             # If the score is 0, create a new population
             if best_birds is None:
@@ -143,6 +156,11 @@ class app(pyglet.window.Window):
 
             # Restart the game
             self.restart()
+
+        score = self.check_best_bird()
+        if score is not None:
+            self.max_score = score[0]
+        self.score_text.text = "Score : " + str(self.max_score)
 
     def bird_decisions(self, timer):
         """
@@ -182,7 +200,7 @@ class app(pyglet.window.Window):
             self (undefined):
 
         Returns:
-            list: The position of the best birds or None if all birds failed.
+            list: The score and the list positions of the best birds or None if all birds failed.
 
         """
 
@@ -199,11 +217,8 @@ class app(pyglet.window.Window):
 
         if max_score == 0:
             return None
-
-        print("The score of the best bird was: " +
-              str(self.birds[best_birds[0]].score))
-        print("The best bird was number: " + str(best_birds))
-        return best_birds
+        
+        return [max_score, best_birds]
 
     def on_draw(self):
         """
@@ -240,6 +255,8 @@ class app(pyglet.window.Window):
         pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
                              radius=5, color=(100, 0, 0)).draw()
 
+        self.score_text.draw()
+
     def pause(self):
         """
         Pause the game and:
@@ -271,6 +288,7 @@ class app(pyglet.window.Window):
                              HOLE, self.y_max, self.x_max, self.startpoint)
 
         self.started = False
+        self.max_score = 0
 
         # Revive all birds
         for bird in self.birds:
