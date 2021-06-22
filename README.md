@@ -32,3 +32,5 @@ well as [git](https://git-scm.com/).
     ```Shell
     poetry run python ./flappy_bird/main.py
     ```
+
+- Start the game with the up arrow key &uarr; or the spacebar
