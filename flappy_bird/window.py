@@ -48,15 +48,20 @@ class app(pyglet.window.Window):
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
                                             x=self.x_max * 40/41, y=self.y_max * 2/3)
-        self.gen_text = pyglet.text.Label('Gen.  : 1',
+        self.gen_text = pyglet.text.Label('Gen. : 1',
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
-                                            x=self.x_max * 40/41, y=self.y_max * 2/3 - 35)
+                                            x=self.x_max * 40/41 + 11, y=self.y_max * 2/3 - 35)
+        self.highscore_text = pyglet.text.Label('Highscore : 0',
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41 - 30, y=self.y_max * 2/3 - 70)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
         self.bird_generation = 1
+        self.highscore = 0
 
     def set_variables(self):
         """
@@ -143,6 +148,9 @@ class app(pyglet.window.Window):
                 print("The score of the best bird was: " +
                       str(score))
                 print("The best bird was number: " + str(best_birds))
+                # Update the best score
+                if score > self.highscore:
+                    self.highscore = score
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
                 steps = len(best_birds)
@@ -165,7 +173,8 @@ class app(pyglet.window.Window):
         if score is not None:
             self.max_score = score[0]
         self.score_text.text = "Score : " + str(self.max_score) 
-        self.gen_text.text = "Gen.  : " + str(self.bird_generation)
+        self.gen_text.text = "Gen. : " + str(self.bird_generation)
+        self.highscore_text.text = "Highscore : " + str(self.highscore)
 
     def bird_decisions(self, timer):
         """
@@ -263,6 +272,7 @@ class app(pyglet.window.Window):
         # Draw all of the text
         self.score_text.draw()
         self.gen_text.draw()
+        self.highscore_text.draw()
 
     def pause(self):
         """
