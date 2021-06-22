@@ -1,4 +1,5 @@
 """
+TODO: Outdated explanation
 This is going to be a Neural Network with 2 hiddep layers consisting of a specified number of neurons.
 
 So there is going to be needed a Matrix with the size of the number of inputs and hidden layer one.
