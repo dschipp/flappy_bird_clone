@@ -118,11 +118,10 @@ class app(pyglet.window.Window):
                 bird.die()
 
             # Check if a bird passed a pipe
-            # FIXME: Score system does not work properly, it counts again if a pipe is removed
-            if bird.nearest_block != block_coordinates[8] and not bird.dead:
+            if bird.nearest_block != block_coordinates[8] and not bird.dead and not block_coordinates[8] == 0:
                 bird.add_score()
                 # print("Got through one!")
-                bird.nearest_block = block_coordinates[8]
+            bird.nearest_block = block_coordinates[8]
 
             # Check if all birds are dead. If one bird is alive the game is not stopped
             if not bird.dead:
