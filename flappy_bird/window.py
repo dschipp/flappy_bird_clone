@@ -56,7 +56,7 @@ class app(pyglet.window.Window):
         self.highscore_text = pyglet.text.Label('Highscore : 0',
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
-                                            x=self.x_max * 40/41 - 30, y=self.y_max * 2/3 - 70)
+                                            x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
