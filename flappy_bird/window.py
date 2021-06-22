@@ -182,9 +182,9 @@ class app(pyglet.window.Window):
         for bird in self.birds:
             if not bird.dead:
                 # Calculate the distances to the nearest pipe
-                y_top = (bird.y - block_coordinates[7]) / 2 * y_max + 1
-                y_bot = (bird.y - block_coordinates[1]) / 2 * y_max + 1
-                dist_block = abs(bird.x - block_coordinates[2]) / x_max
+                y_top = (bird.y - block_coordinates[7]) / y_max
+                y_bot = (bird.y - block_coordinates[1]) / y_max
+                dist_block = (bird.x - block_coordinates[2]) / x_max
                 # y_bird = bird.y / y_max
                 velocity_bird = (bird.velocity / 20) + 1
 

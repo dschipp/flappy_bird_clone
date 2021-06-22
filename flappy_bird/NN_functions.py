@@ -23,7 +23,7 @@ def sigmoid(x: int):
         x (int): The x input
 
     """
-    # x = 1 / (1 + exp(-x))
+    x = 1 / (1 + exp(-x))
     return x
 
 
