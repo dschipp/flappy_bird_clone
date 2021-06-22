@@ -9,6 +9,7 @@ BLOCK_COUNT = 5
 BLOCK_DIST = 150
 SPEED = 1/200
 BLOCK_SPEED = 1
+BLOCK_SPEEDUP = 0.01
 BIRDSIZE = 30
 JUMP_HIGHT = 5
 GRAVITY = 0.2
@@ -85,6 +86,7 @@ class app(pyglet.window.Window):
         #                  radius=BIRDSIZE)
 
         self.started = False
+        self.block_speed = BLOCK_SPEED
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -99,9 +101,12 @@ class app(pyglet.window.Window):
             timer (undefined): The timer of the app.
 
         """
+        # Speed up the Blocks / Pipes game over time
+        self.block_speed += timer * BLOCK_SPEEDUP
+
         self.clear()
 
-        self.blocks.update(BLOCK_SPEED)
+        self.blocks.update(self.block_speed)
 
         # Get the max x and y values for normalisation
         x_max = self.get_size()[1]
