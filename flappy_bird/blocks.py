@@ -127,7 +127,7 @@ class blocks():
                 Pipe(x=(self.count + self.block_dist * self.count),
                      y=0, width=self.block_width, height=height),  # Bottom Block
                 Pipe(x=self.count + self.block_dist * self.count, y=height+self.hole,
-                     width=self.block_width, height=height)  # Top Block
+                     width=self.block_width, height=self.y_max)  # Top Block
             ]
 
             self.blocks.append(block_pair)
