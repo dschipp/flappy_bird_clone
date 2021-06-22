@@ -1,9 +1,10 @@
 import pyglet
-from pyglet import shapes
+from pyglet import sprite
 from NN import Neural_Net
+from NN_functions import decision_function
 
 
-class flappy_bird(shapes.Circle):
+class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
         """
         Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
@@ -20,12 +21,14 @@ class flappy_bird(shapes.Circle):
         Returns:
             None
 
-        TODO: Use a picture of the bird not just a circle.
-
         """
+        # load the image
+        bird_image = pyglet.image.load("./assets/flappy_bird.png")
 
         # Initialise the upper function.
-        super(flappy_bird, self).__init__(x=x, y=y, radius=radius, color=color)
+        super(flappy_bird, self).__init__(bird_image, x=x, y=y)
+        self.scale = radius / bird_image.width
+        self.radius = radius
 
         self.gravity = -gravity
         self.velocity = 0
@@ -34,9 +37,13 @@ class flappy_bird(shapes.Circle):
         self.dead = False
         self.score = 0
 
-        self.nearest_block = 0 # Safe the number of the nearest block to check the score
+        self.nearest_block = 0  # Safe the number of the nearest block to check the score
 
-        self.NN = Neural_Net(3, 1)  # Crate a Neural Network for this bird.
+        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
+
+        # A list to save the outputs the NN gave when the bird died
+        self.died_with_outputs = []
+        self.died_with_inputs = []  # A list to save the inputs the NN gave when the bird died
 
     def move_up(self):
         """
@@ -47,6 +54,9 @@ class flappy_bird(shapes.Circle):
 
         """
         self.velocity += self.jump_height
+
+    def change_color(self, color):
+        self.color = color
 
     def add_score(self):
         """
@@ -71,13 +81,16 @@ class flappy_bird(shapes.Circle):
         self.velocity += self.gravity
         self.y += self.velocity
 
+        # TODO: Tilt the birds upwards or downwards
+        # self.rotation =  90 * abs(self.velocity) / 15 - 45
+
         # Check if the bird hits the boundaries of the window / playing field.
-        if self.y >= height - self.radius * 7:
-            self.y = height - self.radius * 7
+        if self.y >= height - self.height * 8:
+            self.y = height - self.height * 8
             self.velocity = 0
 
-        if self.y <= self.radius:
-            self.y = self.radius
+        if self.y <= self.height * 2:
+            self.y = self.height * 2
             self.velocity = 0
 
     def die(self):
@@ -131,14 +144,9 @@ class flappy_bird(shapes.Circle):
             If the bird should jump or not as a boolean.
 
         """
-        
-        # Check if the bird is dead
-        if self.dead:
-            return
 
         decision = self.NN.calc_outputs(distances)
+        self.died_with_outputs = decision
 
-        # print(decision)
-
-        if decision[0] > 0.5:
+        if decision_function(decision):
             self.move_up()

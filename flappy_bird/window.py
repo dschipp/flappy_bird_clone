@@ -3,19 +3,18 @@ from bird import flappy_bird
 from blocks import blocks
 from button import button
 
-Y_TILING = 10
-X_TILING = 16
-BLOCK_WIDTH = 1.5
-HOLE = 2
-BLOCK_COUNT = 10
-BLOCK_DIST = 6
+BLOCK_WIDTH = 40
+HOLE = 120
+BLOCK_COUNT = 5
+BLOCK_DIST = 150
 SPEED = 1/200
-BLOCK_SPEED = 0.06
-BIRDSIZE = 15
+BLOCK_SPEED = 1
+BIRDSIZE = 30
 JUMP_HIGHT = 5
 GRAVITY = 0.2
 
-BIRD_COUNT = 200
+NN_DECISION_SPEED = 0.1
+BIRD_COUNT = 100
 
 
 class app(pyglet.window.Window):
@@ -33,15 +32,31 @@ class app(pyglet.window.Window):
         """
         super(app, self).__init__()
 
-        self.y_scale = self.get_size()[0] / Y_TILING
-        self.x_scale = self.get_size()[1] / X_TILING
+        self.y_max = self.get_size()[0]
+        self.x_max = self.get_size()[1]
 
         self.set_variables()
 
-        pyglet.gl.glClearColor(255, 255, 255, 1.0)
+        # Draw the background
+        self.background_image = pyglet.image.load("./assets/background.png")
+        self.background = pyglet.sprite.Sprite(
+            self.background_image, x=0, y=-20)
 
-        self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
+        # Create the Scoretext / Scoreboard
+        self.max_score = 0
+        self.score_text = pyglet.text.Label('Score : 0',
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41, y=self.y_max * 2/3)
+        self.gen_text = pyglet.text.Label('Gen.  : 1',
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41, y=self.y_max * 2/3 - 35)
+
+        # Create the birds
+        self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+        self.bird_generation = 1
 
     def set_variables(self):
         """
@@ -56,10 +71,10 @@ class app(pyglet.window.Window):
             self (undefined):
 
         """
-        self.startpoint = X_TILING / 2 + 3
+        self.startpoint = BLOCK_DIST  # X_TILING / 2 + 3
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+                             HOLE, self.y_max, self.x_max, self.startpoint)
 
         # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
         #                  radius=BIRDSIZE)
@@ -83,39 +98,30 @@ class app(pyglet.window.Window):
 
         self.blocks.update(BLOCK_SPEED)
 
-        # self.bird.update(self.get_size()[0])
-
-        for bird in self.birds:
-            bird.update(self.get_size()[0])
-        
-        # Check for collision
-        for bird in self.birds:
-            if self.blocks.check_collision(bird.x, bird.y, bird.radius * 0.8): # Multiply with a factor so it feels better
-                bird.die()
-
         # Get the max x and y values for normalisation
         x_max = self.get_size()[1]
         y_max = self.get_size()[0]
 
         stop_game = True  # Variable to check if the game should be stopped because all birds are dead
 
-         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        block_coordinates = self.blocks.nearest_block_coordinates(self.birds[0].x)
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
 
         for bird in self.birds:
 
-            if bird.nearest_block != block_coordinates[8] and not bird.dead: # Check if a bird passed a pipe
+            if not bird.dead:
+                bird.update(self.get_size()[0])
+
+            # Check for collision
+            if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height):
+                bird.die()
+
+            # Check if a bird passed a pipe
+            if bird.nearest_block != block_coordinates[8] and not bird.dead and not block_coordinates[8] == 0:
                 bird.add_score()
                 # print("Got through one!")
-                bird.nearest_block = block_coordinates[8]
-
-            # Calculate the distances to the nearest pipe
-            dist_top_block = abs(bird.y - block_coordinates[7]) / y_max
-            dist_bot_block = abs(bird.y - block_coordinates[1]) / y_max
-            dist_block = abs(bird.x - block_coordinates[0]) / x_max
-
-            # Ask the bird what he wants to do
-            bird.decide_NN([dist_top_block, dist_bot_block, dist_block])
+            bird.nearest_block = block_coordinates[8]
 
             # Check if all birds are dead. If one bird is alive the game is not stopped
             if not bird.dead:
@@ -124,21 +130,72 @@ class app(pyglet.window.Window):
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
         if stop_game:
             # Check the score
-            best_bird = self.check_best_bird()
+            check = self.check_best_bird()
 
             # If the score is 0, create a new population
-            if best_bird == -1:
+            if check is None:
                 print("No one made it :(")
-                self.birds = [flappy_bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY,
+                self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
             else:
+                best_birds = check[1]
+                score = check[0]
+                print("The score of the best bird was: " +
+                      str(score))
+                print("The best bird was number: " + str(best_birds))
                 print("Birds are learning...")
-                for num, bird in enumerate(self.birds):
-                    if num != best_bird:
-                        bird.learn_from_other_bird(self.birds[best_bird])
-            
+                # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
+                steps = len(best_birds)
+                for num, best_bird in enumerate(best_birds):
+                    lower_boundaries = round((num/steps) * len(self.birds))
+                    upper_boundaries = round(((num+1)/steps) * len(self.birds))
+                    for num, bird in enumerate(self.birds[lower_boundaries:upper_boundaries]):
+                        if num not in best_birds:
+                            bird.learn_from_other_bird(self.birds[best_bird])
+                            # bird.change_color((0, 255 * upper_boundaries, 255 * upper_boundaries))
+                        else:
+                            pass
+                            # bird.change_color((0, 0,255 * upper_boundaries))
+            self.bird_generation += 1
+
             # Restart the game
             self.restart()
+
+        score = self.check_best_bird()
+        if score is not None:
+            self.max_score = score[0]
+        self.score_text.text = "Score : " + str(self.max_score) 
+        self.gen_text.text = "Gen.  : " + str(self.bird_generation)
+
+    def bird_decisions(self, timer):
+        """
+        A explicit function to let the birds decide an and don't do that in every step of the update.
+
+        Args:
+            self (undefined):
+            timer (undefined):
+
+        """
+
+        x_max = self.get_size()[1]
+        y_max = self.get_size()[0]
+
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
+        self.blocks.change_color(block_coordinates[8])
+
+        for bird in self.birds:
+            if not bird.dead:
+                # Calculate the distances to the nearest pipe
+                y_top = (bird.y - block_coordinates[7]) / y_max
+                y_bot = (bird.y - block_coordinates[1]) / y_max
+                dist_block = (bird.x - block_coordinates[2]) / x_max
+                # y_bird = bird.y / y_max
+                velocity_bird = (bird.velocity / 20) + 1
+
+                # Ask the bird what he wants to do
+                bird.decide_NN([y_top, y_bot, dist_block, velocity_bird])
 
     def check_best_bird(self) -> int:
         """
@@ -148,24 +205,25 @@ class app(pyglet.window.Window):
             self (undefined):
 
         Returns:
-            int: The position of the best bird or -1 if all birds failed.
+            list: The score and the list positions of the best birds or None if all birds failed.
 
         """
-        
-        max_score = 0
-        best_bird = 0
 
-        for num, bird in enumerate(self.birds):
+        max_score = 0
+        best_birds = []
+
+        for bird in self.birds:
             if bird.score > max_score:
                 max_score = bird.score
-                best_bird = num
+
+        for num, bird in enumerate(self.birds):
+            if bird.score == max_score:
+                best_birds.append(num)
 
         if max_score == 0:
-            return -1
+            return None
 
-        print("The score of the best bird was: " + str(max_score))
-        print("The best bird was number: " + str(best_bird))
-        return best_bird
+        return [max_score, best_birds]
 
     def on_draw(self):
         """
@@ -179,11 +237,32 @@ class app(pyglet.window.Window):
         """
         self.clear()
 
+        self.background.draw()
+
         self.blocks.draw()
-        # self.bird.draw()
 
         for bird in self.birds:
-            bird.draw()
+            if not bird.dead:
+                bird.draw()
+
+        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        block_coordinates = self.blocks.nearest_block_coordinates(
+            self.birds[0].x)
+
+        # Draw the edges of the nearest Block
+        # pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
+        #                      radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
+        #                      radius=5, color=(100, 0, 0)).draw()
+
+        # pyglet.shapes.Circle(x=block_coordinates[4],
+        #                      y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
+        #                      radius=5, color=(100, 0, 0)).draw()
+
+        # Draw all of the text
+        self.score_text.draw()
+        self.gen_text.draw()
 
     def pause(self):
         """
@@ -197,6 +276,7 @@ class app(pyglet.window.Window):
         # self.restart_button.draw()
 
         pyglet.clock.unschedule(self.update_app)
+        pyglet.clock.unschedule(self.bird_decisions)
 
     def restart(self):
         """
@@ -212,16 +292,18 @@ class app(pyglet.window.Window):
         self.set_variables()
 
         self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             Y_TILING, HOLE, self.y_scale, self.x_scale, self.startpoint)
+                             HOLE, self.y_max, self.x_max, self.startpoint)
 
         self.started = False
-        
+        self.max_score = 0
+
         # Revive all birds
         for bird in self.birds:
-            bird.revive(JUMP_HIGHT, Y_TILING/2 * self.y_scale)
+            bird.revive(JUMP_HIGHT, self.y_max/2)
 
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, SPEED)
+        pyglet.clock.schedule_interval(self.bird_decisions, NN_DECISION_SPEED)
 
     def on_key_press(self, symbol, modifiers):
         """
@@ -236,7 +318,9 @@ class app(pyglet.window.Window):
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, SPEED)
+                pyglet.clock.schedule_interval(
+                    self.bird_decisions, NN_DECISION_SPEED)
                 self.started = True
-            #self.birds[1].move_up()
+            # self.birds[1].move_up()
         if symbol == pyglet.window.key.ESCAPE:
             self.close()

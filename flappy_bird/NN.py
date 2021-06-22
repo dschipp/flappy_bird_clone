@@ -1,4 +1,5 @@
 """
+TODO: Outdated explanation
 This is going to be a Neural Network with 2 hiddep layers consisting of a specified number of neurons.
 
 So there is going to be needed a Matrix with the size of the number of inputs and hidden layer one.
@@ -28,13 +29,11 @@ To learn the NN gets another NN as input and then adapts the hidden layers of th
 
 import numpy as np
 import random
-
-HIDDEN_NEURON_COUNT_1 = 5
-HIDDEN_NEURON_COUNT_2 = 5
+from NN_functions import sigmoid, random_negative_positive
 
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, learning_rate: int = 0.1):
+    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.001):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -48,13 +47,19 @@ class Neural_Net:
 
         self.learning_rate = learning_rate
         self.output_count = output_count
+        self.input_count = input_count
+        self.hidden_layer_count = hidden_layer_count
 
-        self.hidden_layer_1 = np.random.rand(
-            input_count, HIDDEN_NEURON_COUNT_1)
-        self.hidden_layer_2 = np.random.rand(
-            HIDDEN_NEURON_COUNT_2, HIDDEN_NEURON_COUNT_1)
-        self.output_layer = np.random.rand(output_count, HIDDEN_NEURON_COUNT_2).reshape(
-            HIDDEN_NEURON_COUNT_2, output_count)
+        self.weights_input_hidden = np.random.rand(
+            input_count, self.hidden_layer_count)
+
+        self.weights_hidden_output = np.random.rand(
+            self.hidden_layer_count, output_count)
+
+        self.bias_hidden = np.random.rand(1, self.hidden_layer_count)
+        self.bias_output = np.random.rand(1, self.output_count)
+
+        self.activation_function = sigmoid
 
     def calc_outputs(self, inputs: list) -> list:
         """
@@ -68,18 +73,14 @@ class Neural_Net:
             list
 
         """
-    
-        normalisation = sum(inputs)
 
-        inputs = np.array(inputs).reshape(1, len(inputs))
+        hidden = np.matmul(inputs, self.weights_input_hidden)
+        hidden = hidden + self.bias_hidden
+        hidden = self.activation_function(hidden)
 
-        output = np.matmul(inputs, self.hidden_layer_1) / normalisation
-        normalisation = sum(output.reshape(HIDDEN_NEURON_COUNT_1, 1))
-
-        output = np.matmul(output, self.hidden_layer_2) / normalisation
-        normalisation = sum(output.reshape(HIDDEN_NEURON_COUNT_2, 1))
-
-        output = np.matmul(output, self.output_layer) / normalisation
+        output = np.matmul(hidden, self.weights_hidden_output)
+        output = output + self.bias_output
+        output = self.activation_function(output)
 
         return output.tolist()[0]
 
@@ -91,14 +92,26 @@ class Neural_Net:
             self (undefined):
             NN_to_adapt (Neural_Net): The Neural Net to adapt to.
 
+        TODO: Maybe compare the inputted NN decisions with the one this NN made to compare them and the learn from them.
+
         """
 
-        adapt_rate = random.randint(-100, 100) / 1000
+        adapt_rate_weights_input_hidden = random_negative_positive(
+            np.random.rand(self.input_count, self.hidden_layer_count))
+        self.weights_input_hidden = NN_to_adapt.weights_input_hidden + \
+            adapt_rate_weights_input_hidden * self.learning_rate
 
-        self.hidden_layer_1 = NN_to_adapt.hidden_layer_1 + adapt_rate * self.learning_rate
+        adapt_rate_weights_hidden_output = random_negative_positive(
+            np.random.rand(self.hidden_layer_count, self.output_count))
+        self.weights_hidden_output = NN_to_adapt.weights_hidden_output + \
+            adapt_rate_weights_hidden_output * self.learning_rate
 
-        adapt_rate = random.randint(-100, 100) / 1000
-        self.hidden_layer_2 = NN_to_adapt.hidden_layer_2 + adapt_rate * self.learning_rate
+        adapt_rate_bias_hidden = random_negative_positive(
+            np.random.rand(1, self.hidden_layer_count))
+        self.bias_hidden = NN_to_adapt.bias_hidden + \
+            adapt_rate_bias_hidden * self.learning_rate
 
-        adapt_rate = random.randint(-100, 100) / 1000
-        self.output_layer = NN_to_adapt.output_layer + adapt_rate * self.learning_rate
+        adapt_rate_bias_output = random_negative_positive(
+            np.random.rand(1, self.output_count))
+        self.bias_output = NN_to_adapt.bias_output + \
+            adapt_rate_bias_output * self.learning_rate
