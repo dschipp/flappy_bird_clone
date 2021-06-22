@@ -124,9 +124,9 @@ class blocks():
             height = random.randint(MIN_HEIGHT, MAX_HEIGHT)
 
             block_pair = [
-                Pipe(x=(self.count + self.block_dist * self.count),
+                Pipe(x=self.block_dist * self.count - self.block_width,
                      y=0, width=self.block_width, height=height),  # Bottom Block
-                Pipe(x=self.count + self.block_dist * self.count, y=height+self.hole,
+                Pipe(x=self.block_dist * self.count - self.block_width, y=height+self.hole,
                      width=self.block_width, height=self.y_max)  # Top Block
             ]
 
