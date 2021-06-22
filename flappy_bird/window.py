@@ -9,6 +9,7 @@ BLOCK_COUNT = 5
 BLOCK_DIST = 150
 SPEED = 1/200
 BLOCK_SPEED = 1
+BLOCK_SPEEDUP = 0.01
 BIRDSIZE = 30
 JUMP_HIGHT = 5
 GRAVITY = 0.2
@@ -48,15 +49,20 @@ class app(pyglet.window.Window):
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
                                             x=self.x_max * 40/41, y=self.y_max * 2/3)
-        self.gen_text = pyglet.text.Label('Gen.  : 1',
+        self.gen_text = pyglet.text.Label('Gen. : 1',
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
-                                            x=self.x_max * 40/41, y=self.y_max * 2/3 - 35)
+                                            x=self.x_max * 40/41 + 11, y=self.y_max * 2/3 - 35)
+        self.highscore_text = pyglet.text.Label('Highscore : 0',
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
         self.bird_generation = 1
+        self.highscore = 0
 
     def set_variables(self):
         """
@@ -80,6 +86,7 @@ class app(pyglet.window.Window):
         #                  radius=BIRDSIZE)
 
         self.started = False
+        self.block_speed = BLOCK_SPEED
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -94,9 +101,12 @@ class app(pyglet.window.Window):
             timer (undefined): The timer of the app.
 
         """
+        # Speed up the Blocks / Pipes game over time
+        self.block_speed += timer * BLOCK_SPEEDUP
+
         self.clear()
 
-        self.blocks.update(BLOCK_SPEED)
+        self.blocks.update(self.block_speed)
 
         # Get the max x and y values for normalisation
         x_max = self.get_size()[1]
@@ -143,6 +153,9 @@ class app(pyglet.window.Window):
                 print("The score of the best bird was: " +
                       str(score))
                 print("The best bird was number: " + str(best_birds))
+                # Update the best score
+                if score > self.highscore:
+                    self.highscore = score
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
                 steps = len(best_birds)
@@ -165,7 +178,8 @@ class app(pyglet.window.Window):
         if score is not None:
             self.max_score = score[0]
         self.score_text.text = "Score : " + str(self.max_score) 
-        self.gen_text.text = "Gen.  : " + str(self.bird_generation)
+        self.gen_text.text = "Gen. : " + str(self.bird_generation)
+        self.highscore_text.text = "Highscore : " + str(self.highscore)
 
     def bird_decisions(self, timer):
         """
@@ -263,6 +277,7 @@ class app(pyglet.window.Window):
         # Draw all of the text
         self.score_text.draw()
         self.gen_text.draw()
+        self.highscore_text.draw()
 
     def pause(self):
         """
