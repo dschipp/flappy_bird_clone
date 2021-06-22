@@ -5,7 +5,7 @@ from button import button
 
 BLOCK_WIDTH = 40
 HOLE = 120
-BLOCK_COUNT = 4
+BLOCK_COUNT = 5
 BLOCK_DIST = 150
 SPEED = 1/200
 BLOCK_SPEED = 1
@@ -48,10 +48,15 @@ class app(pyglet.window.Window):
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
                                             x=self.x_max * 40/41, y=self.y_max * 2/3)
+        self.gen_text = pyglet.text.Label('Gen.  : 1',
+                                            font_name='Times New Roman',
+                                            font_size=25, color=(0, 0, 0, 255),
+                                            x=self.x_max * 40/41, y=self.y_max * 2/3 - 35)
 
         # Create the birds
         self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
                                   jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+        self.bird_generation = 1
 
     def set_variables(self):
         """
@@ -152,6 +157,7 @@ class app(pyglet.window.Window):
                         else:
                             pass
                             # bird.change_color((0, 0,255 * upper_boundaries))
+            self.bird_generation += 1
 
             # Restart the game
             self.restart()
@@ -159,7 +165,8 @@ class app(pyglet.window.Window):
         score = self.check_best_bird()
         if score is not None:
             self.max_score = score[0]
-        self.score_text.text = "Score : " + str(self.max_score)
+        self.score_text.text = "Score : " + str(self.max_score) 
+        self.gen_text.text = "Gen.  : " + str(self.bird_generation)
 
     def bird_decisions(self, timer):
         """
@@ -244,17 +251,19 @@ class app(pyglet.window.Window):
             self.birds[0].x)
 
         # Draw the edges of the nearest Block
-        pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
-                             radius=5, color=(100, 0, 0)).draw()
-        pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
-                             radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
+        #                      radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
+        #                      radius=5, color=(100, 0, 0)).draw()
 
-        pyglet.shapes.Circle(x=block_coordinates[4],
-                             y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
-        pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
-                             radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[4],
+        #                      y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
+        # pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
+        #                      radius=5, color=(100, 0, 0)).draw()
 
+        # Draw all of the text
         self.score_text.draw()
+        self.gen_text.draw()
 
     def pause(self):
         """
