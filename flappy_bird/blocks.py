@@ -2,8 +2,8 @@ import pyglet
 from pyglet import sprite
 import random
 
-MAX_HEIGHT = 300
-MIN_HEIGHT = 150
+MAX_HEIGHT = 320
+MIN_HEIGHT = 120
 
 
 class Pipe():

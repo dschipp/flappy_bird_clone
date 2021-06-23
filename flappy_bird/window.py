@@ -4,9 +4,9 @@ from blocks import blocks
 from button import button
 
 BLOCK_WIDTH = 40
-HOLE = 120
+HOLE = 100
 BLOCK_COUNT = 5
-BLOCK_DIST = 150
+BLOCK_DIST = 170
 SPEED = 1/200
 BLOCK_SPEED = 1
 BLOCK_SPEEDUP = 0.01
