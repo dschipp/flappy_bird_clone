@@ -1,8 +1,18 @@
 import pyglet
 from pyglet import sprite
 from NN import Neural_Net
-from NN_functions import decision_function
 
+def decision_function(input):
+    """
+    The function after what the bird decides what to do.
+
+    Args:
+        input (undefined): The Input List
+
+    """
+    if input[1] >= input[0]:
+        return True
+    return False
 
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:

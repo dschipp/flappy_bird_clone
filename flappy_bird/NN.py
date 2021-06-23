@@ -29,8 +29,28 @@ To learn the NN gets another NN as input and then adapts the hidden layers of th
 
 import numpy as np
 import random
-from NN_functions import sigmoid, random_negative_positive
 
+def sigmoid(x: int):
+    """
+    The sigmoid function
+
+    Args:
+        x (int): The x input
+
+    """
+    x = 1 / (1 + np.exp(-x))
+    return x
+
+
+def random_negative_positive(x: int):
+    """
+    Return the input random negative of positive.
+
+    Args:
+        x (int): The input
+
+    """
+    return x * random.randint(-1, 1)
 
 class Neural_Net:
     def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.001):
