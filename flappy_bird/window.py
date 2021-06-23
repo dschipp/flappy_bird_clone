@@ -165,6 +165,7 @@ class app(pyglet.window.Window):
                     for num, bird in enumerate(self.birds[lower_boundaries:upper_boundaries]):
                         if num not in best_birds:
                             bird.learn_from_other_bird(self.birds[best_bird])
+                            bird.NN.learning_rate -= 0.00005 # Decrease the learning rate with increasing generations
                             # bird.change_color((0, 255 * upper_boundaries, 255 * upper_boundaries))
                         else:
                             pass
