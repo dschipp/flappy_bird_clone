@@ -53,7 +53,7 @@ def random_negative_positive(x: int):
     return x * random.randint(-1, 1)
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.001):
+    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.002):
         """
         Create Neural Network width 2 Hidden layers.
 
