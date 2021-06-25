@@ -2,6 +2,8 @@ import pyglet
 from pyglet import sprite
 from NN import Neural_Net
 
+# RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5 
+
 def decision_function(input):
     """
     The function after what the bird decides what to do.
