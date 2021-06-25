@@ -15,7 +15,7 @@ JUMP_HIGHT = 5
 GRAVITY = 0.2
 
 NN_DECISION_SPEED = 0.1
-BIRD_COUNT = 100
+BIRD_COUNT = 300
 
 
 class app(pyglet.window.Window):
@@ -254,11 +254,13 @@ class app(pyglet.window.Window):
 
         self.background.draw()
 
-        self.blocks.draw()
+        self.blocks.draw() 
 
+        drawn_birds = 0 # Only draw a specific number of birds for better performance
         for bird in self.birds:
-            if not bird.dead:
+            if not bird.dead and drawn_birds < 50:
                 bird.draw()
+                drawn_birds += 1
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(
