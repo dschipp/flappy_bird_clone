@@ -49,11 +49,21 @@ class flappy_bird(sprite.Sprite):
 
         self.nearest_block = 0  # Safe the number of the nearest block to check the score
 
-        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
+        self.recreate_NN()
 
         # A list to save the outputs the NN gave when the bird died
         self.died_with_outputs = []
         self.died_with_inputs = []  # A list to save the inputs the NN gave when the bird died
+
+    def recreate_NN(self):
+        """
+        Create a new Neural Network / Brain of the Bird.
+
+        Args:
+            self (undefined):
+
+        """
+        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
 
     def move_up(self):
         """

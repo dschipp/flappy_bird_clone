@@ -145,8 +145,10 @@ class app(pyglet.window.Window):
             # If the score is 0, create a new population
             if check is None:
                 print("No one made it :(")
-                self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
-                                          jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+                for bird in self.birds:
+                    bird.recreate_NN()
+                # self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
+                #                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
             else:
                 best_birds = check[1]
                 score = check[0]
