@@ -29,7 +29,9 @@ To learn the NN gets another NN as input and then adapts the hidden layers of th
 
 import numpy as np
 import random
+import numba
 
+@numba.njit
 def sigmoid(x: int):
     """
     The sigmoid function
