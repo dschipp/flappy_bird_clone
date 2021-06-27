@@ -1,8 +1,10 @@
 import pyglet
 from pyglet import sprite
 from NN import Neural_Net
+import constants
 
-# RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5 
+# RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5
+
 
 def decision_function(input):
     """
@@ -16,19 +18,17 @@ def decision_function(input):
         return True
     return False
 
+
 class flappy_bird(sprite.Sprite):
-    def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
+    def __init__(self, x: int, y: int, color: tuple = (0, 128, 255)) -> None:
         """
-        Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
+        Create a flappy bird with a working Neural Network.
 
         Args:
             self (undefined):
-            x (int): The x starting Coordinate
-            y (int): The y starting Coordinate
-            radius (int): The Radius Size of the Bird
-            gravity (int): The gravity which the bird is falling
-            jump_height (int): The height the bird jumps
-            color (tuple=(50,225,30)): The Color the circle of the bird has. Currently some kind of blue
+            x (int): The x position of the Bird.
+            y (int): The y position of the bird.
+            color (tuple=(0,128,255)): (WIP) The color of the bird.
 
         Returns:
             None
@@ -39,12 +39,12 @@ class flappy_bird(sprite.Sprite):
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)
-        self.scale = radius / bird_image.width
-        self.radius = radius
+        self.scale = constants.BIRD_SIZE / bird_image.width
+        self.radius = constants.BIRD_SIZE
 
-        self.gravity = -gravity
+        self.gravity = -constants.GRAVITY
         self.velocity = 0
-        self.jump_height = jump_height
+        self.jump_height = constants.JUMP_HIGHT
 
         self.dead = False
         self.score = 0

@@ -2,21 +2,7 @@ import pyglet
 from bird import flappy_bird
 from blocks import blocks
 from button import button
-
-BLOCK_WIDTH = 40
-HOLE = 100
-BLOCK_COUNT = 5
-BLOCK_DIST = 170
-SPEED = 1/200
-BLOCK_SPEED = 1
-BLOCK_SPEEDUP = 0.01
-BIRDSIZE = 30
-JUMP_HIGHT = 5
-GRAVITY = 0.2
-
-NN_DECISION_SPEED = 0.1
-BIRD_COUNT = 300
-
+import constants
 
 class app(pyglet.window.Window):
 
@@ -59,8 +45,7 @@ class app(pyglet.window.Window):
                                             x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
 
         # Create the birds
-        self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
-                                  jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+        self.birds = [flappy_bird(x=50, y=self.y_max/2) for i in range(constants.BLOCK_COUNT)]
         self.bird_generation = 1
         self.highscore = 0
 
@@ -77,16 +62,11 @@ class app(pyglet.window.Window):
             self (undefined):
 
         """
-        self.startpoint = BLOCK_DIST  # X_TILING / 2 + 3
 
-        self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             HOLE, self.y_max, self.x_max, self.startpoint)
-
-        # self.bird = bird(x=50, y=Y_TILING/2 * self.y_scale, gravity=GRAVITY, jump_height=JUMP_HIGHT,
-        #                  radius=BIRDSIZE)
+        self.blocks = blocks(self.y_max, self.x_max)
 
         self.started = False
-        self.block_speed = BLOCK_SPEED
+        self.block_speed = constants.BLOCK_SPEED
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -102,7 +82,7 @@ class app(pyglet.window.Window):
 
         """
         # Speed up the Blocks / Pipes game over time
-        self.block_speed += timer * BLOCK_SPEEDUP
+        self.block_speed += timer * constants.BLOCK_SPEEDUP
 
         self.clear()
 
@@ -147,8 +127,7 @@ class app(pyglet.window.Window):
                 print("No one made it :(")
                 for bird in self.birds:
                     bird.recreate_NN()
-                # self.birds = [flappy_bird(x=50, y=self.y_max/2, gravity=GRAVITY,
-                #                           jump_height=JUMP_HIGHT, radius=BIRDSIZE) for i in range(BIRD_COUNT)]
+                self.birds = [flappy_bird(x=50, y=self.y_max/2) for i in range(constants.BIRD_COUNT)]
             else:
                 best_birds = check[1]
                 score = check[0]
@@ -260,7 +239,7 @@ class app(pyglet.window.Window):
 
         drawn_birds = 0 # Only draw a specific number of birds for better performance
         for bird in self.birds:
-            if not bird.dead and drawn_birds < 50:
+            if not bird.dead and drawn_birds < constants.DISPLAYED_BIRDS:
                 bird.draw()
                 drawn_birds += 1
 
@@ -311,19 +290,18 @@ class app(pyglet.window.Window):
 
         self.set_variables()
 
-        self.blocks = blocks(BLOCK_COUNT, BLOCK_DIST, BLOCK_WIDTH,
-                             HOLE, self.y_max, self.x_max, self.startpoint)
+        self.blocks = blocks(self.y_max, self.x_max)
 
         self.started = False
         self.max_score = 0
 
         # Revive all birds
         for bird in self.birds:
-            bird.revive(JUMP_HIGHT, self.y_max/2)
+            bird.revive(constants.JUMP_HIGHT, self.y_max/2)
 
         print("Restarting with a new generation. \n")
-        pyglet.clock.schedule_interval(self.update_app, SPEED)
-        pyglet.clock.schedule_interval(self.bird_decisions, NN_DECISION_SPEED)
+        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+        pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
 
     def on_key_press(self, symbol, modifiers):
         """
@@ -337,9 +315,9 @@ class app(pyglet.window.Window):
         """
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
-                pyglet.clock.schedule_interval(self.update_app, SPEED)
+                pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
                 pyglet.clock.schedule_interval(
-                    self.bird_decisions, NN_DECISION_SPEED)
+                    self.bird_decisions, constants.NN_DECISION_SPEED)
                 self.started = True
             # self.birds[1].move_up()
         if symbol == pyglet.window.key.ESCAPE:

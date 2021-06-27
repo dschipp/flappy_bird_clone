@@ -1,9 +1,7 @@
 import pyglet
 from pyglet import sprite
 import random
-
-MAX_HEIGHT = 320
-MIN_HEIGHT = 120
+import constants
 
 
 class Pipe():
@@ -56,20 +54,14 @@ class Pipe():
 
 
 class blocks():
-    def __init__(self, count: int, block_dist: int, block_width: int, hole: int, y_max: int, x_max: int, startpoint: int) -> None:
+    def __init__(self, y_max: int, x_max: int) -> None:
         """
         Create an list of block pairs one at the top and the other at the bottom with a distance between them.
 
         Args:
             self (undefined):
-            count (int): The number of block pairs.
-            block_dist (int): The distance between the block pairs.
-            block_width (int): The width of the blocks.
-            y_tiling (int): In how many tiles the y is splittet up.
-            hole (int): The size of the hole between the blocks in the block pair. So between the upper and lower block.
-            y_scale (int): The y scale of the window, because of the tiling.
-            x_scale (int): The x scale of the window after the tiling
-            startpoint (int): The x start coordinate of the first block pair.
+            y_max (int): The maximum height of the window.
+            x_max (int): The maximum width of the window.
 
         Returns:
             None
@@ -80,22 +72,23 @@ class blocks():
 
         self.x_max = x_max
         self.y_max = y_max
-        self.count = count
-        self.block_width = block_width
-        self.block_dist = block_dist
-        self.startpoint = startpoint
-        self.hole = hole
+        self.count = constants.BLOCK_COUNT
+        self.block_width = constants.BLOCK_WIDTH
+        self.block_dist = constants.BLOCK_DIST
+        self.startpoint = constants.BLOCK_STARTPOINT
+        self.hole = constants.BLOCK_HOLE
 
         # Create a list of block pairs with random heights. The list contains of block pairs, where the firs block
         # is the bottom block and the second one is the top block
-        for block_pair_count in range(count):
-            height = random.randint(MIN_HEIGHT, MAX_HEIGHT)
+        for block_pair_count in range(self.count):
+            height = random.randint(
+                constants.BLOCK_MIN_HEIGHT, constants.BLOCK_MAX_HEIGHT)
 
             block_pair = [
-                Pipe(x=(block_pair_count + block_dist * block_pair_count + startpoint),
-                     y=0, width=block_width, height=height),  # Bottom Pipe
-                Pipe(x=(block_pair_count + block_dist * block_pair_count + startpoint), y=(
-                    height+hole), width=block_width, height=self.y_max)  # Top Pipe
+                Pipe(x=(block_pair_count + constants.BLOCK_DIST * block_pair_count + constants.BLOCK_STARTPOINT),
+                     y=0, width=constants.BLOCK_WIDTH, height=height),  # Bottom Pipe
+                Pipe(x=(block_pair_count + constants.BLOCK_DIST * block_pair_count + constants.BLOCK_STARTPOINT), y=(
+                    height+constants.BLOCK_HOLE), width=constants.BLOCK_WIDTH, height=self.y_max)  # Top Pipe
             ]
 
             self.blocks.append(block_pair)
@@ -121,7 +114,8 @@ class blocks():
         if remove_first:
             self.blocks.pop(0)
 
-            height = random.randint(MIN_HEIGHT, MAX_HEIGHT)
+            height = random.randint(
+                constants.BLOCK_MIN_HEIGHT, constants.BLOCK_MAX_HEIGHT)
 
             block_pair = [
                 Pipe(x=self.block_dist * self.count - self.block_width,
