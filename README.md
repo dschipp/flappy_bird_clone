@@ -7,6 +7,8 @@ The popular game played by a Neural Network with evolution.
 All python dependencies are managed with [poetry](https://python-poetry.org/), this should be first installed as 
 well as [git](https://git-scm.com/).
 
+Also [this](http://www.thezenofpython.com/).
+
 ## Excecute
 
 - Clone the Repository
