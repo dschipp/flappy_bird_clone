@@ -1,22 +1,34 @@
 import pyglet
 from pyglet import sprite
 from NN import Neural_Net
-from NN_functions import decision_function
+import constants
+
+# RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5
+
+
+def decision_function(input):
+    """
+    The function after what the bird decides what to do.
+
+    Args:
+        input (undefined): The Input List
+
+    """
+    if input[1] >= input[0]:
+        return True
+    return False
 
 
 class flappy_bird(sprite.Sprite):
-    def __init__(self, x: int, y: int, radius: int, gravity: int, jump_height: int, color: tuple = (0, 128, 255)) -> None:
+    def __init__(self, x: int, y: int, color: tuple = (0, 128, 255)) -> None:
         """
-        Create a bird, potentially a bird with a Neural Network learning. Currently it is just a circle.
+        Create a flappy bird with a working Neural Network.
 
         Args:
             self (undefined):
-            x (int): The x starting Coordinate
-            y (int): The y starting Coordinate
-            radius (int): The Radius Size of the Bird
-            gravity (int): The gravity which the bird is falling
-            jump_height (int): The height the bird jumps
-            color (tuple=(50,225,30)): The Color the circle of the bird has. Currently some kind of blue
+            x (int): The x position of the Bird.
+            y (int): The y position of the bird.
+            color (tuple=(0,128,255)): (WIP) The color of the bird.
 
         Returns:
             None
@@ -27,23 +39,33 @@ class flappy_bird(sprite.Sprite):
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)
-        self.scale = radius / bird_image.width
-        self.radius = radius
+        self.scale = constants.BIRD_SIZE / bird_image.width
+        self.radius = constants.BIRD_SIZE
 
-        self.gravity = -gravity
+        self.gravity = -constants.GRAVITY
         self.velocity = 0
-        self.jump_height = jump_height
+        self.jump_height = constants.JUMP_HEIGHT
 
         self.dead = False
         self.score = 0
 
         self.nearest_block = 0  # Safe the number of the nearest block to check the score
 
-        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
+        self.recreate_NN()
 
         # A list to save the outputs the NN gave when the bird died
         self.died_with_outputs = []
         self.died_with_inputs = []  # A list to save the inputs the NN gave when the bird died
+
+    def recreate_NN(self):
+        """
+        Create a new Neural Network / Brain of the Bird.
+
+        Args:
+            self (undefined):
+
+        """
+        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
 
     def move_up(self):
         """

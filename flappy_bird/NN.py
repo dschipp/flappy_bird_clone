@@ -1,6 +1,5 @@
 """
-TODO: Outdated explanation
-This is going to be a Neural Network with 2 hiddep layers consisting of a specified number of neurons.
+This is going to be a Neural Network with 1 hiddep layer consisting of a specified number of neurons.
 
 So there is going to be needed a Matrix with the size of the number of inputs and hidden layer one.
 
@@ -12,28 +11,59 @@ For example if we have 3 inputs and a number of 5 hidden layer neurons:
 | input_3 |      | r  r  r |     | output_4 |
                  | r  r  r |     | output_5 |
 
-the outputs go in the next hidden layer and then an out put is created.
+Also there is added a bias on every layer except the input layer.
 
-So we need 3 matrices that have the size of:
+| output_1 |    | bias_1 |
+| output_2 |    | bias_2 |
+| output_3 | +  | bias_3 |
+| output_4 |    | bias_4 |
+| output_5 |    | bias_5 |
 
-1. number of inputs x fist hidden layer neurons
-2. fist hidden layer neurons x second hidden layer neurons
-3. second hidden layer neurons x number of outputs
+After that the values of the neurons are send through an activation function (Currently the sigmoid function).
 
-These matrices are getting multiplied and in a separate function you can change the values of the hidden layer 
-matrices slidely to train.
+So we need 2 matrices that have the size of:
 
-To learn the NN gets another NN as input and then adapts the hidden layers of that NN slightly different.
+1. number of inputs x number of hidden layer neurons
+2. number of hidden layer neurons x number of outputs
+
+And two vectors that have the size of:
+
+1. number of hidden layer neurons
+2. number of output neurons
+
+To learn the NN gets another NN and creates a slightly different version of that inputted NN.
 
 """
 
 import numpy as np
 import random
-from NN_functions import sigmoid, random_negative_positive
+import numba
 
+@numba.njit
+def sigmoid(x: int):
+    """
+    The sigmoid function
+
+    Args:
+        x (int): The x input
+
+    """
+    x = 1 / (1 + np.exp(-x))
+    return x
+
+
+def random_negative_positive(x: int):
+    """
+    Return the input random negative of positive.
+
+    Args:
+        x (int): The input
+
+    """
+    return x * random.randint(-1, 1)
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 0.001):
+    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 500):
         """
         Create Neural Network width 2 Hidden layers.
 
@@ -41,11 +71,11 @@ class Neural_Net:
             self (undefined):
             input_count (undefined): The number of inputs.
             output_count (undefined): The number of outputs.
-            learning_rate (int = 1): The learning rate of the NN, when adapting.
+            learning_rate (int = 500): The higher the more the NN learns from another given NN.
 
         """
 
-        self.learning_rate = learning_rate
+        self.learning_rate = 1 / learning_rate
         self.output_count = output_count
         self.input_count = input_count
         self.hidden_layer_count = hidden_layer_count

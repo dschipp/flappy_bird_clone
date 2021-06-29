@@ -1,4 +1,4 @@
-TODO: Evolution of the birds / Learning System
 TODO: Make that the body of the bird can change the color for better noticeable generations
 TODO: Safe the best bird / birds (Pickle)
 TODO: Plot about the population size
+TODO: Write test functions

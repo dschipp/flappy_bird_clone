@@ -5,9 +5,11 @@ description = ""
 authors = ["David Schippers <david.schip@posteo.de>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8,<3.10"
 pyglet = "^1.5.17"
 numpy = "^1.20.3"
+numba = "^0.53.1"
+configparser = "^5.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
