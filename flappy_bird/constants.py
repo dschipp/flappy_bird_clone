@@ -6,6 +6,7 @@ DISPLAYED_BIRDS = 50  # How Many Birds are displayed on the window.
 JUMP_HIGHT = 5  # How strong do the birds jump.
 GRAVITY = 0.2  # # How strong are the birds pulled down.
 BIRD_SIZE = 30  # The Size of the Bird.
+BIRD_X = 50 # The x coordinate of the Birds.
 
 """ ------------- Neuronal Network Properties -------------- """
 NN_DECISION_SPEED = 0.1  # How often are the Neural Network functions called.
