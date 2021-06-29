@@ -143,11 +143,7 @@ class blocks():
         """
 
         for block_pair in self.blocks:
-            for top, block in enumerate(block_pair):
-
-                top_bottom = 1  # Var to determine if the radius should be added or subtracted
-                if not top:
-                    top_bottom = -1
+            for block in block_pair:
 
                 if x > block.x and x < block.x + block.width and y > block.y and y < block.y + block.height or x + width > block.x and x + width < block.x + block.width and y + height > block.y and y + height < block.y + block.height:
                     return True
