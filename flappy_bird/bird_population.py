@@ -201,4 +201,4 @@ class bird_population():
         """
         # Revive all birds
         for bird in self.birds:
-            bird.revive(constants.JUMP_HIGHT, self.y_max/2)
+            bird.revive(constants.JUMP_HEIGHT, self.y_max/2)

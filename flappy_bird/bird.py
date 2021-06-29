@@ -44,7 +44,7 @@ class flappy_bird(sprite.Sprite):
 
         self.gravity = -constants.GRAVITY
         self.velocity = 0
-        self.jump_height = constants.JUMP_HIGHT
+        self.jump_height = constants.JUMP_HEIGHT
 
         self.dead = False
         self.score = 0
