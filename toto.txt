@@ -2,3 +2,4 @@ TODO: Make that the body of the bird can change the color for better noticeable 
 TODO: Safe the best bird / birds (Pickle)
 TODO: Plot about the population size
 TODO: Write test functions
+TODO: Settings window where you can change the game properties
