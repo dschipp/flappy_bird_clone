@@ -1,5 +1,5 @@
 import pyglet
-from bird import flappy_bird
+from bird_population import bird_population
 from blocks import blocks
 from button import button
 import constants
@@ -45,7 +45,7 @@ class app(pyglet.window.Window):
                                             x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
 
         # Create the birds
-        self.birds = [flappy_bird(x=50, y=self.y_max/2) for i in range(constants.BLOCK_COUNT)]
+        self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
         self.bird_generation = 1
         self.highscore = 0
 
@@ -88,46 +88,24 @@ class app(pyglet.window.Window):
 
         self.blocks.update(self.block_speed)
 
-        # Get the max x and y values for normalisation
-        x_max = self.get_size()[1]
-        y_max = self.get_size()[0]
-
-        stop_game = True  # Variable to check if the game should be stopped because all birds are dead
-
-        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
+        # [x_bot_left, y_bot_left, x_bot_right, y_bot_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(
-            self.birds[0].x)
+            constants.BIRD_X)
 
-        for bird in self.birds:
+        stop_game = self.birds.update(block_coordinates)
 
-            if not bird.dead:
-                bird.update(self.get_size()[0])
-
-            # Check for collision
-            if self.blocks.check_collision(bird.x, bird.y, bird.width, bird.height):
-                bird.die()
-
-            # Check if a bird passed a pipe
-            if bird.nearest_block != block_coordinates[8] and not bird.dead and not block_coordinates[8] == 0:
-                bird.add_score()
-                # print("Got through one!")
-            bird.nearest_block = block_coordinates[8]
-
-            # Check if all birds are dead. If one bird is alive the game is not stopped
-            if not bird.dead:
-                stop_game = False
+        # Check the score
+        check = self.birds.check_best_bird()
 
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
         if stop_game:
-            # Check the score
-            check = self.check_best_bird()
 
             # If the score is 0, create a new population
             if check is None:
                 print("No one made it :(")
                 # for bird in self.birds:
                 #     bird.recreate_NN() # TODO: This function does not work properly i think.
-                self.birds = [flappy_bird(x=50, y=self.y_max/2) for i in range(constants.BIRD_COUNT)]
+                self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
             else:
                 best_birds = check[1]
                 score = check[0]
@@ -139,26 +117,14 @@ class app(pyglet.window.Window):
                     self.highscore = score
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
-                steps = len(best_birds)
-                for num, best_bird in enumerate(best_birds):
-                    lower_boundaries = round((num/steps) * len(self.birds))
-                    upper_boundaries = round(((num+1)/steps) * len(self.birds))
-                    for num, bird in enumerate(self.birds[lower_boundaries:upper_boundaries]):
-                        if num not in best_birds:
-                            bird.learn_from_other_bird(self.birds[best_bird])
-                            bird.NN.learning_rate -= 0.00005 # Decrease the learning rate with increasing generations
-                            # bird.change_color((0, 255 * upper_boundaries, 255 * upper_boundaries))
-                        else:
-                            pass
-                            # bird.change_color((0, 0,255 * upper_boundaries))
+                self.birds.learn(best_birds)
             self.bird_generation += 1
 
             # Restart the game
             self.restart()
 
-        score = self.check_best_bird()
-        if score is not None:
-            self.max_score = score[0]
+        if check is not None:
+            self.max_score = check[0]
         self.score_text.text = "Score : " + str(self.max_score) 
         self.gen_text.text = "Gen. : " + str(self.bird_generation)
         self.highscore_text.text = "Highscore : " + str(self.highscore)
@@ -173,53 +139,12 @@ class app(pyglet.window.Window):
 
         """
 
-        x_max = self.get_size()[1]
-        y_max = self.get_size()[0]
-
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
         block_coordinates = self.blocks.nearest_block_coordinates(
-            self.birds[0].x)
-        self.blocks.change_color(block_coordinates[8])
+            constants.BIRD_X)
+        # self.blocks.change_color(block_coordinates[8])
 
-        for bird in self.birds:
-            if not bird.dead:
-                # Calculate the distances to the nearest pipe
-                y_top = (bird.y - block_coordinates[7]) / y_max
-                y_bot = (bird.y - block_coordinates[1]) / y_max
-                dist_block = (bird.x - block_coordinates[2]) / x_max
-                # y_bird = bird.y / y_max
-                velocity_bird = (bird.velocity / 20) + 1
-
-                # Ask the bird what he wants to do
-                bird.decide_NN([y_top, y_bot, dist_block, velocity_bird])
-
-    def check_best_bird(self) -> int:
-        """
-        Check for the best bird.
-
-        Args:
-            self (undefined):
-
-        Returns:
-            list: The score and the list positions of the best birds or None if all birds failed.
-
-        """
-
-        max_score = 0
-        best_birds = []
-
-        for bird in self.birds:
-            if bird.score > max_score:
-                max_score = bird.score
-
-        for num, bird in enumerate(self.birds):
-            if bird.score == max_score:
-                best_birds.append(num)
-
-        if max_score == 0:
-            return None
-
-        return [max_score, best_birds]
+        self.birds.birds_brain_decides(block_coordinates)
 
     def on_draw(self):
         """
@@ -237,15 +162,11 @@ class app(pyglet.window.Window):
 
         self.blocks.draw() 
 
-        drawn_birds = 0 # Only draw a specific number of birds for better performance
-        for bird in self.birds:
-            if not bird.dead and drawn_birds < constants.DISPLAYED_BIRDS:
-                bird.draw()
-                drawn_birds += 1
+        self.birds.draw()
 
         # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        block_coordinates = self.blocks.nearest_block_coordinates(
-            self.birds[0].x)
+        # block_coordinates = self.blocks.nearest_block_coordinates(
+        #     self.birds[0].x)
 
         # Draw the edges of the nearest Block
         # pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
@@ -295,9 +216,7 @@ class app(pyglet.window.Window):
         self.started = False
         self.max_score = 0
 
-        # Revive all birds
-        for bird in self.birds:
-            bird.revive(constants.JUMP_HIGHT, self.y_max/2)
+        self.birds.revive_population()
 
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
