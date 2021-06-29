@@ -5,6 +5,10 @@ import constants
 
 # RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5
 
+class bird_colors():
+    def __init__(self, color:str = 'yellow') -> None:
+        self.color = color
+        self.image_path = "./assets/flappy_bird_yellow.png"
 
 def decision_function(input):
     """
@@ -34,8 +38,10 @@ class flappy_bird(sprite.Sprite):
             None
 
         """
+        self.color_class = bird_colors()
+
         # load the image
-        bird_image = pyglet.image.load("./assets/flappy_bird.png")
+        bird_image = pyglet.image.load(self.color_class.image_path)
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)
