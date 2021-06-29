@@ -112,7 +112,7 @@ class app(pyglet.window.Window):
                 print("The score of the best bird was: " +
                       str(score))
                 print("The best bird was number: " + str(best_birds))
-                # Update the best score
+                # Update the hight score
                 if score > self.highscore:
                     self.highscore = score
                 print("Birds are learning...")
@@ -163,21 +163,6 @@ class app(pyglet.window.Window):
         self.blocks.draw() 
 
         self.birds.draw()
-
-        # [x_bot_left, y_bot_left, x_bot_right, y_top_right, x_top_right, y_top_right, x_top_left, y_top_left, block_number]
-        # block_coordinates = self.blocks.nearest_block_coordinates(
-        #     self.birds[0].x)
-
-        # Draw the edges of the nearest Block
-        # pyglet.shapes.Circle(x=block_coordinates[0], y=block_coordinates[1],
-        #                      radius=5, color=(100, 0, 0)).draw()
-        # pyglet.shapes.Circle(x=block_coordinates[2], y=block_coordinates[3],
-        #                      radius=5, color=(100, 0, 0)).draw()
-
-        # pyglet.shapes.Circle(x=block_coordinates[4],
-        #                      y=block_coordinates[5], radius=5, color=(100, 0, 0)).draw()
-        # pyglet.shapes.Circle(x=block_coordinates[6], y=block_coordinates[7],
-        #                      radius=5, color=(100, 0, 0)).draw()
 
         # Draw all of the text
         self.score_text.draw()
