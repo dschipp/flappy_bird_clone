@@ -202,3 +202,11 @@ class bird_population():
         # Revive all birds
         for bird in self.birds:
             bird.revive(constants.JUMP_HEIGHT, self.y_max/2)
+    
+    def get_alive_count(self):
+        count = 0
+        for bird in self.birds:
+            if not bird.dead:
+                count += 1
+
+        return count

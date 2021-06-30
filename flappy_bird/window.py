@@ -43,6 +43,10 @@ class app(pyglet.window.Window):
                                             font_name='Times New Roman',
                                             font_size=25, color=(0, 0, 0, 255),
                                             x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
+        self.alive_bird_count_text = pyglet.text.Label('Alive Birds : ' + str(constants.BIRD_COUNT),
+                                            font_name='Times New Roman',
+                                            font_size=15, color=(0, 0, 0, 255),
+                                            x= 10 , y= 10)
 
         # Create the birds
         self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
@@ -134,6 +138,7 @@ class app(pyglet.window.Window):
         self.score_text.text = "Score : " + str(self.max_score) 
         self.gen_text.text = "Gen. : " + str(self.bird_generation)
         self.highscore_text.text = "Highscore : " + str(self.highscore)
+        self.alive_bird_count_text.text = 'Alive Birds : ' + str(self.birds.get_alive_count())
 
     def bird_decisions(self, timer):
         """
@@ -174,6 +179,7 @@ class app(pyglet.window.Window):
         self.score_text.draw()
         self.gen_text.draw()
         self.highscore_text.draw()
+        self.alive_bird_count_text.draw()
 
     def pause(self):
         """

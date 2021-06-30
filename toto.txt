@@ -1,7 +1,5 @@
 TODO: Make that the body of the bird can change the color for better noticeable generations
 TODO: Safe the best bird / birds (Pickle)
-TODO: Plot about the population size
 TODO: Write test functions
 TODO: Settings window where you can change the game properties
-TODO: If the highscore is not broken after a few generations. Create a new one.
 TODO: Press a button to speed up the game
