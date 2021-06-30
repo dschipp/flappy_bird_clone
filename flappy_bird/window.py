@@ -86,6 +86,8 @@ class app(pyglet.window.Window):
             timer (undefined): The timer of the app.
 
         """
+        self.bird_decisions(timer)
+
         # Speed up the Blocks / Pipes game over time
         self.block_speed += timer * constants.BLOCK_SPEEDUP
 
@@ -108,12 +110,11 @@ class app(pyglet.window.Window):
             # If the score is 0, create a new population
             if check is None:
                 print("No one made it :(")
-                # for bird in self.birds:
-                #     bird.recreate_NN() # TODO: This function does not work properly i think.
-                self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
+                self.birds.recreate_population()
             elif self.generations_without_beating_the_highscore > constants.MAX_GENERATIONS_WITHOUT_HIGHSCORE:
-                print("For " + str(self.generations_without_beating_the_highscore) + " no bird broke the highscore. So a new population is created.")
-                self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
+                print("For " + str(self.generations_without_beating_the_highscore) + " generatrions no bird broke the highscore. So a new population is created.")
+                self.birds.recreate_population()
+                self.generations_without_beating_the_highscore = 0
             else:
                 best_birds = check[1]
                 score = check[0]
@@ -193,7 +194,7 @@ class app(pyglet.window.Window):
         # self.restart_button.draw()
 
         pyglet.clock.unschedule(self.update_app)
-        pyglet.clock.unschedule(self.bird_decisions)
+        # pyglet.clock.unschedule(self.bird_decisions)
 
     def restart(self):
         """
@@ -210,14 +211,14 @@ class app(pyglet.window.Window):
 
         self.blocks = blocks(self.y_max, self.x_max)
 
-        self.started = False
+        self.started = True
         self.max_score = 0
 
         self.birds.revive_population()
 
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
-        pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
+        # pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
 
     def on_key_press(self, symbol, modifiers):
         """
@@ -232,9 +233,13 @@ class app(pyglet.window.Window):
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
                 pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
-                pyglet.clock.schedule_interval(
-                    self.bird_decisions, constants.NN_DECISION_SPEED)
+                #pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
                 self.started = True
             # self.birds[1].move_up()
+        if symbol == pyglet.window.key.RIGHT:
+            if self.started:
+                print("Lets go faster!")
+                pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+
         if symbol == pyglet.window.key.ESCAPE:
             self.close()

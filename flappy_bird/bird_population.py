@@ -210,3 +210,7 @@ class bird_population():
                 count += 1
 
         return count
+    
+    def recreate_population(self):
+        self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
+                      for i in range(self.size)]
