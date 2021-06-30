@@ -7,8 +7,41 @@ import constants
 
 class bird_colors():
     def __init__(self, color:str = 'yellow') -> None:
+        """
+        Create a class to handle the color properties of the flappy bird.
+
+        Args:
+            self (undefined):
+            color (str='yellow'): The color that the bird should have.
+
+        Returns:
+            None
+
+        """
+    
+        self.image_path = None
+        self.set_color(color)
         self.color = color
-        self.image_path = "./assets/flappy_bird_yellow.png"
+    
+    def set_color(self, color:str):
+        """
+        
+
+        Args:
+            self (undefined):
+            color (str):
+
+        """
+    
+        if color == 'yellow':
+            self.image_path = "./assets/flappy_bird_yellow.png"
+        elif color == 'blue':
+            self.image_path = "./assets/flappy_bird_blue.png"
+        elif color == 'green':
+            self.image_path = "./assets/flappy_bird_green.png"
+        else:
+            raise "Not an available color"
+
 
 def decision_function(input):
     """
@@ -38,10 +71,10 @@ class flappy_bird(sprite.Sprite):
             None
 
         """
-        self.color_class = bird_colors()
+        self.bird_color = bird_colors()
 
         # load the image
-        bird_image = pyglet.image.load(self.color_class.image_path)
+        bird_image = pyglet.image.load(self.bird_color.image_path)
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)
@@ -84,7 +117,8 @@ class flappy_bird(sprite.Sprite):
         self.velocity += self.jump_height
 
     def change_color(self, color):
-        self.color = color
+        pass
+        # self.color = color
 
     def add_score(self):
         """
