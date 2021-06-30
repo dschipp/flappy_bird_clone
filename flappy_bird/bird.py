@@ -25,11 +25,11 @@ class bird_colors():
     
     def set_color(self, color:str):
         """
-        
+        Set the color of the bird.
 
         Args:
             self (undefined):
-            color (str):
+            color (str): 'yellow', 'green', 'blue'
 
         """
     
@@ -40,7 +40,7 @@ class bird_colors():
         elif color == 'green':
             self.image_path = "./assets/flappy_bird_green.png"
         else:
-            raise "Not an available color"
+            raise "Not an available color. The currently available colors are: 'yellow', 'green', 'blue'"
 
 
 def decision_function(input):
