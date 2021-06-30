@@ -3,3 +3,4 @@ TODO: Safe the best bird / birds (Pickle)
 TODO: Plot about the population size
 TODO: Write test functions
 TODO: Settings window where you can change the game properties
+TODO: If the highscore is not broken after a few generations. Create a new one.
