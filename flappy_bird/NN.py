@@ -37,9 +37,9 @@ To learn the NN gets another NN and creates a slightly different version of that
 
 import numpy as np
 import random
-import numba
+# import numba
 
-@numba.njit
+# @numba.njit
 def sigmoid(x: int):
     """
     The sigmoid function
