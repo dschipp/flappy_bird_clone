@@ -4,3 +4,4 @@ TODO: Plot about the population size
 TODO: Write test functions
 TODO: Settings window where you can change the game properties
 TODO: If the highscore is not broken after a few generations. Create a new one.
+TODO: Press a button to speed up the game
