@@ -48,6 +48,7 @@ class app(pyglet.window.Window):
         self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
         self.bird_generation = 1
         self.highscore = 0
+        self.generations_without_beating_the_highscore = 0
 
     def set_variables(self):
         """
@@ -106,6 +107,9 @@ class app(pyglet.window.Window):
                 # for bird in self.birds:
                 #     bird.recreate_NN() # TODO: This function does not work properly i think.
                 self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
+            elif self.generations_without_beating_the_highscore > constants.MAX_GENERATIONS_WITHOUT_HIGHSCORE:
+                print("For " + str(self.generations_without_beating_the_highscore) + " no bird broke the highscore. So a new population is created.")
+                self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
             else:
                 best_birds = check[1]
                 score = check[0]
@@ -115,6 +119,8 @@ class app(pyglet.window.Window):
                 # Update the hight score
                 if score > self.highscore:
                     self.highscore = score
+                else:
+                    self.generations_without_beating_the_highscore += 1
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
                 self.birds.learn(best_birds)
