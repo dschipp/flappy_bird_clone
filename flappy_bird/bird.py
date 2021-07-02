@@ -55,6 +55,8 @@ def decision_function(input):
         return True
     return False
 
+# load the image
+bird_image = pyglet.image.load("./assets/flappy_bird_yellow.png")
 
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, color: tuple = (0, 128, 255)) -> None:
@@ -74,7 +76,7 @@ class flappy_bird(sprite.Sprite):
         self.bird_color = bird_colors()
 
         # load the image
-        bird_image = pyglet.image.load(self.bird_color.image_path)
+        # bird_image = pyglet.image.load(self.bird_color.image_path)
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)

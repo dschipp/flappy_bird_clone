@@ -37,9 +37,9 @@ To learn the NN gets another NN and creates a slightly different version of that
 
 import numpy as np
 import random
-# import numba
+import numba
 
-# @numba.njit
+@numba.njit
 def sigmoid(x: int):
     """
     The sigmoid function
@@ -63,7 +63,7 @@ def random_negative_positive(x: int):
     return x * random.randint(-1, 1)
 
 class Neural_Net:
-    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 500):
+    def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 300):
         """
         Create Neural Network width 2 Hidden layers.
 
