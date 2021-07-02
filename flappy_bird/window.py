@@ -28,6 +28,7 @@ class app(pyglet.window.Window):
         self.background_image = pyglet.image.load("./assets/background.png")
         self.background = pyglet.sprite.Sprite(
             self.background_image, x=0, y=-20)
+        self.background.scale_y = self.y_max / self.background.height
 
         # Create the Scoretext / Scoreboard
         self.max_score = 0

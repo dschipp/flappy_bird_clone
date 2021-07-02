@@ -2,6 +2,4 @@ TODO: Make that the body of the bird can change the color for better noticeable 
 TODO: Safe the best bird / birds (Pickle)
 TODO: Write test functions
 TODO: Settings window where you can change the game properties
-TODO: Free licenced pictures
-TODO: Choose a open source license
 TODO: Use a web based gui
