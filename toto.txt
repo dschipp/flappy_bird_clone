@@ -5,5 +5,4 @@ TODO: Settings window where you can change the game properties
 TODO: Press a button to speed up the game
 TODO: Free licenced pictures
 TODO: Choose a open source license
-TODO: Only load a picture once and then use it again
 TODO: Use a web based gui
