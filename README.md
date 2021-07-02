@@ -1,6 +1,6 @@
 # Flappy Bird
 
-The popular game played by a Neural Network with evolution.
+The popular game Flappy Bird played by a Neural Network with evolution.
 
 ## Dependencies
 
