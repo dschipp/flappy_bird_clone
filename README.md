@@ -1,13 +1,11 @@
 # Flappy Bird
 
-The popular game played by a Neural Network with evolution.
+The popular game Flappy Bird played by a Neural Network with evolution.
 
 ## Dependencies
 
-All python dependencies are managed with [poetry](https://python-poetry.org/), this should be first installed as 
-well as [git](https://git-scm.com/).
-
-Also [this](http://www.thezenofpython.com/).
+- All python dependencies are managed with [poetry](https://python-poetry.org/), this should be installed first.
+- It is recommended to use [git](https://git-scm.com/). Especially if you want to development.
 
 ## Excecute
 
@@ -23,7 +21,7 @@ Also [this](http://www.thezenofpython.com/).
     cd flappy bird
     ```
 
-- Install the dependencies
+- Install the python dependencies
 
     ```Shell
     poetry install
@@ -35,4 +33,4 @@ Also [this](http://www.thezenofpython.com/).
     poetry run python ./flappy_bird/main.py
     ```
 
-- Start the game with the up arrow key &uarr; or the spacebar
+- Start the game with the up arrow key &uarr; or the spacebar. To speed up use the right arrow &rarr;.

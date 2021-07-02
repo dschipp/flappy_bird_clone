@@ -5,6 +5,43 @@ import constants
 
 # RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5
 
+class bird_colors():
+    def __init__(self, color:str = 'yellow') -> None:
+        """
+        Create a class to handle the color properties of the flappy bird.
+
+        Args:
+            self (undefined):
+            color (str='yellow'): The color that the bird should have.
+
+        Returns:
+            None
+
+        """
+    
+        self.image_path = None
+        self.set_color(color)
+        self.color = color
+    
+    def set_color(self, color:str):
+        """
+        Set the color of the bird.
+
+        Args:
+            self (undefined):
+            color (str): 'yellow', 'green', 'blue'
+
+        """
+    
+        if color == 'yellow':
+            self.image_path = "./assets/flappy_bird_yellow.png"
+        elif color == 'blue':
+            self.image_path = "./assets/flappy_bird_blue.png"
+        elif color == 'green':
+            self.image_path = "./assets/flappy_bird_green.png"
+        else:
+            raise "Not an available color. The currently available colors are: 'yellow', 'green', 'blue'"
+
 
 def decision_function(input):
     """
@@ -18,6 +55,8 @@ def decision_function(input):
         return True
     return False
 
+# load the image
+bird_image = pyglet.image.load("./assets/flappy_bird_yellow.png")
 
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, color: tuple = (0, 128, 255)) -> None:
@@ -34,8 +73,10 @@ class flappy_bird(sprite.Sprite):
             None
 
         """
+        self.bird_color = bird_colors()
+
         # load the image
-        bird_image = pyglet.image.load("./assets/flappy_bird.png")
+        # bird_image = pyglet.image.load(self.bird_color.image_path)
 
         # Initialise the upper function.
         super(flappy_bird, self).__init__(bird_image, x=x, y=y)
@@ -78,7 +119,8 @@ class flappy_bird(sprite.Sprite):
         self.velocity += self.jump_height
 
     def change_color(self, color):
-        self.color = color
+        pass
+        # self.color = color
 
     def add_score(self):
         """

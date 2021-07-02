@@ -18,6 +18,7 @@ BIRD_X = int(config['Bird']['BIRD_SIZE']) # The x coordinate of the Birds.
 """ ------------- Neuronal Network Properties -------------- """
 NN_DECISION_SPEED = float(config['NeuralNet']['NN_DECISION_SPEED'])  # How often are the Neural Network functions called.
 BIRD_COUNT = int(config['NeuralNet']['BIRD_COUNT'])  # Of how many birds does one Population consists.
+MAX_GENERATIONS_WITHOUT_HIGHSCORE = int(config['NeuralNet']['MAX_GENERATIONS_WITHOUT_HIGHSCORE'])
 
 """ ---------------- Block Properties ---------------------- """
 BLOCK_MAX_HEIGHT = int(config['Block']['BLOCK_MAX_HEIGHT'])

@@ -4,6 +4,10 @@ import random
 import constants
 
 
+# load the images
+pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
+pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
+
 class Pipe():
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
         """
@@ -24,10 +28,6 @@ class Pipe():
         self.y = y
         self.height = height
         self.width = width
-
-        # load the image
-        pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
-        pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
 
         self.pipe_head = sprite.Sprite(pipe_head_image, x=x, y=y)
         self.pipe_body = sprite.Sprite(pipe_body_image, x=x, y=y)
