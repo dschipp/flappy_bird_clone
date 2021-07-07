@@ -1,5 +1,7 @@
+import pickle
 from bird import flappy_bird
 import constants
+import pyglet
 
 
 def check_collision(object_coordinates: list, block_coordinates: list) -> bool:
@@ -64,6 +66,8 @@ class bird_population():
 
         self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
                       for i in range(self.size)]
+
+        self.best_bird_save_file_path = "best_bird.pickle"
 
     def update(self, block_coordinates) -> bool:
         """
@@ -148,7 +152,7 @@ class bird_population():
                 # Ask the bird what he wants to do
                 bird.decide_NN([y_top, y_bot, dist_block, velocity_bird])
 
-    def check_best_bird(self) -> int:
+    def check_best_bird(self) -> list:
         """
         Check for the best bird.
 
@@ -157,6 +161,7 @@ class bird_population():
 
         Returns:
             list: The score and the list positions of the best birds or None if all birds failed.
+                    [score, [best_bird_list_pos]]
 
         """
 
@@ -215,3 +220,36 @@ class bird_population():
         self.birds = None
         self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
                       for i in range(self.size)]
+
+    def save_best_bird(self):
+        """
+        Save the best bird of a generation.
+
+        Args:
+            self (undefined):
+
+        """
+
+        best_bird_list = self.check_best_bird()
+
+        if best_bird_list is None:
+            return
+
+        best_bird = self.birds[best_bird_list[1][0]]
+        pickling_on = open(self.best_bird_save_file_path, "wb")
+        pickle.dump(best_bird, pickling_on)
+        pickling_on.close()
+
+        print("Saved the best ")
+
+    def load_best_bird(self):
+        """
+        Load the saved best bird and create a new generation from that bird.
+
+        Args:
+            self (undefined):
+
+        """
+        
+        pickle_off = open(self.best_bird_save_file_path, "rb")
+
