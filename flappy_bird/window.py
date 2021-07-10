@@ -241,6 +241,12 @@ class app(pyglet.window.Window):
             if self.started:
                 print("Lets go faster!")
                 pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+        
+        if symbol == pyglet.window.key.S:
+            self.birds.save_best_bird()
+
+        if symbol == pyglet.window.key.L:
+            self.birds.load_best_bird()
 
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
