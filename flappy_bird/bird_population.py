@@ -233,14 +233,15 @@ class bird_population():
         best_bird_list = self.check_best_bird()
 
         if best_bird_list is None:
+            print("There is no best bird to save.")
             return
 
-        best_bird = self.birds[best_bird_list[1][0]]
+        best_bird_NN = self.birds[best_bird_list[1][0]].NN
         pickling_on = open(self.best_bird_save_file_path, "wb")
-        pickle.dump(best_bird, pickling_on)
+        pickle.dump(best_bird_NN, pickling_on)
         pickling_on.close()
 
-        print("Saved the best ")
+        print("Saved the best bird this population.")
 
     def load_best_bird(self):
         """
@@ -250,6 +251,12 @@ class bird_population():
             self (undefined):
 
         """
-        
-        pickle_off = open(self.best_bird_save_file_path, "rb")
 
+        pickle_off = open(self.best_bird_save_file_path, "rb")
+        loaded_bird_NN = pickle.load(pickle_off)
+        self.birds[0].NN = loaded_bird_NN
+        pickle_off.close()
+
+        print("Loaded the saved best bird.")
+
+        # self.learn([0,[0]])
