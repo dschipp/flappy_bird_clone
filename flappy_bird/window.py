@@ -33,6 +33,9 @@ class app(pyglet.window.Window):
 
         # Initialize the Menu
         self.menu = menu(self.x_max/2, self.y_max / 2)
+        self.menu_blur_image = pyglet.image.load("./assets/menu_blur.png")
+        self.menu_blur = pyglet.sprite.Sprite(
+            self.menu_blur_image, x=0, y=-20)
 
         # Create the Scoretext / Scoreboard
         self.max_score = 0
@@ -53,7 +56,13 @@ class app(pyglet.window.Window):
                                             font_size=15, color=(0, 0, 0, 255),
                                             x= 10 , y= 10)
 
-        # Create the birds
+        # Start a Menu Sequence of the game
+        self.birds = bird_population(1, self.x_max, self.y_max)
+        self.birds.load_best_bird() # TODO: If the loaded bird is deleted this might cause Problems
+        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+
+    def start_game(self):
+        self.started = True
         self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
         self.bird_generation = 1
         self.highscore = 0
@@ -110,8 +119,9 @@ class app(pyglet.window.Window):
         check = self.birds.check_best_bird()
 
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
-        if stop_game:
-
+        if stop_game and not self.started: # If the Menu sequence bird died.
+            self.restart
+        elif stop_game:
             # If the score is 0, create a new population
             if check is None:
                 print("No one made it :(")
@@ -141,10 +151,11 @@ class app(pyglet.window.Window):
 
         if check is not None:
             self.max_score = check[0]
-        self.score_text.text = "Score : " + str(self.max_score) 
-        self.gen_text.text = "Gen. : " + str(self.bird_generation)
-        self.highscore_text.text = "Highscore : " + str(self.highscore)
-        self.alive_bird_count_text.text = 'Alive Birds : ' + str(self.birds.get_alive_count())
+        if self.started:
+            self.score_text.text = "Score : " + str(self.max_score) 
+            self.gen_text.text = "Gen. : " + str(self.bird_generation)
+            self.highscore_text.text = "Highscore : " + str(self.highscore)
+            self.alive_bird_count_text.text = 'Alive Birds : ' + str(self.birds.get_alive_count())
 
     def bird_decisions(self, timer):
         """
@@ -183,12 +194,16 @@ class app(pyglet.window.Window):
 
         # Draw all of the text
         if not self.started:
+            self.menu_blur.draw()
             self.menu.draw()
         else:
             self.score_text.draw()
             self.gen_text.draw()
             self.highscore_text.draw()
             self.alive_bird_count_text.draw()
+
+    def menu_sequence(self):
+        pass
 
     def pause(self):
         """
@@ -240,9 +255,9 @@ class app(pyglet.window.Window):
         """
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
-                pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+                self.start_game()
+                self.restart()
                 #pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
-                self.started = True
             # self.birds[1].move_up()
         if symbol == pyglet.window.key.RIGHT:
             if self.started:
