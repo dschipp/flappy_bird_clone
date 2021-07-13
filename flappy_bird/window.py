@@ -3,6 +3,7 @@ from bird_population import bird_population
 from blocks import blocks
 from button import button
 import constants
+from displayed_texts import menu
 
 class app(pyglet.window.Window):
 
@@ -29,6 +30,9 @@ class app(pyglet.window.Window):
         self.background = pyglet.sprite.Sprite(
             self.background_image, x=0, y=-20)
         self.background.scale_y = self.y_max / self.background.height
+
+        # Initialize the Menu
+        self.menu = menu(self.x_max/2, self.y_max / 2)
 
         # Create the Scoretext / Scoreboard
         self.max_score = 0
@@ -178,10 +182,13 @@ class app(pyglet.window.Window):
         self.birds.draw()
 
         # Draw all of the text
-        self.score_text.draw()
-        self.gen_text.draw()
-        self.highscore_text.draw()
-        self.alive_bird_count_text.draw()
+        if not self.started:
+            self.menu.draw()
+        else:
+            self.score_text.draw()
+            self.gen_text.draw()
+            self.highscore_text.draw()
+            self.alive_bird_count_text.draw()
 
     def pause(self):
         """
