@@ -86,6 +86,7 @@ class app(pyglet.window.Window):
 
         self.started = False
         self.block_speed = constants.BLOCK_SPEED
+        self.onpause = False
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -217,7 +218,12 @@ class app(pyglet.window.Window):
         # self.restart_button.draw()
 
         pyglet.clock.unschedule(self.update_app)
+        self.started = False
         # pyglet.clock.unschedule(self.bird_decisions)
+
+    def unpause(self):
+        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+        self.started = True
 
     def restart(self):
         """
@@ -272,3 +278,11 @@ class app(pyglet.window.Window):
 
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
+
+        if symbol == pyglet.window.key.P:
+            if self.started:
+                self.pause()
+                self.onpause = True
+            elif not self.started and self.onpause:
+                self.unpause()
+                self.onpause = False
