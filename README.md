@@ -12,13 +12,13 @@ The popular game Flappy Bird played by a Neural Network with evolution.
 - Clone the Repository
 
     ```Shell
-    git clone https://github.com/rayl3r/flappy_bird.git
+    git clone https://github.com/rayl3r/flappy_bird_clone.git
     ```
 
 - Move into the project folder
 
     ```Shell
-    cd flappy bird
+    cd flappy_bird_clone
     ```
 
 - Install the python dependencies
