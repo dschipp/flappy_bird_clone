@@ -12,21 +12,39 @@ class menu:
         self.x_middle = x_middle
         self.y_middle = y_middle
 
-        self.start_game_instructions_text = pyglet.text.Label('To Start the game press Space or Arrow Up',
+        self.start_game_instructions_text = pyglet.text.Label('- To Start the game press Space or Arrow Up',
                                             font_name='Times New Roman',
                                             font_size=15, color=(0, 0, 0, 255),
-                                            x=self.x_middle- 150, y=self.y_middle + 15)
+                                            x=self.x_middle- 120, y=self.y_middle + 15)
         
-        self.save_load_instructions_text = pyglet.text.Label('To save the best bird press S or to load the saved best bird press L',
+        self.save_instructions_text = pyglet.text.Label('- To save the best bird press S',
                                             font_name='Times New Roman',
                                             font_size=15, color=(0, 0, 0, 255),
-                                            x=self.x_middle - 150, y=self.y_middle - 15)
+                                            x=self.x_middle - 120, y=self.y_middle - 15)
+        
+        self.load_instructions_text = pyglet.text.Label('- To load the saved best bird press L',
+                                            font_name='Times New Roman',
+                                            font_size=15, color=(0, 0, 0, 255),
+                                            x=self.x_middle - 120, y=self.y_middle - 45)
+        
+        self.speed_up_instructions_text = pyglet.text.Label('- To speed up the game press the right arrow key',
+                                            font_name='Times New Roman',
+                                            font_size=15, color=(0, 0, 0, 255),
+                                            x=self.x_middle - 120, y=self.y_middle - 75)
+
+        self.pause_instructions_text = pyglet.text.Label('- To Pause and resume the game press P',
+                                            font_name='Times New Roman',
+                                            font_size=15, color=(0, 0, 0, 255),
+                                            x=self.x_middle - 120, y=self.y_middle - 105)
         
 
     def draw(self):
         
         self.start_game_instructions_text.draw()
-        self.save_load_instructions_text.draw()
+        self.save_instructions_text.draw()
+        self.load_instructions_text.draw()
+        self.speed_up_instructions_text.draw()
+        self.pause_instructions_text.draw()
 
 
 
