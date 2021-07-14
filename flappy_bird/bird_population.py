@@ -208,16 +208,30 @@ class bird_population():
         # Revive all birds
         for bird in self.birds:
             bird.revive(constants.JUMP_HEIGHT, self.y_max/2)
-    
+
     def get_alive_count(self):
+        """
+        Get the number of still alive birds.
+
+        Args:
+            self (undefined):
+
+        """
         count = 0
         for bird in self.birds:
             if not bird.dead:
                 count += 1
 
         return count
-    
+
     def recreate_population(self):
+        """
+        Create a new population of birds.
+
+        Args:
+            self (undefined):
+
+        """
         self.birds = None
         self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
                       for i in range(self.size)]
@@ -257,7 +271,7 @@ class bird_population():
             pickle_off = open(self.best_bird_save_file_path, "rb")
         except:
             pickle_off = open(self.example_best_bird_save_file_path, "rb")
-        
+
         loaded_bird_NN = pickle.load(pickle_off)
         self.birds[0].NN = loaded_bird_NN
         pickle_off.close()
