@@ -1,3 +1,7 @@
+"""
+Implement a Button class to create Button with a text written on it.
+"""
+
 import pyglet
 from pyglet import shapes
 

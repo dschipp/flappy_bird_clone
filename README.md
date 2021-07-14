@@ -34,3 +34,4 @@ The popular game Flappy Bird played by a Neural Network with evolution.
     ```
 
 - Start the game with the up arrow key &uarr; or the spacebar. To speed up use the right arrow &rarr;.
+- Load the example best bird with L and save your own best bird with S and override the sample best bird.

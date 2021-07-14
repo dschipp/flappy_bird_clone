@@ -3,6 +3,8 @@ from bird_population import bird_population
 from blocks import blocks
 from button import button
 import constants
+from displayed_texts import menu
+
 
 class app(pyglet.window.Window):
 
@@ -30,6 +32,12 @@ class app(pyglet.window.Window):
             self.background_image, x=0, y=-20)
         self.background.scale_y = self.y_max / self.background.height
 
+        # Initialize the Menu
+        self.menu = menu(self.x_max/2, self.y_max / 2)
+        self.menu_blur_image = pyglet.image.load("./assets/menu_blur.png")
+        self.menu_blur = pyglet.sprite.Sprite(
+            self.menu_blur_image, x=0, y=-20)
+
         # Create the Scoretext / Scoreboard
         self.max_score = 0
         self.score_text = pyglet.text.Label('Score : 0',
@@ -37,20 +45,35 @@ class app(pyglet.window.Window):
                                             font_size=25, color=(0, 0, 0, 255),
                                             x=self.x_max * 40/41, y=self.y_max * 2/3)
         self.gen_text = pyglet.text.Label('Gen. : 1',
-                                            font_name='Times New Roman',
-                                            font_size=25, color=(0, 0, 0, 255),
-                                            x=self.x_max * 40/41 + 11, y=self.y_max * 2/3 - 35)
+                                          font_name='Times New Roman',
+                                          font_size=25, color=(0, 0, 0, 255),
+                                          x=self.x_max * 40/41 + 11, y=self.y_max * 2/3 - 35)
         self.highscore_text = pyglet.text.Label('Highscore : 0',
-                                            font_name='Times New Roman',
-                                            font_size=25, color=(0, 0, 0, 255),
-                                            x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
+                                                font_name='Times New Roman',
+                                                font_size=25, color=(0, 0, 0, 255),
+                                                x=self.x_max * 40/41 - 63, y=self.y_max * 2/3 - 70)
         self.alive_bird_count_text = pyglet.text.Label('Alive Birds : ' + str(constants.BIRD_COUNT),
-                                            font_name='Times New Roman',
-                                            font_size=15, color=(0, 0, 0, 255),
-                                            x= 10 , y= 10)
+                                                       font_name='Times New Roman',
+                                                       font_size=15, color=(0, 0, 0, 255),
+                                                       x=10, y=10)
 
-        # Create the birds
-        self.birds = bird_population(constants.BIRD_COUNT, self.x_max, self.y_max)
+        # Start a Menu Sequence of the game
+        self.birds = bird_population(1, self.x_max, self.y_max)
+        # TODO: If the loaded bird is deleted this might cause Problems
+        self.birds.load_best_bird()
+        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+
+    def start_game(self):
+        """
+        Function to start a new game.
+
+        Args:
+            self (undefined):
+
+        """
+        self.started = True
+        self.birds = bird_population(
+            constants.BIRD_COUNT, self.x_max, self.y_max)
         self.bird_generation = 1
         self.highscore = 0
         self.generations_without_beating_the_highscore = 0
@@ -73,6 +96,7 @@ class app(pyglet.window.Window):
 
         self.started = False
         self.block_speed = constants.BLOCK_SPEED
+        self.onpause = False
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -106,14 +130,16 @@ class app(pyglet.window.Window):
         check = self.birds.check_best_bird()
 
         # If all birds are dead the game is get restarted and if no bird passed a single pipe a new population of birds is created
-        if stop_game:
-
+        if stop_game and not self.started:  # If the Menu sequence bird died.
+            self.restart
+        elif stop_game:
             # If the score is 0, create a new population
             if check is None:
                 print("No one made it :(")
                 self.birds.recreate_population()
             elif self.generations_without_beating_the_highscore > constants.MAX_GENERATIONS_WITHOUT_HIGHSCORE:
-                print("For " + str(self.generations_without_beating_the_highscore) + " generatrions no bird broke the highscore. So a new population is created.")
+                print("For " + str(self.generations_without_beating_the_highscore) +
+                      " generatrions no bird broke the highscore. So a new population is created.")
                 self.birds.recreate_population()
                 self.generations_without_beating_the_highscore = 0
             else:
@@ -137,10 +163,12 @@ class app(pyglet.window.Window):
 
         if check is not None:
             self.max_score = check[0]
-        self.score_text.text = "Score : " + str(self.max_score) 
-        self.gen_text.text = "Gen. : " + str(self.bird_generation)
-        self.highscore_text.text = "Highscore : " + str(self.highscore)
-        self.alive_bird_count_text.text = 'Alive Birds : ' + str(self.birds.get_alive_count())
+        if self.started:
+            self.score_text.text = "Score : " + str(self.max_score)
+            self.gen_text.text = "Gen. : " + str(self.bird_generation)
+            self.highscore_text.text = "Highscore : " + str(self.highscore)
+            self.alive_bird_count_text.text = 'Alive Birds : ' + \
+                str(self.birds.get_alive_count())
 
     def bird_decisions(self, timer):
         """
@@ -173,15 +201,19 @@ class app(pyglet.window.Window):
 
         self.background.draw()
 
-        self.blocks.draw() 
+        self.blocks.draw()
 
         self.birds.draw()
 
         # Draw all of the text
-        self.score_text.draw()
-        self.gen_text.draw()
-        self.highscore_text.draw()
-        self.alive_bird_count_text.draw()
+        if not self.started:
+            self.menu_blur.draw()
+            self.menu.draw()
+        else:
+            self.score_text.draw()
+            self.gen_text.draw()
+            self.highscore_text.draw()
+            self.alive_bird_count_text.draw()
 
     def pause(self):
         """
@@ -195,7 +227,19 @@ class app(pyglet.window.Window):
         # self.restart_button.draw()
 
         pyglet.clock.unschedule(self.update_app)
+        self.started = False
         # pyglet.clock.unschedule(self.bird_decisions)
+
+    def unpause(self):
+        """
+        Onpause the game
+
+        Args:
+            self (undefined):
+
+        """
+        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+        self.started = True
 
     def restart(self):
         """
@@ -233,14 +277,29 @@ class app(pyglet.window.Window):
         """
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
-                pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+                self.start_game()
+                self.restart()
                 #pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
-                self.started = True
             # self.birds[1].move_up()
         if symbol == pyglet.window.key.RIGHT:
             if self.started:
                 print("Lets go faster!")
-                pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+                pyglet.clock.schedule_interval(
+                    self.update_app, constants.GAME_SPEED)
+
+        if symbol == pyglet.window.key.S:
+            self.birds.save_best_bird()
+
+        if symbol == pyglet.window.key.L:
+            self.birds.load_best_bird()
 
         if symbol == pyglet.window.key.ESCAPE:
             self.close()
+
+        if symbol == pyglet.window.key.P:
+            if self.started:
+                self.pause()
+                self.onpause = True
+            elif not self.started and self.onpause:
+                self.unpause()
+                self.onpause = False
