@@ -1,16 +1,16 @@
-# This workflow will triage pull requests and apply a label based on the
-# paths that are modified in the pull request.
-#
-# To use this workflow, you will need to set up a .github/labeler.yml
-# file with configuration.  For more information, see:
-# https://github.com/actions/labeler
+name: Build Docs and Open PR
+on:
+  push:
+    branches: [ master ]
 
-- name: Python Markdown Documentation
-  # You may pin to the exact commit or the version.
-  # uses: jbheard/markdown-docs@c97b542c3d24257d97d55179445e339251618220
-  uses: jbheard/markdown-docs@v0.1
-  with:
-    # Path to the source folder containing python code
-    src_path: flappy_bird # optional, default is .
-    # Directory to create markdown documents in
-    dst_path: # optional, default is docs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Generate Python Docs
+      uses: jbheard/markdown-docs@v1
+    - name: Open docs update PR
+      uses: peter-evans/create-pull-request@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
