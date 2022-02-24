@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+
 """
 This is going to be a Neural Network with 1 hiddep layer consisting of a specified number of neurons.
 

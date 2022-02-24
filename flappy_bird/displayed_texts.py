@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+
 """
 A class for the main menu displayed when the game is started or stopped.
 Shows game instructions and has a option menu for to change the properties of the game.
