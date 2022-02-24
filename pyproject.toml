@@ -7,7 +7,7 @@ authors = ["David Schippers <schip.david@gmail.com>"]
 [tool.poetry.dependencies]
 python = ">=3.8,<3.10"
 pyglet = "^1.5.17"
-numpy = "^1.20.3"
+numpy = "^1.22.2"
 numba = "^0.53.1"
 configparser = "^5.0.2"
 
