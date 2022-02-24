@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+
 """
 Implement a Button class to create Button with a text written on it.
 """

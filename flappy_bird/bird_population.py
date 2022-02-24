@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+
 import pickle
 from bird import flappy_bird
 import constants

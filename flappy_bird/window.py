@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+
 import pyglet
 from bird_population import bird_population
 from blocks import blocks
