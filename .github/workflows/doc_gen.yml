@@ -18,10 +18,9 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install configparser, numba, numpy, pyglet, pdoc, pytest
+      # this Action should follow steps to set up Python build environment
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v3
     - name: Documentation generation pdoc
       run: |
         pdoc -o ./docs flappy_bird

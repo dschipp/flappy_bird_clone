@@ -1,0 +1,6 @@
+pyglet
+numpy
+numba
+configparser
+pytest
+pdoc
