@@ -5,8 +5,9 @@ name: Documentation Generator
 
 on:
   push:
-    branches:
+    branches-ignore:
       - master
+      - update-documentation
 
 
 jobs:
@@ -35,7 +36,6 @@ jobs:
       with:
         commit-message: 'Documentation'
         title: Update documentation
-        labels: auto-merge
         body: |
           - Updates the documentation for the project
 
@@ -43,6 +43,7 @@ jobs:
 
           [1]: https://github.com/peter-evans/create-pull-request
         branch: update-documentation
+        labels: auto-merge
     - name: Automatically Merge PR 
       uses: plm9606/automerge_actions@1.2.2
       with:
