@@ -5,9 +5,8 @@ name: Documentation Generator
 
 on:
   push:
-    branches-ignore:
+    branches:
       - master
-      - update-documentation
 
 
 jobs:
