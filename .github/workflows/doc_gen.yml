@@ -43,4 +43,9 @@ jobs:
 
           [1]: https://github.com/peter-evans/create-pull-request
         branch: update-documentation
-        delete-branch: true
+        labels: auto-merge
+    - name: Automatically Merge PR 
+      uses: plm9606/automerge_actions@1.2.2
+      with:
+        label-name: auto-merge
+        auto-delete: true
