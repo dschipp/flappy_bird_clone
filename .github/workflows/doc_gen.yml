@@ -5,8 +5,9 @@ name: Documentation Generator
 
 on:
   push:
-    branches:
+    branches-ignore:
       - master
+
 
 jobs:
   doc_gen:
@@ -32,7 +33,7 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
-        commit-message: 'Build documentation'
+        commit-message: 'Documentation'
         title: Update documentation
         body: |
           - Updates the documentation for the project
@@ -41,3 +42,4 @@ jobs:
 
           [1]: https://github.com/peter-evans/create-pull-request
         branch: update-documentation
+        delete-branch: true
