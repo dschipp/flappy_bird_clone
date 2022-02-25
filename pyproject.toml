@@ -10,6 +10,7 @@ pyglet = "^1.5.21"
 numpy = "^1.22.2"
 numba = "^0.53.1"
 configparser = "^5.2.0"
+pdoc = "^10.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
