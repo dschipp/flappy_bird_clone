@@ -1,0 +1,13 @@
+prefix=/usr/local
+libdir=${prefix}/lib/x86_64-linux-gnu
+includedir=${prefix}/include
+
+glx_tls=yes
+
+Name: gl
+Description: Mesa OpenGL Library
+Version: 18.2.8
+Requires.private: x11, xext, xcb, libdrm >=  2.4.75
+Libs: -L${libdir} -lGL
+Libs.private: -lpthread -pthread -lm -ldl
+Cflags:-I${includedir}

@@ -1,0 +1,10 @@
+prefix=/usr/local
+libdir=${prefix}/lib/x86_64-linux-gnu
+includedir=${prefix}/include
+
+Name: osmesa
+Description: Mesa Off-screen Rendering Library
+Version: 8.0.0
+Libs: -L${libdir} -lOSMesa
+Libs.private: -lpthread -pthread -lm -ldl
+Cflags:-I${includedir}
