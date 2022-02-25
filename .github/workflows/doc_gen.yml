@@ -10,7 +10,7 @@ on:
 
 jobs:
   doc_gen:
-    runs-on: ubuntu-latest
+    container: fedora
     strategy:
       matrix:
         python-version: ["3.9"]
