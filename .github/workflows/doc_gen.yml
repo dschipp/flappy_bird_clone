@@ -14,11 +14,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Python Markdown Documentation
-      uses: jbheard/markdown-docs@v0.1
+    - name: Setup OpenGL
+      # You may pin to the exact commit or the version.
+      # uses: openrndr/setup-opengl@43f0e974acc1a7baee9bc142ccfcdfb24551825a
+      uses: openrndr/setup-opengl@v1.1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        src_path: ./flappy_bird
-        dst_path: ./docs
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install poetry
+        poetry install
+    - name: Documentation generation pdoc
+      run: |
+        poetry run pdoc -o ./docs flappy_bird
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
@@ -31,4 +42,3 @@ jobs:
 
           [1]: https://github.com/peter-evans/create-pull-request
         branch: update-documentation
-
