@@ -276,10 +276,10 @@ class bird_population():
         except:
             pickle_off = open(self.example_best_bird_save_file_path, "rb")
 
-        loaded_bird_NN = pickle.load(pickle_off)
-        self.birds[0].NN = loaded_bird_NN
-        pickle_off.close()
+        #loaded_bird_NN = pickle.load(pickle_off)
+        #self.birds[0].NN = loaded_bird_NN
+        #pickle_off.close()
 
-        print("Loaded the saved best bird.")
+        #print("Loaded the saved best bird.")
 
         # self.learn([0,[0]])
