@@ -12,7 +12,7 @@ on:
 
 jobs:
   doc_gen:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         python-version: ["3.9"]
@@ -32,7 +32,7 @@ jobs:
       run: |
         poetry run pdoc -o ./docs flappy_bird
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v3-multi
       with:
         commit-message: 'Build Documentation'
         title: Update documentation
