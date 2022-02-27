@@ -28,9 +28,8 @@ jobs:
         python -m pip install -r docs/doc-requirements.txt
     - name: Documentation generation with sphinx
       run: |
-        cd docs
-        sphinx-apidoc -o source ../flappy_bird
-        make html
+        cd docs && sphinx-apidoc -o source ../flappy_bird
+        cd docs && make html
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
