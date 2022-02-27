@@ -27,7 +27,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r docs/doc-requirements.txt
     - name: Sphinx Build
-      uses: ammaraskar/sphinx-action@0.4
+      run: |
+        cd docs && sphinx-apidoc -o source ../flappy_bird
+        make html
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:

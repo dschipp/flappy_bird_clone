@@ -12,7 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join('..','..','..', 'flappy_bird')))
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, path + "/../../flappy_bird")
 
 
 # -- Project information -----------------------------------------------------
