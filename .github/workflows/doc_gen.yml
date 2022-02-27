@@ -30,11 +30,11 @@ jobs:
         poetry install
     - name: Documentation generation pdoc
       run: |
-        poetry run pdoc -o ./docs flappy_bird !pyglet
+        poetry run pdoc -o ./docs flappy_bird
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
-        commit-message: 'Documentation'
+        commit-message: 'Build Documentation'
         title: Update documentation
         body: |
           - Updates the documentation for the project
@@ -43,9 +43,9 @@ jobs:
 
           [1]: https://github.com/peter-evans/create-pull-request
         branch: update-documentation
-        labels: auto-merge
-    - name: Automatically Merge PR 
-      uses: plm9606/automerge_actions@1.2.2
-      with:
-        label-name: auto-merge
-        auto-delete: true
+#        labels: auto-merge
+#    - name: Automatically Merge PR 
+#      uses: plm9606/automerge_actions@1.2.2
+#      with:
+#        label-name: auto-merge
+#        auto-delete: true
