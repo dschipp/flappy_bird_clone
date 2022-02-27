@@ -1,9 +1,12 @@
 """ The Game configs are read from the config.ini file """
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
 
 import configparser
 
 config = configparser.ConfigParser()
-config.read("./data/config.ini")
+config.read(path + "/../data/config.ini")
 
 """ ---------------- Game Properties ----------------------- """
 GAME_SPEED = float(config['Game']['GAME_SPEED'])

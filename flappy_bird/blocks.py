@@ -9,8 +9,8 @@ import constants
 
 
 # load the images
-pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
-pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
+pipe_head_image = pyglet.image.load(path + "/../assets/pipe_head.png")
+pipe_body_image = pyglet.image.load(path + "/../assets/pipe_body.png")
 
 class Pipe():
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
