@@ -11,7 +11,7 @@ on:
 
 jobs:
   doc_gen:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.9"]
@@ -25,11 +25,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install poetry
-        poetry install
-    - name: Documentation generation pdoc
+        python -m pip install sphinx, sphinx-rtd-theme
+    - name: Documentation generation with sphinx
       run: |
-        poetry run pdoc -o ./docs flappy_bird
+        cd docs
+        sphinx-apidoc -o source ../flappy_bird
+        make html
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
