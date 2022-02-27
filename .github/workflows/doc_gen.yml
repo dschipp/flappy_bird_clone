@@ -32,7 +32,7 @@ jobs:
       run: |
         poetry run pdoc -o ./docs flappy_bird
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3-multi
+      uses: peter-evans/create-pull-request@v1.3.1-multi
       with:
         commit-message: 'Build Documentation'
         title: Update documentation
