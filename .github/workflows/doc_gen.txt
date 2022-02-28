@@ -1,5 +1,5 @@
 # TODO: Get automated pdoc running
-# Currently does not work because pdoc is not running on the ubunto runner and the create pull request is not working on windows
+# Currently does not work because pdoc is not running on the ubunto runner and the create pull request is not working on windows. So this is a text file for now
 
 #name: Documentation Generator
 
