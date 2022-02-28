@@ -24,7 +24,7 @@ class Pipe():
             width (int): The width of the block / So the x coordinate + the width => lower right corner.
             height (int): The height of the block / So the y coordinate + the height => upper left corneer.
             color=(0 (,153,76)): The color of the block. Standard some kind of green.
-
+            
         """
         # super(Pipe, self).__init__(pipe_image, x=x, y=y)
 

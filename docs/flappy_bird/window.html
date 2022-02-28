@@ -877,8 +877,6 @@ application, there is no need to do this.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">block_speed</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">BLOCK_SPEED</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">onpause</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="c1"># self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)</span>
 </pre></div>
 
         </details>
@@ -1112,7 +1110,6 @@ application, there is no need to do this.</p>
 
         <span class="n">pyglet</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">unschedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_app</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="c1"># pyglet.clock.unschedule(self.bird_decisions)</span>
 </pre></div>
 
         </details>
@@ -1193,7 +1190,6 @@ application, there is no need to do this.</p>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restarting with a new generation. </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">pyglet</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_app</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">GAME_SPEED</span><span class="p">)</span>
-        <span class="c1"># pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)</span>
 </pre></div>
 
         </details>
