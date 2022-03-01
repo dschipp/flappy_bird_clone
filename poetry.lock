@@ -122,7 +122,7 @@ pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 
 [[package]]
 name = "pdoc"
-version = "10.0.2"
+version = "10.0.1"
 description = "API Documentation for Python Projects"
 category = "dev"
 optional = false
@@ -224,7 +224,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8, <3.10"
-content-hash = "18f1b33bbdda0eb880488bac571eb0c74b500b67d2ff9730ba76ca5d3a78fe71"
+content-hash = "fa6e21a02dabd8c16aeed73c5ea331026b5eaf3a7e9cfe6632a20affea43dc09"
 
 [metadata.files]
 astunparse = [
@@ -388,7 +388,7 @@ packaging = [
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
 ]
 pdoc = [
-    {file = "pdoc-10.0.2-py3-none-any.whl", hash = "sha256:c0d5408fb5dfe5a1e5ab080d2fba1fdee2281e66480302bd365d9bd0a7b93cf2"},
+    {file = "pdoc-10.0.1-py3-none-any.whl", hash = "sha256:c81997f7574c456ae8b49be0e6b689f350826bc6857c9f070a075a194bfa4549"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
