@@ -39,3 +39,9 @@ The popular game Flappy Bird played by a Neural Network with evolution.
 ## Documentation
 
 You can find the documentation of the code [here](https://rayl3r.github.io/flappy_bird_clone/).
+
+But that documentation might not be up-to-date so it is advised to build you own documentation running the command:
+
+    poetry run pdoc flappy_bird
+
+Or run the "documentation" [task using VS Code](https://code.visualstudio.com/Docs/editor/tasks).
