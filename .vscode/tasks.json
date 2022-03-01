@@ -16,7 +16,7 @@
         {
             "label": "documentation",
             "type": "shell",
-            "command": "poetry run pdoc flappy_bird",
+            "command": "poetry run pdoc --math flappy_bird",
             "problemMatcher": []
         }
     ]
