@@ -4,7 +4,7 @@ The popular game Flappy Bird played by a Neural Network with evolution.
 
 ## Dependencies
 
-- All python dependencies are managed with [poetry](https://python-poetry.org/), this should be installed first (Note that i use pre commit hooks to generate a documentation. So you need to use poetry otherwise you cant commit).
+- All python dependencies are managed with [poetry](https://python-poetry.org/), this should be installed first.
 - It is recommended to use [git](https://git-scm.com/). Especially if you want to development.
 
 ## Excecute
