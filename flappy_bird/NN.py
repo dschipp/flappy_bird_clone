@@ -1,8 +1,4 @@
-import os, sys
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(path)
-
-"""
+r"""
 This is going to be a Neural Network with 1 hiddep layer consisting of a specified number of neurons.
 
 So there is going to be needed a Matrix with the size of the number of inputs and hidden layer one.
@@ -14,6 +10,8 @@ For example if we have 3 inputs and a number of 5 hidden layer neurons:
 | input_2 |  *   | r  r  r |  =  | output_3 |
 | input_3 |      | r  r  r |     | output_4 |
                  | r  r  r |     | output_5 |
+
+Hello my name is $\\vec{p}$
 
 Also there is added a bias on every layer except the input layer.
 
@@ -38,6 +36,11 @@ And two vectors that have the size of:
 To learn the NN gets another NN and creates a slightly different version of that inputted NN.
 
 """
+
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+__docformat__ = "google"
 
 import numpy as np
 import random
