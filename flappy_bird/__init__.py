@@ -5,7 +5,9 @@ r'''
 
 Every bird has its own
 
-.. include:: ../todo.txt
+# Todo's and workons
+
+.. include:: ../todo.md
 '''
 
 __version__ = '0.1.0'
