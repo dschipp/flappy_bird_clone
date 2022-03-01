@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 10.0.2"/>
+    <meta name="generator" content="pdoc 10.0.1"/>
     <title>flappy_bird.window API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -11,7 +11,24 @@
     <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
     <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;}nav.pdoc{--pad:1.75rem;--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent }nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc li{display:block;margin:0;padding:.2rem 0 .2rem var(--indent);transition:all 100ms;}nav.pdoc > div > ul > li{padding-left:0;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
     <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--code);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.pdoc details{filter:opacity(1);}.pdoc details:not([open]){height:0;}.pdoc details > summary{position:absolute;top:-35px;right:0;font-size:.75rem;color:var(--muted);padding:0 .7em;user-select:none;cursor:pointer;}.pdoc details > summary:focus{outline:0;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc > section:first-of-type > .docstring{margin-bottom:2.5rem;}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc .headerlink{position:absolute;width:0;margin-left:-1.5rem;line-height:1.4rem;font-size:1.5rem;font-weight:normal;transition:all 100ms ease-in-out;opacity:0;user-select:none;}.pdoc .attr > .headerlink{margin-left:-2.5rem;}.pdoc *:hover > .headerlink,.pdoc *:target > .attr > .headerlink{opacity:1;}.pdoc .attr{display:block;color:var(--text);margin:.5rem 0 .5rem;padding:.4rem 5rem .4rem 1rem;background-color:var(--accent);}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{white-space:pre-wrap;}.pdoc .annotation{color:var(--annotation);}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
-    <style>/*! custom.css */</style></head>
+    <style>/*! custom.css */</style><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+    /* Re-invoke MathJax when DOM content changes, for example during search. */
+    document.addEventListener("DOMContentLoaded", () => {
+        new MutationObserver(() => MathJax.typeset()).observe(
+            document.querySelector("main.pdoc").parentNode,
+            {childList: true}
+        );
+    })
+</script></head>
 <body>
     <nav class="pdoc">
         <label id="navtoggle" for="togglestate" class="pdoc-button"><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke-linecap='round' stroke="currentColor" stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg></label>
@@ -88,6 +105,7 @@
             <div class="pdoc-code codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">__docformat__</span> <span class="o">=</span> <span class="s2">&quot;google&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pyglet</span>
 <span class="kn">from</span> <span class="nn">bird_population</span> <span class="kn">import</span> <span class="n">bird_population</span>
@@ -405,7 +423,7 @@
 
         
         <span class="def">class</span>
-        <span class="name">app</span><wbr>(<span class="base">pyglet.window.xlib.XlibWindow</span>):
+        <span class="name">app</span><wbr>(<span class="base">pyglet.window.win32.Win32Window</span>):
     </div>
 
             <details>
@@ -803,11 +821,17 @@ application, there is no need to do this.</p>
 
             <div class="docstring"><p>Create the flappy bird window with blocks and bird.</p>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    None</p>
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>None</p>
+</blockquote>
 </div>
 
 
@@ -842,8 +866,11 @@ application, there is no need to do this.</p>
 
             <div class="docstring"><p>Function to start a new game.</p>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -877,8 +904,6 @@ application, there is no need to do this.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">block_speed</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">BLOCK_SPEED</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">onpause</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="c1"># self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)</span>
 </pre></div>
 
         </details>
@@ -893,8 +918,11 @@ application, there is no need to do this.</p>
 <li>A variable if the game has already started</li>
 </ul>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -989,9 +1017,12 @@ application, there is no need to do this.</p>
 <li>The bird</li>
 </ul>
 
-<p>Args:
-    self (undefined):
-    timer (undefined): The timer of the app.</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+<li><strong>timer (undefined):</strong>  The timer of the app.</li>
+</ul>
 </div>
 
 
@@ -1028,9 +1059,12 @@ application, there is no need to do this.</p>
 
             <div class="docstring"><p>A explicit function to let the birds decide an and don't do that in every step of the update.</p>
 
-<p>Args:
-    self (undefined):
-    timer (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+<li><strong>timer (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1083,8 +1117,11 @@ application, there is no need to do this.</p>
 <li>The bird / birds</li>
 </ul>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1112,7 +1149,6 @@ application, there is no need to do this.</p>
 
         <span class="n">pyglet</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">unschedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_app</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="c1"># pyglet.clock.unschedule(self.bird_decisions)</span>
 </pre></div>
 
         </details>
@@ -1123,8 +1159,11 @@ application, there is no need to do this.</p>
 <li>(WIP) Draw the restart buttom to restart the game.</li>
 </ul>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1155,8 +1194,11 @@ application, there is no need to do this.</p>
 
             <div class="docstring"><p>Onpause the game</p>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1193,15 +1235,17 @@ application, there is no need to do this.</p>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restarting with a new generation. </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">pyglet</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_app</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">GAME_SPEED</span><span class="p">)</span>
-        <span class="c1"># pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)</span>
 </pre></div>
 
         </details>
 
             <div class="docstring"><p>Restart the whole game.</p>
 
-<p>Args:
-    self (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1260,10 +1304,13 @@ application, there is no need to do this.</p>
 
             <div class="docstring"><p>The function to check keyboard inputs and react to them.</p>
 
-<p>Args:
-    self (undefined):
-    symbol (undefined):
-    modifiers (undefined):</p>
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>self (undefined):</strong> </li>
+<li><strong>symbol (undefined):</strong> </li>
+<li><strong>modifiers (undefined):</strong> </li>
+</ul>
 </div>
 
 
@@ -1271,36 +1318,32 @@ application, there is no need to do this.</p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>pyglet.window.xlib.XlibWindow</dt>
+                                    <div><dt>pyglet.window.win32.Win32Window</dt>
                                 <dd id="app.close" class="function">close</dd>
-                <dd id="app.switch_to" class="function">switch_to</dd>
-                <dd id="app.flip" class="function">flip</dd>
+                <dd id="app.vsync" class="variable">vsync</dd>
                 <dd id="app.set_vsync" class="function">set_vsync</dd>
-                <dd id="app.set_caption" class="function">set_caption</dd>
-                <dd id="app.set_wm_class" class="function">set_wm_class</dd>
-                <dd id="app.get_caption" class="function">get_caption</dd>
-                <dd id="app.set_size" class="function">set_size</dd>
-                <dd id="app.get_size" class="function">get_size</dd>
+                <dd id="app.switch_to" class="function">switch_to</dd>
+                <dd id="app.update_transparency" class="function">update_transparency</dd>
+                <dd id="app.flip" class="function">flip</dd>
                 <dd id="app.set_location" class="function">set_location</dd>
                 <dd id="app.get_location" class="function">get_location</dd>
-                <dd id="app.activate" class="function">activate</dd>
-                <dd id="app.set_visible" class="function">set_visible</dd>
+                <dd id="app.set_size" class="function">set_size</dd>
+                <dd id="app.get_size" class="function">get_size</dd>
                 <dd id="app.set_minimum_size" class="function">set_minimum_size</dd>
                 <dd id="app.set_maximum_size" class="function">set_maximum_size</dd>
+                <dd id="app.activate" class="function">activate</dd>
+                <dd id="app.set_visible" class="function">set_visible</dd>
                 <dd id="app.minimize" class="function">minimize</dd>
                 <dd id="app.maximize" class="function">maximize</dd>
+                <dd id="app.set_caption" class="function">set_caption</dd>
                 <dd id="app.set_mouse_platform_visible" class="function">set_mouse_platform_visible</dd>
-                <dd id="app.set_mouse_position" class="function">set_mouse_position</dd>
                 <dd id="app.set_exclusive_mouse" class="function">set_exclusive_mouse</dd>
+                <dd id="app.set_mouse_position" class="function">set_mouse_position</dd>
                 <dd id="app.set_exclusive_keyboard" class="function">set_exclusive_keyboard</dd>
                 <dd id="app.get_system_mouse_cursor" class="function">get_system_mouse_cursor</dd>
                 <dd id="app.set_icon" class="function">set_icon</dd>
                 <dd id="app.dispatch_events" class="function">dispatch_events</dd>
                 <dd id="app.dispatch_pending_events" class="function">dispatch_pending_events</dd>
-                <dd id="app.dispatch_platform_event" class="function">dispatch_platform_event</dd>
-                <dd id="app.dispatch_platform_event_view" class="function">dispatch_platform_event_view</dd>
-                <dd id="app.get_single_property" class="function">get_single_property</dd>
-                <dd id="app.parse_filenames" class="function">parse_filenames</dd>
 
             </div>
             <div><dt>pyglet.window.BaseWindow</dt>
@@ -1340,7 +1383,6 @@ application, there is no need to do this.</p>
                 <dd id="app.style" class="variable">style</dd>
                 <dd id="app.fullscreen" class="variable">fullscreen</dd>
                 <dd id="app.visible" class="variable">visible</dd>
-                <dd id="app.vsync" class="variable">vsync</dd>
                 <dd id="app.display" class="variable">display</dd>
                 <dd id="app.screen" class="variable">screen</dd>
                 <dd id="app.config" class="variable">config</dd>
