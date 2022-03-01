@@ -1,6 +1,7 @@
 import os, sys
 path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(path)
+__docformat__ = "google"
 
 import pickle
 from bird import flappy_bird

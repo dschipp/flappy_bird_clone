@@ -1,29 +1,20 @@
-import os, sys
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(path)
-
-"""
+r"""
 This is going to be a Neural Network with 1 hiddep layer consisting of a specified number of neurons.
 
 So there is going to be needed a Matrix with the size of the number of inputs and hidden layer one.
 
 For example if we have 3 inputs and a number of 5 hidden layer neurons: 
 
-                 | r  r  r |     | output_1 |
-| input_1 |      | r  r  r |     | output_2 |
-| input_2 |  *   | r  r  r |  =  | output_3 |
-| input_3 |      | r  r  r |     | output_4 |
-                 | r  r  r |     | output_5 |
+$\begin{bmatrix} i_1, i_2, i_3 \end{bmatrix} \\
+    * \begin{bmatrix} [h_1, h_2, h_3], [h_4, h_5, h_6], [h_7, h_8, h_9] \end{bmatrix} \\
+        = \begin{bmatrix} o_1, o_2, o_3, o_4, o_5 \end{bmatrix}$
 
-Also there is added a bias on every layer except the input layer.
+Also there is added a bias on every layer except the input layer:
 
-| output_1 |    | bias_1 |
-| output_2 |    | bias_2 |
-| output_3 | +  | bias_3 |
-| output_4 |    | bias_4 |
-| output_5 |    | bias_5 |
+$\begin{bmatrix} o_1, o_2, o_3, o_4, o_5 \end{bmatrix} \\
+        + \begin{bmatrix} b_1, b_2, b_3, b_4, b_5 \end{bmatrix}$
 
-After that the values of the neurons are send through an activation function (Currently the sigmoid function).
+After that the values of the neurons are send through an activation function (currently the sigmoid function: $x = \frac{1}{1 + \exp{-x}}$).
 
 So we need 2 matrices that have the size of:
 
@@ -38,6 +29,11 @@ And two vectors that have the size of:
 To learn the NN gets another NN and creates a slightly different version of that inputted NN.
 
 """
+
+import os, sys
+path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(path)
+__docformat__ = "google"
 
 import numpy as np
 import random

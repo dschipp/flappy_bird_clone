@@ -224,7 +224,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8, <3.10"
-content-hash = "18f1b33bbdda0eb880488bac571eb0c74b500b67d2ff9730ba76ca5d3a78fe71"
+content-hash = "fa6e21a02dabd8c16aeed73c5ea331026b5eaf3a7e9cfe6632a20affea43dc09"
 
 [metadata.files]
 astunparse = [

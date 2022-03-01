@@ -6,14 +6,14 @@ authors = ["David Schippers <schip.david@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.8, <3.10"
-pyglet = "^1.5.21"
+pyglet = "=1.5.21"
 numpy = ">=1.18, <1.22"
-numba = "^0.55.1"
-configparser = "^5.2.0"
+numba = "=0.55.1"
+configparser = "=5.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
-pdoc = "^10.0.1"
+pdoc = "=10.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "run",
             "type": "shell",
             "command": "poetry run python ./flappy_bird/main.py",
             "problemMatcher": [],
@@ -12,6 +12,12 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "documentation",
+            "type": "shell",
+            "command": "poetry run pdoc --math flappy_bird",
+            "problemMatcher": []
         }
     ]
 }

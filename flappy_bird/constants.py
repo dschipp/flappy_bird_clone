@@ -1,4 +1,4 @@
-""" The Game configs are read from the config.ini file """
+"""### The Game configs are read from the config.ini file """
 
 import configparser
 
