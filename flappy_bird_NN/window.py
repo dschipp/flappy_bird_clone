@@ -102,7 +102,7 @@ class app(pyglet.window.Window):
 
         self.started = False
         self.block_speed = constants.BLOCK_SPEED
-        self.onpause = False
+        self.on_pause = False
 
         # self.restart_button = button(self.get_size()[1] / 2 ,self.get_size()[0] / 2, 600, 600)
 
@@ -238,7 +238,7 @@ class app(pyglet.window.Window):
 
     def unpause(self):
         """
-        Onpause the game
+        Unpause the game
 
         Args:
             self (undefined):
@@ -306,7 +306,7 @@ class app(pyglet.window.Window):
         if symbol == pyglet.window.key.P:
             if self.started:
                 self.pause()
-                self.onpause = True
-            elif not self.started and self.onpause:
+                self.on_pause = True
+            elif not self.started and self.on_pause:
                 self.unpause()
-                self.onpause = False
+                self.on_pause = False
