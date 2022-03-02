@@ -14,9 +14,15 @@
             }
         },
         {
-            "label": "documentation",
+            "label": "view documentation",
             "type": "shell",
             "command": "poetry run pdoc --math flappy_bird_NN",
+            "problemMatcher": []
+        },
+        {
+            "label": "build documentation",
+            "type": "shell",
+            "command": "poetry run pdoc --math -o ./docs flappy_bird_NN",
             "problemMatcher": []
         }
     ]
