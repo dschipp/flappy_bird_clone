@@ -1,3 +1,4 @@
 __pycache__/
 best_bird.pickle
 /dist
+app.log
