@@ -9,6 +9,7 @@ from blocks import blocks
 from button import button
 import constants
 from displayed_texts import menu
+import logging
 
 
 class app(pyglet.window.Window):
@@ -289,6 +290,7 @@ class app(pyglet.window.Window):
         if symbol == pyglet.window.key.RIGHT:
             if self.started:
                 print("Lets go faster!")
+                logging.info("Speed increased")
                 pyglet.clock.schedule_interval(
                     self.update_app, constants.GAME_SPEED)
 
