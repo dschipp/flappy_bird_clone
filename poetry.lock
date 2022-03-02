@@ -223,8 +223,8 @@ python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.8, <3.10"
-content-hash = "fa6e21a02dabd8c16aeed73c5ea331026b5eaf3a7e9cfe6632a20affea43dc09"
+python-versions = ">=3.8, <3.11"
+content-hash = "270346189f2821ce207c4c3edbff0dc2e8b370f0d27bef38e5af6b103cff194d"
 
 [metadata.files]
 astunparse = [
