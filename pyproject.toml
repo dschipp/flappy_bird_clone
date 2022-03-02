@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Flappy Bird played by NN"
+name = "Flappy Bird played by an NN"
 version = "0.1.1"
 description = "The simple Flappy Bird game with a Neural Network with neural evolution"
 authors = ["David Schippers <schip.david@gmail.com>"]

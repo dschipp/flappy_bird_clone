@@ -6,7 +6,7 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "poetry run python ./flappy_bird/main.py",
+            "command": "poetry run python ./flappy_bird_NN/main.py",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,7 +16,7 @@
         {
             "label": "documentation",
             "type": "shell",
-            "command": "poetry run pdoc --math flappy_bird",
+            "command": "poetry run pdoc --math flappy_bird_NN",
             "problemMatcher": []
         }
     ]
