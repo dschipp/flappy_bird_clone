@@ -73,7 +73,7 @@ class bird_population():
                       for i in range(self.size)]
 
         self.best_bird_save_file_path = "best_bird.pickle"
-        self.example_best_bird_save_file_path = "data/example_best_bird.pickle"
+        self.example_best_bird_save_file_path = path + "/../data/example_best_bird.pickle"
 
     def update(self, block_coordinates) -> bool:
         """
@@ -271,16 +271,16 @@ class bird_population():
             self (undefined):
 
         """
-        pass # TODO: Something doesnt work here
-#        try:
-#            pickle_off = open(self.best_bird_save_file_path, "rb")
-#        except:
-#            pickle_off = open(self.example_best_bird_save_file_path, "rb")
+        
+        try:
+            pickle_off = open(self.best_bird_save_file_path, "rb")
+        except:
+            pickle_off = open(self.example_best_bird_save_file_path, "rb")
 
-#        loaded_bird_NN = pickle.load(pickle_off)
-#        self.birds[0].NN = loaded_bird_NN
-#        pickle_off.close()
+        loaded_bird_NN = pickle.load(pickle_off)
+        self.birds[0].NN = loaded_bird_NN
+        pickle_off.close()
 
-#        print("Loaded the saved best bird.")
+        print("Loaded the saved best bird.")
 
         # self.learn([0,[0]])
