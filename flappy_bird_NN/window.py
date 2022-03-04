@@ -234,6 +234,7 @@ class app(pyglet.window.Window):
 
         pyglet.clock.unschedule(self.update_app)
         self.started = False
+        logging.info("Paused the game.")
         # pyglet.clock.unschedule(self.bird_decisions)
 
     def unpause(self):
@@ -246,6 +247,7 @@ class app(pyglet.window.Window):
         """
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
         self.started = True
+        logging.info("Unpaused the game.")
 
     def restart(self):
         """
@@ -270,6 +272,7 @@ class app(pyglet.window.Window):
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
         # pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
+        logging.info("Restarted the game.")
 
     def on_key_press(self, symbol, modifiers):
         """
@@ -281,6 +284,9 @@ class app(pyglet.window.Window):
             modifiers (undefined):
 
         """
+
+        logging.debug("Key " + str(symbol) + "was pressed.")
+
         if symbol == pyglet.window.key.UP or symbol == pyglet.window.key.SPACE:
             if not self.started:
                 self.start_game()
