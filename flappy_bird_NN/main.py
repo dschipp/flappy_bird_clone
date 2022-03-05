@@ -7,6 +7,7 @@ import pyglet
 from window import app
 import logging
 from logging import config
+import constants
 
 log_config = {
     "version":1,
@@ -33,7 +34,7 @@ log_config = {
 config.dictConfig(log_config)
 
 if __name__ == '__main__':
-    logging.info("Start app")
+    logging.info("Start app with update speed: " + str(constants.GAME_SPEED))
 
     window = app()
     pyglet.app.run()

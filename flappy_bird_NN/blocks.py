@@ -7,11 +7,12 @@ import pyglet
 from pyglet import sprite
 import random
 import constants
+import logging
 
 
 # load the images
-pipe_head_image = pyglet.image.load("./assets/pipe_head.png")
-pipe_body_image = pyglet.image.load("./assets/pipe_body.png")
+pipe_head_image = pyglet.image.load(path + "/../assets/pipe_head.png")
+pipe_body_image = pyglet.image.load(path + "/../assets/pipe_body.png")
 
 class Pipe():
     def __init__(self, x: int, y: int, width: int, height: int, color=(0, 153, 76)):
@@ -130,6 +131,8 @@ class blocks():
             ]
 
             self.blocks.append(block_pair)
+
+            logging.debug("Removed first block and added a new one to the end of the block list.")
 
     def check_collision(self, x: int, y: int, width: int = 0, height: int = 0) -> bool:
         """

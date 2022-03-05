@@ -7,6 +7,7 @@ import pyglet
 from pyglet import sprite
 from NN import Neural_Net
 import constants
+import logging
 
 # RGB colors of the beak: R = 96.1; G = 30.2; B = 5.5
 
@@ -39,13 +40,13 @@ class bird_colors():
         """
     
         if color == 'yellow':
-            self.image_path = "./assets/flappy_bird_yellow.png"
+            self.image_path = path + "/../assets/flappy_bird_yellow.png"
         elif color == 'blue':
-            self.image_path = "./assets/flappy_bird_blue.png"
+            self.image_path = path + "/../assets/flappy_bird_blue.png"
         elif color == 'green':
-            self.image_path = "./assets/flappy_bird_green.png"
+            self.image_path = path + "/../assets/flappy_bird_green.png"
         else:
-            raise "Not an available color. The currently available colors are: 'yellow', 'green', 'blue'"
+            logging.error(color + " is not an available color. The currently available colors are: 'yellow', 'green', 'blue'")
 
 
 def decision_function(input):
@@ -61,7 +62,7 @@ def decision_function(input):
     return False
 
 # load the image
-bird_image = pyglet.image.load("./assets/flappy_bird_yellow.png")
+bird_image = pyglet.image.load(path + "/../assets/flappy_bird_yellow.png")
 
 class flappy_bird(sprite.Sprite):
     def __init__(self, x: int, y: int, color: tuple = (0, 128, 255)) -> None:

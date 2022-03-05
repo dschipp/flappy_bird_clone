@@ -7,6 +7,7 @@ import pickle
 from bird import flappy_bird
 import constants
 import pyglet
+import logging
 
 
 def check_collision(object_coordinates: list, block_coordinates: list) -> bool:
@@ -72,7 +73,7 @@ class bird_population():
         self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
                       for i in range(self.size)]
 
-        self.best_bird_save_file_path = "best_bird.pickle"
+        self.best_bird_save_file_path = path + "/../best_bird.pickle"
         self.example_best_bird_save_file_path = path + "/../data/example_best_bird.pickle"
 
     def update(self, block_coordinates) -> bool:
@@ -121,6 +122,8 @@ class bird_population():
             best_birds (undefined): [score of the best bird, the list positions of the best bird]
 
         """
+
+        logging.debug("Birds are learning from the " + str(len(best_birds)) + " best birds of the population.")
 
         steps = len(best_birds)
         for num, best_bird in enumerate(best_birds):
@@ -241,6 +244,8 @@ class bird_population():
         self.birds = [flappy_bird(x=constants.BIRD_X, y=self.y_max/2)
                       for i in range(self.size)]
 
+        logging.info("Created a new population of birds.")
+
     def save_best_bird(self):
         """
         Save the best bird of a generation.
@@ -253,6 +258,7 @@ class bird_population():
         best_bird_list = self.check_best_bird()
 
         if best_bird_list is None:
+            logging.warning("There is no best bird to save.")
             print("There is no best bird to save.")
             return
 
@@ -261,6 +267,7 @@ class bird_population():
         pickle.dump(best_bird_NN, pickling_on)
         pickling_on.close()
 
+        logging.info("Saved the best bird from this population.")
         print("Saved the best bird this population.")
 
     def load_best_bird(self):
@@ -281,6 +288,7 @@ class bird_population():
         self.birds[0].NN = loaded_bird_NN
         pickle_off.close()
 
+        logging.info("Loaded the saved best bird.")
         print("Loaded the saved best bird.")
 
         # self.learn([0,[0]])

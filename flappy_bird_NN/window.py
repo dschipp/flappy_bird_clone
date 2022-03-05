@@ -141,9 +141,12 @@ class app(pyglet.window.Window):
         elif stop_game:
             # If the score is 0, create a new population
             if check is None:
+                logging.info("No bird made it so the population is regenerated.")
                 print("No one made it :(")
                 self.birds.recreate_population()
             elif self.generations_without_beating_the_highscore > constants.MAX_GENERATIONS_WITHOUT_HIGHSCORE:
+                logging.debug("For " + str(self.generations_without_beating_the_highscore) +
+                      " generatrions no bird broke the highscore. So a new population is created.")
                 print("For " + str(self.generations_without_beating_the_highscore) +
                       " generatrions no bird broke the highscore. So a new population is created.")
                 self.birds.recreate_population()
@@ -151,6 +154,9 @@ class app(pyglet.window.Window):
             else:
                 best_birds = check[1]
                 score = check[0]
+                logging.info("The score of the best bird was: " +
+                      str(score))
+                logging.info("The best bird was number: " + str(best_birds))
                 print("The score of the best bird was: " +
                       str(score))
                 print("The best bird was number: " + str(best_birds))
@@ -159,11 +165,12 @@ class app(pyglet.window.Window):
                     self.highscore = score
                 else:
                     self.generations_without_beating_the_highscore += 1
+                logging.info("Birds are learning...")
                 print("Birds are learning...")
                 # If more than one bird made it as far as he got split the next generation up and let them learn from the different birds.
                 self.birds.learn(best_birds)
             self.bird_generation += 1
-
+            logging.info("New generation is starting. Generation: " + str(self.bird_generation))
             # Restart the game
             self.restart()
 
@@ -272,7 +279,7 @@ class app(pyglet.window.Window):
         print("Restarting with a new generation. \n")
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
         # pyglet.clock.schedule_interval(self.bird_decisions, constants.NN_DECISION_SPEED)
-        logging.info("Restarted the game.")
+        logging.info("Restarting with a new generation.")
 
     def on_key_press(self, symbol, modifiers):
         """
