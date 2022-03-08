@@ -69,6 +69,9 @@ class app(pyglet.window.Window):
         self.birds.load_best_bird()
         pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
 
+        # Remember the number of the best bird
+        self.best_bird = [0]
+
     def start_game(self):
         """
         Function to start a new game.
@@ -152,6 +155,7 @@ class app(pyglet.window.Window):
                 self.birds.recreate_population()
                 self.generations_without_beating_the_highscore = 0
             else:
+                self.best_bird = check[1]
                 best_birds = check[1]
                 score = check[0]
                 logging.info("The score of the best bird was: " +
@@ -217,6 +221,8 @@ class app(pyglet.window.Window):
         self.blocks.draw()
 
         self.birds.draw()
+
+        # self.birds.birds[self.best_bird[0]].NN.draw()
 
         # Draw all of the text
         if not self.started:

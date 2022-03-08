@@ -65,7 +65,7 @@ def random_negative_positive(x: int):
 class Neural_Net:
     def __init__(self, input_count, output_count, hidden_layer_count=5, learning_rate: int = 300):
         """
-        Create Neural Network width 2 Hidden layers.
+        Create Neural Network width 1 Hidden layer.
 
         Args:
             self (undefined):

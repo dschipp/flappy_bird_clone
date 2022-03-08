@@ -76,6 +76,19 @@ class bird_population():
         self.best_bird_save_file_path = path + "/../best_bird.pickle"
         self.example_best_bird_save_file_path = path + "/../data/example_best_bird.pickle"
 
+        self.hidden_circles = []
+        self.output_circles = []
+        self.input_circles = []
+        self.hidden_input_lines = []
+        self.output_hidden_lines = []
+        self.init_NN_draw()
+
+        self.NN_draw_blur_image = pyglet.image.load(path + "/../assets/menu_blur.png")
+        self.NN_draw_blur_image.width = 170
+        self.NN_draw_blur_image.height = 200
+        self.NN_draw_blur = pyglet.sprite.Sprite(
+            self.NN_draw_blur_image, x=450, y=25)
+
     def update(self, block_coordinates) -> bool:
         """
         Let the birds move and check if they hit something or else.
@@ -203,6 +216,7 @@ class bird_population():
         for bird in self.birds:
             if not bird.dead and drawn_birds < constants.DISPLAYED_BIRDS:
                 bird.draw()
+                self.draw_NN(bird)
                 drawn_birds += 1
 
     def revive_population(self):
@@ -292,3 +306,97 @@ class bird_population():
         print("Loaded the saved best bird.")
 
         # self.learn([0,[0]])
+
+    def init_NN_draw(self):
+
+        NN = self.birds[0].NN
+        
+        dist_between_layers = 60
+        dist_between_neurons = 40
+        start_x = 640 - 40 # So we go from right to left so there can be an infinite amount of layers be drawn.
+        start_y = 50 # So we go from bottom to top so there can be an infinite of neurons drawn.
+        circle_size = 10
+        line_width = 2
+
+        # Draw the weights between output and hidden layer
+        self.output_hidden_lines = []
+        in_x = start_x - dist_between_layers
+        out_x = start_x
+        for line_num,line in enumerate(NN.weights_hidden_output):
+            in_y = start_y + dist_between_neurons * line_num
+            output_hidden_line = []
+            for entry_num,entry in enumerate(line):
+                out_y = start_y + dist_between_neurons * entry_num
+                output_hidden_line.append(pyglet.shapes.Line(out_x, out_y, in_x, in_y, line_width, color = (47, 143, 191)))
+            self.output_hidden_lines.append(output_hidden_line)
+
+        # Draw the weights between hidden and input layer
+        self.hidden_input_lines = []
+        in_x = start_x - 2*dist_between_layers
+        out_x = start_x - dist_between_layers
+        for line_num,line in enumerate(NN.weights_input_hidden):
+            in_y = start_y + dist_between_neurons * line_num
+            hidden_input_line = []
+            for entry_num,entry in enumerate(line):
+                out_y = start_y + dist_between_neurons * entry_num
+                hidden_input_line.append(pyglet.shapes.Line(out_x, out_y, in_x, in_y, line_width, color = (47, 143, 191)))
+            self.hidden_input_lines.append(hidden_input_line)
+
+        # Draw output neurons
+        self.output_circles = []
+        for i,bias_value in enumerate(NN.bias_output[0]):
+            self.output_circles.append(pyglet.shapes.Circle(start_x, start_y + i * dist_between_neurons, circle_size, color =(206, 55, 55)))
+            self.output_circles[-1].opacity = 250 * bias_value
+
+        # Draw hidden neurons
+        self.hidden_circles = []
+        for i,bias_value in enumerate(NN.bias_hidden[0]):
+            self.hidden_circles.append(pyglet.shapes.Circle(start_x - dist_between_layers, start_y + i * dist_between_neurons, circle_size, color =(206, 55, 55)))
+            self.output_circles[-1].opacity = 250 * bias_value
+
+        # Draw input neurons
+        self.input_circles = []
+        for i in range(NN.input_count):
+            self.input_circles.append(pyglet.shapes.Circle(start_x - 2*dist_between_layers, start_y + i * dist_between_neurons, circle_size, color =(206, 55, 55)))
+
+    def draw_NN(self, bird):
+
+        NN = bird.NN
+
+        # Draw the weights between output and hidden layer
+        for line_num,line in enumerate(NN.weights_hidden_output):
+            for entry_num,entry in enumerate(line):
+                self.output_hidden_lines[line_num][entry_num].opacity = 250 * entry
+
+        # Draw the weights between hidden and input layer
+        for line_num,line in enumerate(NN.weights_input_hidden):
+            for entry_num,entry in enumerate(line):
+                self.hidden_input_lines[line_num][entry_num].opacity =  250 * entry
+
+        # Draw output neurons
+        for i,bias_value in enumerate(NN.bias_output[0]):
+            self.output_circles[i].opacity = 250 * bias_value
+
+        # Draw hidden neurons
+        for i,bias_value in enumerate(NN.bias_hidden[0]):
+            self.hidden_circles[i].opacity = 250 * bias_value
+
+        self.NN_draw_blur.draw()
+
+        for i in self.hidden_input_lines:
+            for line in i:
+                line.draw()
+        
+        for i in self.output_hidden_lines:
+            for line in i:
+                line.draw()
+
+        for circle in self.hidden_circles:
+            circle.draw()
+
+        for circle in self.output_circles:
+            circle.draw()
+
+        for circle in self.input_circles:
+            circle.draw()
+        
