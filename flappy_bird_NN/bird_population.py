@@ -308,7 +308,14 @@ class bird_population():
         # self.learn([0,[0]])
 
     def init_NN_draw(self):
+        """
+        Initialise the objects to draw for displaying the NN.
 
+        Args:
+            self (undefined):
+
+        """
+    
         NN = self.birds[0].NN
         
         dist_between_layers = 60
@@ -360,7 +367,15 @@ class bird_population():
             self.input_circles.append(pyglet.shapes.Circle(start_x - 2*dist_between_layers, start_y + i * dist_between_neurons, circle_size, color =(206, 55, 55)))
 
     def draw_NN(self, bird):
+        """
+        Draw the NN of the bird that is currently displayed.
 
+        Args:
+            self (undefined):
+            bird (flappy_bird): The flappy bird from which the NN shall be drawn.
+
+        """
+    
         NN = bird.NN
 
         # Draw the weights between output and hidden layer
