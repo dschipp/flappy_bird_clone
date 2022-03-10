@@ -22,11 +22,18 @@ BIRD_X = int(config['Bird']['BIRD_SIZE'])
 """The x coordinate of the Birds."""
 
 """ ------------- Neuronal Network Properties -------------- """
+NN_INPUT_NUM = int(config['NeuralNet']['NN_INPUT_NUM'])
+"""Number of inputs"""
+NN_HIDDEN_LAYER_NUM = int(config['NeuralNet']['NN_HIDDEN_LAYER_NUM'])
+"""Number of neurons of the hidden layer"""
+NN_OUTPUT_LAYER_NUM = int(config['NeuralNet']['NN_OUTPUT_LAYER_NUM'])
+"""Number of neurons of the output layer"""
 NN_DECISION_SPEED = float(config['NeuralNet']['NN_DECISION_SPEED'])
 """How often are the Neural Network functions called."""
 BIRD_COUNT = int(config['NeuralNet']['BIRD_COUNT'])
 """Of how many birds does one Population consists."""
-MAX_GENERATIONS_WITHOUT_HIGHSCORE = int(config['NeuralNet']['MAX_GENERATIONS_WITHOUT_HIGHSCORE'])
+MAX_GENERATIONS_WITHOUT_HIGHSCORE = int(
+    config['NeuralNet']['MAX_GENERATIONS_WITHOUT_HIGHSCORE'])
 """How many generation are allowed without breaking the highscore"""
 
 """ ---------------- Block Properties ---------------------- """
@@ -48,3 +55,11 @@ BLOCK_DIST = int(config['Block']['BLOCK_DIST'])
 """The distance between the blocks."""
 BLOCK_STARTPOINT = int(config['Block']['BLOCK_STARTPOINT'])
 """The x startcoodinate for the blocks at the beginning of the game."""
+
+""" ---------------- Graph Properties ---------------------- """
+NN_GRAPH_DIST_BETWEEN_LAYERS = int(config['Graph']['DIST_BETWEEN_LAYERS'])
+NN_GRAPH_DIST_BETWEEN_NEURONS = int(config['Graph']['DIST_BETWEEN_NEURONS'])
+NN_GRAPH_START_POS_X = int(config['Graph']['START_POS_X'])
+NN_GRAPH_START_POS_Y = int(config['Graph']['START_POS_Y'])
+NN_GRAPH_CIRCLE_SIZE = int(config['Graph']['CIRCLE_SIZE'])
+NN_GRAPH_LINE_WIDTH = int(config['Graph']['LINE_WIDTH'])
