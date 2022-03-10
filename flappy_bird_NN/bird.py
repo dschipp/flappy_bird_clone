@@ -112,7 +112,7 @@ class flappy_bird(sprite.Sprite):
             self (undefined):
 
         """
-        self.NN = Neural_Net(4, 2)  # Crate a Neural Network for this bird.
+        self.NN = Neural_Net(constants.NN_INPUT_NUM, constants.NN_OUTPUT_LAYER_NUM, hidden_layer_count=constants.NN_HIDDEN_LAYER_NUM)  # Crate a Neural Network for this bird.
 
     def move_up(self):
         """
