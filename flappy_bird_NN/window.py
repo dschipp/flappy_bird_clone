@@ -222,8 +222,6 @@ class app(pyglet.window.Window):
 
         self.birds.draw()
 
-        # self.birds.birds[self.best_bird[0]].NN.draw()
-
         # Draw all of the text
         if not self.started:
             self.menu_blur.draw()
