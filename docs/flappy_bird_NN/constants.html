@@ -66,6 +66,15 @@
                     <a class="variable" href="#BIRD_X">BIRD_X</a>
             </li>
             <li>
+                    <a class="variable" href="#NN_INPUT_NUM">NN_INPUT_NUM</a>
+            </li>
+            <li>
+                    <a class="variable" href="#NN_HIDDEN_LAYER_NUM">NN_HIDDEN_LAYER_NUM</a>
+            </li>
+            <li>
+                    <a class="variable" href="#NN_OUTPUT_LAYER_NUM">NN_OUTPUT_LAYER_NUM</a>
+            </li>
+            <li>
                     <a class="variable" href="#NN_DECISION_SPEED">NN_DECISION_SPEED</a>
             </li>
             <li>
@@ -146,11 +155,18 @@
 <span class="sd">&quot;&quot;&quot;The x coordinate of the Birds.&quot;&quot;&quot;</span>
 
 <span class="sd">&quot;&quot;&quot; ------------- Neuronal Network Properties -------------- &quot;&quot;&quot;</span>
+<span class="n">NN_INPUT_NUM</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;NN_INPUT_NUM&#39;</span><span class="p">])</span>
+<span class="sd">&quot;&quot;&quot;Number of inputs&quot;&quot;&quot;</span>
+<span class="n">NN_HIDDEN_LAYER_NUM</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;NN_HIDDEN_LAYER_NUM&#39;</span><span class="p">])</span>
+<span class="sd">&quot;&quot;&quot;Number of neurons of the hidden layer&quot;&quot;&quot;</span>
+<span class="n">NN_OUTPUT_LAYER_NUM</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;NN_OUTPUT_LAYER_NUM&#39;</span><span class="p">])</span>
+<span class="sd">&quot;&quot;&quot;Number of neurons of the output layer&quot;&quot;&quot;</span>
 <span class="n">NN_DECISION_SPEED</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;NN_DECISION_SPEED&#39;</span><span class="p">])</span>
 <span class="sd">&quot;&quot;&quot;How often are the Neural Network functions called.&quot;&quot;&quot;</span>
 <span class="n">BIRD_COUNT</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;BIRD_COUNT&#39;</span><span class="p">])</span>
 <span class="sd">&quot;&quot;&quot;Of how many birds does one Population consists.&quot;&quot;&quot;</span>
-<span class="n">MAX_GENERATIONS_WITHOUT_HIGHSCORE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;MAX_GENERATIONS_WITHOUT_HIGHSCORE&#39;</span><span class="p">])</span>
+<span class="n">MAX_GENERATIONS_WITHOUT_HIGHSCORE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;NeuralNet&#39;</span><span class="p">][</span><span class="s1">&#39;MAX_GENERATIONS_WITHOUT_HIGHSCORE&#39;</span><span class="p">])</span>
 <span class="sd">&quot;&quot;&quot;How many generation are allowed without breaking the highscore&quot;&quot;&quot;</span>
 
 <span class="sd">&quot;&quot;&quot; ---------------- Block Properties ---------------------- &quot;&quot;&quot;</span>
@@ -172,6 +188,14 @@
 <span class="sd">&quot;&quot;&quot;The distance between the blocks.&quot;&quot;&quot;</span>
 <span class="n">BLOCK_STARTPOINT</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Block&#39;</span><span class="p">][</span><span class="s1">&#39;BLOCK_STARTPOINT&#39;</span><span class="p">])</span>
 <span class="sd">&quot;&quot;&quot;The x startcoodinate for the blocks at the beginning of the game.&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot; ---------------- Graph Properties ---------------------- &quot;&quot;&quot;</span>
+<span class="n">NN_GRAPH_DIST_BETWEEN_LAYERS</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;DIST_BETWEEN_LAYERS&#39;</span><span class="p">])</span>
+<span class="n">NN_GRAPH_DIST_BETWEEN_NEURONS</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;DIST_BETWEEN_NEURONS&#39;</span><span class="p">])</span>
+<span class="n">NN_GRAPH_START_POS_X</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;START_POS_X&#39;</span><span class="p">])</span>
+<span class="n">NN_GRAPH_START_POS_Y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;START_POS_Y&#39;</span><span class="p">])</span>
+<span class="n">NN_GRAPH_CIRCLE_SIZE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;CIRCLE_SIZE&#39;</span><span class="p">])</span>
+<span class="n">NN_GRAPH_LINE_WIDTH</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Graph&#39;</span><span class="p">][</span><span class="s1">&#39;LINE_WIDTH&#39;</span><span class="p">])</span>
 </pre></div>
 
         </details>
@@ -204,7 +228,7 @@
                 <section id="JUMP_HEIGHT">
                                 <div class="attr variable"><a class="headerlink" href="#JUMP_HEIGHT">#&nbsp;&nbsp</a>
 
-        <span class="name">JUMP_HEIGHT</span><span class="default_value"> = 5</span>
+        <span class="name">JUMP_HEIGHT</span><span class="default_value"> = 7</span>
     </div>
 
     
@@ -216,7 +240,7 @@
                 <section id="GRAVITY">
                                 <div class="attr variable"><a class="headerlink" href="#GRAVITY">#&nbsp;&nbsp</a>
 
-        <span class="name">GRAVITY</span><span class="default_value"> = 0.2</span>
+        <span class="name">GRAVITY</span><span class="default_value"> = 0.25</span>
     </div>
 
     
@@ -245,6 +269,42 @@
 
     
             <div class="docstring"><p>The x coordinate of the Birds.</p>
+</div>
+
+
+                </section>
+                <section id="NN_INPUT_NUM">
+                                <div class="attr variable"><a class="headerlink" href="#NN_INPUT_NUM">#&nbsp;&nbsp</a>
+
+        <span class="name">NN_INPUT_NUM</span><span class="default_value"> = 4</span>
+    </div>
+
+    
+            <div class="docstring"><p>Number of inputs</p>
+</div>
+
+
+                </section>
+                <section id="NN_HIDDEN_LAYER_NUM">
+                                <div class="attr variable"><a class="headerlink" href="#NN_HIDDEN_LAYER_NUM">#&nbsp;&nbsp</a>
+
+        <span class="name">NN_HIDDEN_LAYER_NUM</span><span class="default_value"> = 6</span>
+    </div>
+
+    
+            <div class="docstring"><p>Number of neurons of the hidden layer</p>
+</div>
+
+
+                </section>
+                <section id="NN_OUTPUT_LAYER_NUM">
+                                <div class="attr variable"><a class="headerlink" href="#NN_OUTPUT_LAYER_NUM">#&nbsp;&nbsp</a>
+
+        <span class="name">NN_OUTPUT_LAYER_NUM</span><span class="default_value"> = 2</span>
+    </div>
+
+    
+            <div class="docstring"><p>Number of neurons of the output layer</p>
 </div>
 
 
