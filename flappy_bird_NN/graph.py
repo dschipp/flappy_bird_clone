@@ -17,10 +17,12 @@ class NN_graph():
     def __init__(self) -> None:
         """
         Create graph that displays the NN of the Birds. 
-        The opacity of the objects are based on the value of the bias or weight. So the opacity of the lines between the neurons are dependent on the weight between the neurons. The opacity of the circles are dependent on the bias value of that neuron.
+        The opacity of the objects are based on the value of the bias or weight.
+        So the opacity of the lines between the neurons are dependent on the weight between the neurons.
+        The opacity of the circles are dependent on the bias value of that neuron.
 
-        TODO: Implement a change of the opacity to the input values.
-        TODO: Implement in someway which input is most important an lead to a significant change to the output.
+        - TODO: Implement a change of the opacity to the input values.
+        - TODO: Implement in someway which input is most important an lead to a significant change to the output.
 
         Args:
             self (undefined):
