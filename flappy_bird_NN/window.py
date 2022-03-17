@@ -280,6 +280,8 @@ class app(pyglet.window.Window):
         self.set_variables()
 
         self.blocks = blocks(self.y_max, self.x_max)
+        
+        self.h_graph.update(self.bird_generation, self.max_score)
 
         self.started = True
         self.max_score = 0

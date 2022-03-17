@@ -143,25 +143,75 @@ class highscore_graph():
         Returns:
             None
 
+        # TODO: Add numbers to the axis
         """
 
-        zero_point_x = window_width - 400
-        zero_point_y = window_height - 450
-        x_axis_left_point = window_width - 200
-        y_axis_top_point = window_height - 350
+        self.zero_point_x = window_width - 400
+        self.zero_point_y = window_height - 450
+        self.x_axis_left_point = window_width - 200
+        self.y_axis_top_point = window_height - 350
+        
+        self.x_axis_length = self.x_axis_left_point - self.zero_point_x
+        self.y_axis_length = self.y_axis_top_point - self.zero_point_y
+
+        self.generations_scores = [[0,0]] # A variable to store the generation and scores at that generation [gen, score] and initialize it with a zero point
+        self.graph_lines = [] # A list to store all the lines to draw for the graph
 
         line_width = 2
 
-        self.x_axis = pyglet.shapes.Line(zero_point_x, zero_point_y, x_axis_left_point, zero_point_y, line_width, color=(0, 0, 0))
-        self.y_axis = pyglet.shapes.Line(zero_point_x, zero_point_y, zero_point_x, y_axis_top_point, line_width, color=(0, 0, 0))
+        self.x_axis = pyglet.shapes.Line(self.zero_point_x, self.zero_point_y, self.x_axis_left_point, self.zero_point_y, line_width, color=(0, 0, 0))
+        self.y_axis = pyglet.shapes.Line(self.zero_point_x, self.zero_point_y, self.zero_point_x, self.y_axis_top_point, line_width, color=(0, 0, 0))
 
         self.x_axis_text = pyglet.text.Label('Generation', font_name='Times New Roman', font_size=10,color=(0, 0, 0, 255),
-                                    y = zero_point_y-10, x = x_axis_left_point)
+                                    y = self.zero_point_y-10, x = self.x_axis_left_point)
         self.y_axis_text = pyglet.text.Label('Highscore', font_name='Times New Roman', font_size=10,color=(0, 0, 0, 255),
-                                    y = y_axis_top_point, x = zero_point_x)
+                                    y = self.y_axis_top_point, x = self.zero_point_x)
     
-    def update(self):
-        pass
+    def update(self, generation:int, score:int):
+        """
+        Update the properties of the graph of the generation vs the score
+
+        Args:
+            self (undefined):
+            generation (int): The generation of that new score
+            score (int): The score of the generation
+
+        # TODO: Overwork the code
+        """
+
+        self.generations_scores.append([generation, score])
+
+        max_generation = max([sublist[0] for sublist in self.generations_scores])
+        max_score = max([sublist[1] for sublist in self.generations_scores])
+
+        if max_generation == 0:
+            x_step_size = 0
+        else:
+            x_step_size = self.x_axis_length / max_generation
+        
+        if score == 0:
+            y_step_size = 0
+        else:
+            y_step_size = self.y_axis_length / max_score
+
+        points = [] # [y (score), x (generation)]
+        for gen_score in self.generations_scores:
+            gen = gen_score[0]
+            score = gen_score[1]
+
+            point = [self.zero_point_y + score*y_step_size, self.zero_point_x + gen*x_step_size]
+            points.append(point)
+
+        self.graph_lines = []
+        
+        line_width = 1
+        self.graph_lines = []
+        for i in range(len(points)-1):
+            current_point = points[i]
+            next_point = points[i+1]
+
+            line = pyglet.shapes.Line(current_point[1], current_point[0], next_point[1], next_point[0], line_width, color=(0, 0, 0))
+            self.graph_lines.append(line)
 
     def draw(self):
         
@@ -170,9 +220,6 @@ class highscore_graph():
         self.y_axis_text.draw()
         self.x_axis_text.draw()
 
-# Der bereich der x axe muss aufgeteilt werden in die anzahl an Generationen. Der jeweilige Highscore gehört dann zu der Generation
-# und wird dementsprechend gemalt.
-# Also ist die Anzahl an Generationen abhängig von der länge der x-axe. Welche nummern da am ende stehen kann noch später
-# geklärt werden weil es passen natürlich ab einer gewissen Generation nicht alle Zahlen dahin.
-# Die y axe muss von den Highscores aufgeteilt werden. Da den derzeitigen highscore durch 4 oder so teilen und diese Schritte 
-# darstellen.
+        if len(self.graph_lines) != 0:
+            for line in self.graph_lines:
+                line.draw()
