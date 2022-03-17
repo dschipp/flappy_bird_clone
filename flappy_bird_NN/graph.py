@@ -1,3 +1,4 @@
+from asyncio.proactor_events import _ProactorBaseWritePipeTransport
 import constants
 from bird import flappy_bird
 import numpy as np
@@ -129,3 +130,49 @@ class NN_graph():
 
         for i in self.input_circles:
             i.draw()
+
+
+class highscore_graph():
+    def __init__(self, window_width, window_height) -> None:
+        """
+        A class to plot the number of generations agains the highscore of that generation.
+
+        Args:
+            self (undefined):
+
+        Returns:
+            None
+
+        """
+
+        zero_point_x = window_width - 400
+        zero_point_y = window_height - 450
+        x_axis_left_point = window_width - 200
+        y_axis_top_point = window_height - 350
+
+        line_width = 2
+
+        self.x_axis = pyglet.shapes.Line(zero_point_x, zero_point_y, x_axis_left_point, zero_point_y, line_width, color=(0, 0, 0))
+        self.y_axis = pyglet.shapes.Line(zero_point_x, zero_point_y, zero_point_x, y_axis_top_point, line_width, color=(0, 0, 0))
+
+        self.x_axis_text = pyglet.text.Label('Generation', font_name='Times New Roman', font_size=10,color=(0, 0, 0, 255),
+                                    y = zero_point_y-10, x = x_axis_left_point)
+        self.y_axis_text = pyglet.text.Label('Highscore', font_name='Times New Roman', font_size=10,color=(0, 0, 0, 255),
+                                    y = y_axis_top_point, x = zero_point_x)
+    
+    def update(self):
+        pass
+
+    def draw(self):
+        
+        self.x_axis.draw()
+        self.y_axis.draw()
+        self.y_axis_text.draw()
+        self.x_axis_text.draw()
+
+# Der bereich der x axe muss aufgeteilt werden in die anzahl an Generationen. Der jeweilige Highscore gehört dann zu der Generation
+# und wird dementsprechend gemalt.
+# Also ist die Anzahl an Generationen abhängig von der länge der x-axe. Welche nummern da am ende stehen kann noch später
+# geklärt werden weil es passen natürlich ab einer gewissen Generation nicht alle Zahlen dahin.
+# Die y axe muss von den Highscores aufgeteilt werden. Da den derzeitigen highscore durch 4 oder so teilen und diese Schritte 
+# darstellen.

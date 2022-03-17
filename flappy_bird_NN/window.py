@@ -10,6 +10,7 @@ from button import button
 import constants
 from displayed_texts import menu
 import logging
+from graph import highscore_graph
 
 
 class app(pyglet.window.Window):
@@ -71,6 +72,9 @@ class app(pyglet.window.Window):
 
         # Remember the number of the best bird
         self.best_bird = [0]
+
+        # Draw a graph to display the number of generations and each of their highscores
+        self.h_graph = highscore_graph(self.y_max, self.x_max)
 
     def start_game(self):
         """
@@ -231,6 +235,8 @@ class app(pyglet.window.Window):
             self.gen_text.draw()
             self.highscore_text.draw()
             self.alive_bird_count_text.draw()
+
+        self.h_graph.draw()
 
     def pause(self):
         """
