@@ -8,30 +8,12 @@ from window import app
 import logging
 from logging import config
 import constants
+import json
 
-log_config = {
-    "version":1,
-    "root":{
-        "handlers" : ["log_handler"],
-        "level": "DEBUG"
-    },
-    "handlers":{
-        "log_handler":{
-            "formatter": "std_out",
-            "class": "logging.FileHandler",
-            "level": "DEBUG",
-            "filename":"app.log"
-        }
-    },
-    "formatters":{
-        "std_out": {
-            "format": "%(asctime)s : %(levelname)s : %(module)s : %(funcName)s : %(lineno)d : %(message)s",
-            "datefmt":"%d-%m-%Y %I:%M:%S"
-        }
-    },
-}
-
-config.dictConfig(log_config)
+with open(path + "/../data/log_config.json", 'rt') as conf_file:
+    conf = json.load(conf_file)
+config.dictConfig(conf)
+conf_file.close()
 
 if __name__ == '__main__':
     logging.info("Start app with update speed: " + str(constants.GAME_SPEED))
