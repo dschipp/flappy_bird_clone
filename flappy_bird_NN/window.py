@@ -76,6 +76,9 @@ class app(pyglet.window.Window):
         # Draw a graph to display the number of generations and each of their highscores
         self.h_graph = highscore_graph(self.y_max, self.x_max)
 
+        # A new variable to increase the game speed better
+        self.acceleration = 0.01
+
     def start_game(self):
         """
         Function to start a new game.
@@ -262,7 +265,8 @@ class app(pyglet.window.Window):
             self (undefined):
 
         """
-        pyglet.clock.schedule_interval(self.update_app, constants.GAME_SPEED)
+        print(self.acceleration * constants.GAME_SPEED)
+        pyglet.clock.schedule_interval(self.update_app, self.acceleration * constants.GAME_SPEED)
         self.started = True
         logging.info("Unpaused the game.")
 
