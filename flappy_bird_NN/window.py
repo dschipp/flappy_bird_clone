@@ -12,6 +12,7 @@ from displayed_texts import menu
 import logging
 from graph import highscore_graph
 
+logo = pyglet.image.load(path + "/../assets/logo.png")
 
 class app(pyglet.window.Window):
 
@@ -27,6 +28,8 @@ class app(pyglet.window.Window):
 
         """
         super(app, self).__init__()
+
+        self.set_icon(logo)
 
         self.y_max = self.get_size()[0]
         self.x_max = self.get_size()[1]
